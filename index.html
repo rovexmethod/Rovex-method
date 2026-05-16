@@ -1020,14 +1020,14 @@
 
             OPTION A — PayPal "Buy Now" button (simplest):
             1. Go to paypal.com/buttons → Create a "Buy Now" button
-            2. Set price to 79 EUR, product name "Rovex Method"
+            2. Set price to 79 USD, product name "Rovex Method"
             3. Copy the generated <form> code and replace the placeholder below
 
             OPTION B — PayPal JavaScript SDK (recommended for custom UI):
             1. Replace 'YOUR_PAYPAL_CLIENT_ID' below with your PayPal Client ID
                from developer.paypal.com → My Apps & Credentials
             2. Uncomment the SDK script and paypal.Buttons() block below
-            3. Ensure currency is EUR and amount is "79.00"
+            3. Ensure currency is USD and amount is "79.00"
 
             OPTION C — PayPal Checkout via LemonSqueezy:
             LemonSqueezy supports PayPal natively — enable it in your LS dashboard
@@ -1367,7 +1367,7 @@
           return actions.order.create({
             purchase_units: [{
               description: 'Rovex Method — Full Access',
-              amount: { value: '2', currency_code: 'USD' }
+              amount: { value: '79', currency_code: 'USD' }
             }]
           });
         },
