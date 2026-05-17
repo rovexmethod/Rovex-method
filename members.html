@@ -1,0 +1,2471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Rovex Method — Members</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #07070E;
+  --bg2: #0D0D1A;
+  --bg3: #12121F;
+  --card: #0F0F1E;
+  --border: rgba(255,255,255,0.06);
+  --border2: rgba(255,255,255,0.1);
+  --blue: #3B82F6;
+  --blue2: #1D4ED8;
+  --blue-glow: rgba(59,130,246,0.15);
+  --green: #22C55E;
+  --green-glow: rgba(34,197,94,0.15);
+  --orange: #F97316;
+  --red: #EF4444;
+  --yellow: #EAB308;
+  --text: #E2E2F0;
+  --text2: #8888A8;
+  --text3: #444468;
+  --sidebar-w: 260px;
+  --header-h: 60px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  font-weight:300;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ─── ASSESSMENT OVERLAY ─── */
+#assessment-overlay{
+  position:fixed;inset:0;
+  background:rgba(7,7,14,0.97);
+  z-index:1000;
+  display:flex;align-items:center;justify-content:center;
+  padding:24px;
+}
+.assessment-box{
+  background:var(--bg3);
+  border:1px solid var(--border2);
+  border-radius:20px;
+  padding:48px;
+  max-width:560px;width:100%;
+  position:relative;
+}
+.assessment-box h2{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:900;font-size:2.8rem;
+  text-transform:uppercase;line-height:0.9;
+  margin-bottom:8px;
+}
+.assessment-box h2 span{color:var(--blue);}
+.assessment-box p{color:var(--text2);font-size:0.9rem;margin-bottom:32px;}
+.form-row{margin-bottom:20px;}
+.form-row label{display:block;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:8px;font-family:'Barlow Condensed',sans-serif;font-weight:700;}
+.form-row input,.form-row select{
+  width:100%;background:var(--bg);border:1px solid var(--border2);
+  border-radius:10px;padding:12px 16px;color:var(--text);
+  font-family:'DM Sans',sans-serif;font-size:0.9rem;
+  outline:none;transition:border-color 0.2s;
+}
+.form-row input:focus,.form-row select:focus{border-color:var(--blue);}
+.form-row select option{background:var(--bg);}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.btn-primary{
+  width:100%;padding:16px;
+  background:linear-gradient(135deg,var(--blue),var(--blue2));
+  border:none;border-radius:12px;
+  color:#fff;font-family:'Barlow Condensed',sans-serif;
+  font-weight:700;font-size:1.2rem;text-transform:uppercase;
+  letter-spacing:0.08em;cursor:pointer;
+  transition:opacity 0.2s,transform 0.1s;
+  margin-top:8px;
+}
+.btn-primary:hover{opacity:0.9;}
+.btn-primary:active{transform:scale(0.98);}
+
+/* ─── LAYOUT ─── */
+#app{display:flex;min-height:100vh;}
+
+/* ─── SIDEBAR ─── */
+#sidebar{
+  width:var(--sidebar-w);min-width:var(--sidebar-w);
+  background:var(--bg2);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  position:fixed;top:0;left:0;bottom:0;
+  z-index:100;
+  transition:transform 0.3s ease;
+}
+.sidebar-logo{
+  padding:16px 24px 12px;
+  border-bottom:1px solid var(--border);
+}
+.sidebar-logo .wordmark{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:900;font-size:1rem;
+  letter-spacing:0.15em;text-transform:uppercase;color:#fff;
+}
+.sidebar-logo .wordmark span{color:var(--blue);}
+.sidebar-logo .badge{
+  display:inline-block;margin-top:6px;
+  background:var(--blue-glow);border:1px solid rgba(59,130,246,0.3);
+  border-radius:4px;padding:2px 8px;
+  font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;
+  color:var(--blue);font-family:'Barlow Condensed',sans-serif;font-weight:700;
+}
+.sidebar-plan{
+  padding:16px 24px;
+  border-bottom:1px solid var(--border);
+}
+.sidebar-plan .plan-label{
+  font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;
+  color:var(--text3);font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  margin-bottom:4px;
+}
+.sidebar-plan .plan-name{
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  font-size:1.1rem;color:var(--blue);text-transform:uppercase;
+}
+nav{flex:1;padding:16px 0;overflow-y:auto;}
+.nav-section{
+  padding:8px 24px 4px;
+  font-size:0.62rem;text-transform:uppercase;letter-spacing:0.12em;
+  color:var(--text3);font-family:'Barlow Condensed',sans-serif;font-weight:700;
+}
+.nav-item{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 24px;cursor:pointer;
+  font-size:0.88rem;color:var(--text2);
+  transition:all 0.15s;border-left:3px solid transparent;
+  position:relative;
+}
+.nav-item:hover{color:var(--text);background:rgba(255,255,255,0.03);}
+.nav-item.active{
+  color:#fff;background:rgba(59,130,246,0.08);
+  border-left-color:var(--blue);
+}
+.nav-item .nav-icon{font-size:1rem;width:20px;text-align:center;}
+.nav-item .nav-lock{
+  margin-left:auto;font-size:0.65rem;
+  color:var(--text3);opacity:0.6;
+}
+.nav-item.locked{opacity:0.4;cursor:not-allowed;}
+.sidebar-footer{
+  padding:16px 24px;border-top:1px solid var(--border);
+}
+.streak-display{
+  display:flex;align-items:center;gap:10px;
+  background:var(--bg);border:1px solid var(--border);
+  border-radius:10px;padding:12px 14px;
+}
+.streak-fire{font-size:1.2rem;}
+.streak-info .streak-num{
+  font-family:'Barlow Condensed',sans-serif;font-weight:900;
+  font-size:1.4rem;color:#fff;line-height:1;
+}
+.streak-info .streak-label{
+  font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;
+  color:var(--text3);
+}
+
+/* ─── MOBILE HEADER ─── */
+#mobile-header{
+  display:none;
+  position:fixed;top:0;left:0;right:0;height:var(--header-h);
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  z-index:200;align-items:center;justify-content:space-between;
+  padding:0 20px;
+}
+.mobile-logo{
+  font-family:'Barlow Condensed',sans-serif;font-weight:900;
+  font-size:1rem;letter-spacing:0.15em;text-transform:uppercase;
+}
+.mobile-logo span{color:var(--blue);}
+#menu-btn{
+  background:none;border:1px solid var(--border2);
+  border-radius:8px;padding:8px 10px;color:var(--text2);
+  cursor:pointer;font-size:1rem;
+}
+#sidebar-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,0.7);z-index:99;
+  touch-action:none;
+}
+#sidebar-overlay.open{display:block;}
+
+/* ─── MAIN ─── */
+#main{
+  margin-left:var(--sidebar-w);
+  flex:1;min-height:100vh;
+}
+.section{
+  display:none;padding:48px;max-width:1000px;
+}
+.section.active{display:block;}
+
+/* ─── PAGE HEADER ─── */
+.page-header{margin-bottom:40px;}
+.page-header .eyebrow{
+  font-size:0.72rem;text-transform:uppercase;letter-spacing:0.12em;
+  color:var(--blue);font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  margin-bottom:8px;
+}
+.page-header h1{
+  font-family:'Barlow Condensed',sans-serif;font-weight:900;
+  font-size:clamp(2.4rem,5vw,3.6rem);text-transform:uppercase;
+  line-height:0.9;color:#fff;
+}
+.page-header h1 span{color:var(--blue);}
+.page-header p{color:var(--text2);font-size:0.95rem;margin-top:12px;max-width:600px;}
+
+/* ─── CARDS ─── */
+.card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:28px;
+  transition:border-color 0.2s;
+}
+.card:hover{border-color:var(--border2);}
+.card-grid{display:grid;gap:20px;}
+.card-grid.cols-2{grid-template-columns:1fr 1fr;}
+.card-grid.cols-3{grid-template-columns:1fr 1fr 1fr;}
+.card-grid.cols-4{grid-template-columns:repeat(4,1fr);}
+
+/* ─── STAT CARDS ─── */
+.stat-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:24px;
+}
+.stat-card .stat-label{
+  font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;
+  color:var(--text3);font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  margin-bottom:8px;
+}
+.stat-card .stat-value{
+  font-family:'Barlow Condensed',sans-serif;font-weight:900;
+  font-size:2.4rem;color:#fff;line-height:1;
+}
+.stat-card .stat-sub{font-size:0.78rem;color:var(--text2);margin-top:4px;}
+.stat-card .stat-icon{font-size:1.5rem;margin-bottom:12px;}
+
+/* ─── PROGRESS BAR ─── */
+.prog-wrap{margin:16px 0;}
+.prog-label{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:8px;font-size:0.8rem;color:var(--text2);
+}
+.prog-label strong{color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:700;}
+.prog-track{height:6px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden;}
+.prog-fill{
+  height:100%;border-radius:3px;
+  background:linear-gradient(90deg,var(--blue),#60A5FA);
+  transition:width 0.6s cubic-bezier(.4,0,.2,1);
+}
+.prog-fill.green{background:linear-gradient(90deg,var(--green),#4ADE80);}
+
+/* ─── WORKOUT CARDS ─── */
+.workout-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:24px;
+  display:flex;align-items:flex-start;gap:20px;
+  transition:border-color 0.2s,background 0.2s;
+}
+.workout-card.done{
+  border-color:rgba(34,197,94,0.3);
+  background:rgba(34,197,94,0.03);
+}
+.workout-checkbox{
+  width:24px;height:24px;min-width:24px;
+  border:2px solid var(--border2);border-radius:6px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all 0.2s;margin-top:2px;
+}
+.workout-checkbox.checked{
+  background:var(--green);border-color:var(--green);
+  color:#fff;font-size:0.75rem;
+}
+.workout-info{flex:1;}
+.workout-day{
+  font-size:0.65rem;text-transform:uppercase;letter-spacing:0.12em;
+  color:var(--text3);font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  margin-bottom:4px;
+}
+.workout-name{
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  font-size:1.15rem;color:#fff;margin-bottom:8px;
+}
+.workout-meta{display:flex;gap:16px;flex-wrap:wrap;}
+.workout-tag{
+  display:flex;align-items:center;gap:5px;
+  font-size:0.78rem;color:var(--text2);
+}
+.workout-tag .dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--blue);display:inline-block;
+}
+.workout-tag .dot.green{background:var(--green);}
+.workout-tag .dot.orange{background:var(--orange);}
+.workout-tag .dot.red{background:var(--red);}
+.workout-notes{
+  margin-top:12px;
+  background:var(--bg);border:1px solid var(--border);
+  border-radius:8px;padding:10px 14px;
+  font-size:0.8rem;color:var(--text2);
+  font-style:italic;line-height:1.6;
+}
+
+/* ─── WEEK ACCORDION ─── */
+.week-block{margin-bottom:16px;}
+.week-header{
+  display:flex;align-items:center;gap:16px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:20px 24px;
+  cursor:pointer;transition:border-color 0.2s;
+  user-select:none;
+}
+.week-header:hover{border-color:var(--border2);}
+.week-header.locked-week{opacity:0.4;cursor:not-allowed;}
+.week-num{
+  font-family:'Barlow Condensed',sans-serif;font-weight:900;
+  font-size:2rem;color:var(--text3);min-width:48px;line-height:1;
+}
+.week-title{flex:1;}
+.week-title strong{
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  font-size:1.1rem;color:#fff;display:block;
+}
+.week-title span{font-size:0.8rem;color:var(--text2);}
+.week-status{
+  font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  padding:6px 12px;border-radius:6px;
+}
+.week-status.complete{background:var(--green-glow);color:var(--green);}
+.week-status.in-progress{background:var(--blue-glow);color:var(--blue);}
+.week-status.locked{background:rgba(255,255,255,0.04);color:var(--text3);}
+.week-toggle{color:var(--text3);font-size:0.8rem;transition:transform 0.2s;}
+.week-body{
+  display:none;padding:4px 0 0;
+  display:flex;flex-direction:column;gap:10px;
+  margin-top:8px;
+}
+.week-body.collapsed{display:none;}
+
+/* ─── ZONE CARDS ─── */
+.zone-card{
+  border-radius:14px;padding:24px;border-width:1px;border-style:solid;
+}
+.zone-card.z1{background:rgba(34,197,94,0.05);border-color:rgba(34,197,94,0.2);}
+.zone-card.z2{background:rgba(59,130,246,0.05);border-color:rgba(59,130,246,0.2);}
+.zone-card.z3{background:rgba(234,179,8,0.05);border-color:rgba(234,179,8,0.2);}
+.zone-card.z4{background:rgba(249,115,22,0.05);border-color:rgba(249,115,22,0.2);}
+.zone-card.z5{background:rgba(239,68,68,0.05);border-color:rgba(239,68,68,0.2);}
+.zone-label{
+  font-family:'Barlow Condensed',sans-serif;font-weight:900;
+  font-size:1.3rem;text-transform:uppercase;margin-bottom:4px;
+}
+.zone-card.z1 .zone-label{color:var(--green);}
+.zone-card.z2 .zone-label{color:var(--blue);}
+.zone-card.z3 .zone-label{color:var(--yellow);}
+.zone-card.z4 .zone-label{color:var(--orange);}
+.zone-card.z5 .zone-label{color:var(--red);}
+.zone-desc{font-size:0.85rem;color:var(--text2);margin-bottom:12px;}
+.zone-feel{
+  font-size:0.75rem;font-family:'JetBrains Mono',monospace;
+  color:var(--text3);border-top:1px solid var(--border);
+  padding-top:10px;margin-top:10px;
+}
+
+/* ─── PB TRACKER ─── */
+.pb-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:24px;
+  display:flex;flex-direction:column;gap:12px;
+}
+.pb-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 0;border-bottom:1px solid var(--border);
+}
+.pb-row:last-child{border-bottom:none;padding-bottom:0;}
+.pb-dist{
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  font-size:1.1rem;color:#fff;
+}
+.pb-time-wrap{display:flex;align-items:center;gap:12px;}
+.pb-input{
+  background:var(--bg);border:1px solid var(--border2);
+  border-radius:8px;padding:8px 12px;
+  color:#fff;font-family:'JetBrains Mono',monospace;
+  font-size:0.9rem;width:120px;outline:none;
+  transition:border-color 0.2s;text-align:center;
+}
+.pb-input:focus{border-color:var(--blue);}
+.pb-save-btn{
+  background:var(--blue-glow);border:1px solid rgba(59,130,246,0.3);
+  color:var(--blue);border-radius:8px;padding:8px 14px;
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  font-size:0.8rem;text-transform:uppercase;cursor:pointer;
+  transition:all 0.2s;
+}
+.pb-save-btn:hover{background:var(--blue);color:#fff;}
+
+/* ─── CONTENT BLOCKS ─── */
+.content-block{margin-bottom:32px;}
+.content-block h3{
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  font-size:1.3rem;text-transform:uppercase;color:#fff;
+  margin-bottom:12px;
+  display:flex;align-items:center;gap:10px;
+}
+.content-block h3::before{
+  content:'';display:inline-block;
+  width:3px;height:18px;background:var(--blue);border-radius:2px;
+}
+.content-block p{color:var(--text2);font-size:0.92rem;line-height:1.8;margin-bottom:12px;}
+.content-block ul{
+  list-style:none;display:flex;flex-direction:column;gap:8px;
+}
+.content-block ul li{
+  display:flex;align-items:flex-start;gap:10px;
+  color:var(--text2);font-size:0.9rem;line-height:1.6;
+  padding:10px 14px;
+  background:var(--card);border:1px solid var(--border);border-radius:8px;
+}
+.content-block ul li::before{
+  content:'→';color:var(--blue);font-family:'Barlow Condensed',sans-serif;
+  font-weight:700;min-width:16px;margin-top:2px;
+}
+
+/* ─── RPE SCALE ─── */
+.rpe-bar{
+  display:flex;border-radius:10px;overflow:hidden;
+  margin:16px 0;height:48px;
+}
+.rpe-seg{
+  flex:1;display:flex;align-items:center;justify-content:center;
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  font-size:1rem;color:#fff;cursor:default;
+  transition:filter 0.2s;
+}
+.rpe-seg:hover{filter:brightness(1.2);}
+
+/* ─── PHASE BLOCKS ─── */
+.phase-card{
+  border-radius:14px;padding:24px;margin-bottom:12px;
+  border:1px solid;
+}
+.phase-card.base{background:rgba(34,197,94,0.04);border-color:rgba(34,197,94,0.2);}
+.phase-card.build{background:rgba(59,130,246,0.04);border-color:rgba(59,130,246,0.2);}
+.phase-card.peak{background:rgba(249,115,22,0.04);border-color:rgba(249,115,22,0.2);}
+.phase-card.taper{background:rgba(168,85,247,0.04);border-color:rgba(168,85,247,0.2);}
+.phase-title{
+  font-family:'Barlow Condensed',sans-serif;font-weight:900;
+  font-size:1.4rem;text-transform:uppercase;margin-bottom:4px;
+}
+.phase-card.base .phase-title{color:var(--green);}
+.phase-card.build .phase-title{color:var(--blue);}
+.phase-card.peak .phase-title{color:var(--orange);}
+.phase-card.taper .phase-title{color:#A855F7;}
+.phase-sub{font-size:0.8rem;color:var(--text2);margin-bottom:12px;}
+.phase-body{font-size:0.88rem;color:var(--text2);line-height:1.7;}
+
+/* ─── QUOTE BLOCK ─── */
+.quote-block{
+  border-left:3px solid var(--blue);
+  padding:16px 20px;
+  background:var(--blue-glow);border-radius:0 10px 10px 0;
+  margin:20px 0;
+  font-style:italic;color:var(--text2);font-size:0.92rem;line-height:1.7;
+}
+
+/* ─── TAGS ─── */
+.tag{
+  display:inline-flex;align-items:center;
+  padding:4px 10px;border-radius:6px;
+  font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;
+}
+.tag.blue{background:var(--blue-glow);color:var(--blue);border:1px solid rgba(59,130,246,0.25);}
+.tag.green{background:var(--green-glow);color:var(--green);border:1px solid rgba(34,197,94,0.25);}
+.tag.orange{background:rgba(249,115,22,0.1);color:var(--orange);border:1px solid rgba(249,115,22,0.25);}
+.tag.red{background:rgba(239,68,68,0.1);color:var(--red);border:1px solid rgba(239,68,68,0.25);}
+.tag.purple{background:rgba(168,85,247,0.1);color:#A855F7;border:1px solid rgba(168,85,247,0.25);}
+
+/* ─── DIVIDER ─── */
+.divider{height:1px;background:var(--border);margin:32px 0;}
+
+/* ─── INTERVAL TABLE ─── */
+.interval-table{width:100%;border-collapse:collapse;font-size:0.85rem;}
+.interval-table th{
+  text-align:left;padding:10px 14px;
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;
+  color:var(--text3);border-bottom:1px solid var(--border);
+}
+.interval-table td{
+  padding:12px 14px;color:var(--text2);
+  border-bottom:1px solid var(--border);
+  font-size:0.85rem;
+}
+.interval-table tr:last-child td{border-bottom:none;}
+.interval-table tr:hover td{background:rgba(255,255,255,0.02);}
+
+/* ─── NOTIFICATION ─── */
+#toast{
+  position:fixed;bottom:32px;right:32px;
+  background:var(--green);color:#fff;
+  padding:12px 20px;border-radius:10px;
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  font-size:0.9rem;text-transform:uppercase;letter-spacing:0.05em;
+  transform:translateY(80px);opacity:0;
+  transition:all 0.3s cubic-bezier(.4,0,.2,1);
+  z-index:999;
+}
+#toast.show{transform:translateY(0);opacity:1;}
+
+/* ─── MOBILE ─── */
+@media(max-width:768px){
+  #mobile-header{display:flex;}
+  #sidebar{transform:translateX(-100%);overflow-y:auto;-webkit-overflow-scrolling:touch;}
+  #sidebar.open{transform:translateX(0);}
+  #main{margin-left:0;padding-top:var(--header-h);}
+  .section{padding:24px 20px;}
+  .card-grid.cols-2,.card-grid.cols-3,.card-grid.cols-4{grid-template-columns:1fr;}
+  .assessment-box{padding:32px 24px;}
+  .form-grid{grid-template-columns:1fr;}
+  #sidebar{padding-bottom:80px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ASSESSMENT -->
+<div id="assessment-overlay">
+  <div class="assessment-box">
+    <div class="eyebrow" style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--blue);font-family:'Barlow Condensed',sans-serif;font-weight:700;margin-bottom:8px;">Runner Assessment</div>
+    <h2>LET'S BUILD<br/><span>YOUR PLAN</span></h2>
+    <p>Answer 4 questions. We'll route you into the right training block automatically.</p>
+    <div class="form-row">
+      <label>Experience Level</label>
+      <select id="exp-level">
+        <option value="">Select level...</option>
+        <option value="beginner">Beginner — I rarely run or just starting</option>
+        <option value="intermediate">Intermediate — I run occasionally, finished a 5K</option>
+        <option value="advanced">Advanced — I run regularly, looking to improve time</option>
+      </select>
+    </div>
+    <div class="form-grid">
+      <div class="form-row">
+        <label>Best 5K Time (mm:ss)</label>
+        <input type="text" id="time-5k" placeholder="e.g. 32:00"/>
+        <div style="margin-top:8px;">
+          <button type="button" onclick="skipPB5k()" style="background:rgba(255,255,255,0.05);border:1px solid var(--border2);border-radius:8px;padding:7px 14px;color:var(--text2);font-size:0.75rem;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;cursor:pointer;">
+            🏁 Complete Beginner — Skip
+          </button>
+        </div>
+      </div>
+      <div class="form-row">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+          <label style="margin-bottom:0;">Weight</label>
+          <div style="display:flex;gap:0;border:1px solid var(--border2);border-radius:6px;overflow:hidden;">
+            <button type="button" id="unit-kg" onclick="setWeightUnit('kg')" style="padding:3px 10px;background:var(--blue);color:#fff;border:none;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.7rem;text-transform:uppercase;cursor:pointer;">KG</button>
+            <button type="button" id="unit-lbs" onclick="setWeightUnit('lbs')" style="padding:3px 10px;background:transparent;color:var(--text3);border:none;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.7rem;text-transform:uppercase;cursor:pointer;">LBS</button>
+          </div>
+        </div>
+        <input type="number" id="weight" placeholder="e.g. 75"/>
+        <div id="weight-unit-hint" style="font-size:0.72rem;color:var(--text3);margin-top:4px;">Enter weight in kg</div>
+      </div>
+    </div>
+    <div class="form-row">
+      <label>Primary Goal</label>
+      <select id="goal">
+        <option value="">Select goal...</option>
+        <option value="5k">Run my first 5K without stopping</option>
+        <option value="10k">Complete a 10K</option>
+        <option value="hm">Finish a Half Marathon</option>
+        <option value="speed">Improve my speed and race times</option>
+      </select>
+    </div>
+    <button class="btn-primary" onclick="completeAssessment()">Build My Training Plan →</button>
+  </div>
+</div>
+
+<!-- MOBILE HEADER -->
+<div id="mobile-header">
+  <div class="mobile-logo">ROVEX <span>METHOD</span></div>
+  <button id="menu-btn" onclick="toggleSidebar()">☰ Menu</button>
+</div>
+<div id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+<!-- APP -->
+<div id="app">
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sidebar-logo">
+    <div class="wordmark">ROVEX <span>METHOD</span></div>
+  </div>
+  <div class="sidebar-plan">
+    <div class="plan-label">Your Plan</div>
+    <div class="plan-name" id="sidebar-plan-name">Loading...</div>
+  </div>
+  <nav>
+    <div class="nav-section">Overview</div>
+    <div class="nav-item active" onclick="showSection('dashboard')">
+      <span class="nav-icon">⚡</span> Dashboard
+    </div>
+    <div class="nav-item" onclick="showSection('pb-tracker')">
+      <span class="nav-icon">🏆</span> PB Tracker
+    </div>
+
+    <div class="nav-section" style="margin-top:8px;">Modules</div>
+    <div class="nav-item" onclick="showSection('module1')">
+      <span class="nav-icon">🎯</span> 01 — Fundamentals
+    </div>
+    <div class="nav-item" onclick="showSection('module2')">
+      <span class="nav-icon">📊</span> 02 — Training Zones
+    </div>
+    <div class="nav-item" onclick="showSection('module3')">
+      <span class="nav-icon">🟢</span> 03 — Beginner Plan
+    </div>
+    <div class="nav-item" onclick="showSection('module4')">
+      <span class="nav-icon">🔵</span> 04 — Intermediate
+    </div>
+    <div class="nav-item" onclick="showSection('module5')">
+      <span class="nav-icon">🚀</span> 05 — Advanced
+    </div>
+    <div class="nav-item" onclick="showSection('module5hm')">
+      <span class="nav-icon">🏅</span> 05b — Half Marathon
+    </div>
+    <div class="nav-item" onclick="showSection('module5m')">
+      <span class="nav-icon">🏆</span> 05c — Marathon
+    </div>
+    <div class="nav-item" onclick="showSection('module6')">
+      <span class="nav-icon">🛡️</span> 06 — Injury Prevention
+    </div>
+    <div class="nav-item" onclick="showSection('module7')">
+      <span class="nav-icon">🥗</span> 07 — Nutrition
+    </div>
+
+    <div class="nav-section" style="margin-top:8px;">Mindset</div>
+    <div class="nav-item" onclick="showSection('mindset')">
+      <span class="nav-icon">🧠</span> Mindset System
+    </div>
+
+    <div class="nav-section" style="margin-top:8px;">Extras</div>
+    <div class="nav-item" onclick="showSection('hr-calculator')">
+      <span class="nav-icon">❤️</span> HR Zone Calculator
+    </div>
+    <div class="nav-item" onclick="showSection('gear')">
+      <span class="nav-icon">👟</span> Gear Guide
+    </div>
+    <div class="nav-item" onclick="showSection('weather')">
+      <span class="nav-icon">🌦️</span> Running in Any Weather
+    </div>
+    <div class="nav-item" onclick="showSection('faq')">
+      <span class="nav-icon">❓</span> FAQ
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="streak-display">
+      <div class="streak-fire">🔥</div>
+      <div class="streak-info">
+        <div class="streak-num" id="streak-num">0</div>
+        <div class="streak-label">Day Streak</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main id="main">
+
+<!-- ══════════════════════════════════════════ DASHBOARD ══ -->
+<div class="section active" id="sec-dashboard">
+  <div class="page-header">
+    <div class="eyebrow">Welcome Back</div>
+    <h1>YOUR <span>COMMAND</span><br/>CENTER</h1>
+    <p>Track your progress, continue training, and hit your goals systematically.</p>
+  </div>
+
+  <div class="card-grid cols-4" style="margin-bottom:24px;">
+    <div class="stat-card">
+      <div class="stat-icon">📅</div>
+      <div class="stat-label">Current Week</div>
+      <div class="stat-value" id="dash-week">W1</div>
+      <div class="stat-sub">of your program</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">✅</div>
+      <div class="stat-label">Workouts Done</div>
+      <div class="stat-value" id="dash-workouts">0</div>
+      <div class="stat-sub">total completed</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🔥</div>
+      <div class="stat-label">Day Streak</div>
+      <div class="stat-value" id="dash-streak">0</div>
+      <div class="stat-sub">keep going</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🎯</div>
+      <div class="stat-label">Goal</div>
+      <div class="stat-value" id="dash-goal" style="font-size:1.4rem;">5K</div>
+      <div class="stat-sub" id="dash-plan">Beginner Plan</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+      <div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.1rem;color:#fff;">Overall Program Progress</div>
+        <div style="font-size:0.8rem;color:var(--text2);margin-top:2px;" id="prog-sub">Complete workouts to track progress</div>
+      </div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.8rem;color:var(--blue);" id="prog-pct">0%</div>
+    </div>
+    <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+
+  <div class="card-grid cols-2">
+    <div class="card">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;color:#fff;margin-bottom:16px;">🏃 Continue Training</div>
+      <div id="next-workout-info" style="color:var(--text2);font-size:0.9rem;margin-bottom:16px;">Your next workout is ready.</div>
+      <button class="btn-primary" style="font-size:1rem;padding:12px;" onclick="showSection('module3')">Go to Training Plan →</button>
+    </div>
+    <div class="card">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;color:#fff;margin-bottom:16px;">📋 Quick Start Rules</div>
+      <div class="content-block" style="margin-bottom:0;">
+        <ul>
+          <li>Run 3–4x per week maximum</li>
+          <li>Never sprint every workout</li>
+          <li>80% of runs should feel easy</li>
+          <li>Rest days are training days</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ PB TRACKER ══ -->
+<div class="section" id="sec-pb-tracker">
+  <div class="page-header">
+    <div class="eyebrow">Performance Records</div>
+    <h1>PB <span>TRACKER</span></h1>
+    <p>Log your personal bests. Every PR tells the story of your progress.</p>
+  </div>
+
+  <div class="card-grid cols-2" style="margin-bottom:24px;">
+    <div class="pb-card">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;color:#fff;margin-bottom:4px;">Personal Bests</div>
+      <div style="font-size:0.8rem;color:var(--text2);margin-bottom:16px;">Format: mm:ss or h:mm:ss</div>
+      <div class="pb-row">
+        <div class="pb-dist">1K</div>
+        <div class="pb-time-wrap">
+          <input class="pb-input" id="pb-1k" placeholder="--:--" type="text"/>
+          <button class="pb-save-btn" onclick="savePB('1k')">Save</button>
+        </div>
+      </div>
+      <div class="pb-row">
+        <div class="pb-dist">5K</div>
+        <div class="pb-time-wrap">
+          <input class="pb-input" id="pb-5k" placeholder="--:--" type="text"/>
+          <button class="pb-save-btn" onclick="savePB('5k')">Save</button>
+        </div>
+      </div>
+      <div class="pb-row">
+        <div class="pb-dist">10K</div>
+        <div class="pb-time-wrap">
+          <input class="pb-input" id="pb-10k" placeholder="--:--" type="text"/>
+          <button class="pb-save-btn" onclick="savePB('10k')">Save</button>
+        </div>
+      </div>
+      <div class="pb-row">
+        <div class="pb-dist">Half Marathon</div>
+        <div class="pb-time-wrap">
+          <input class="pb-input" id="pb-hm" placeholder="h:mm:ss" type="text"/>
+          <button class="pb-save-btn" onclick="savePB('hm')">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;color:#fff;margin-bottom:16px;">📈 RPE Scale</div>
+      <div style="font-size:0.8rem;color:var(--text2);margin-bottom:12px;">Rate of Perceived Exertion — how hard does it feel?</div>
+      <div class="rpe-bar">
+        <div class="rpe-seg" style="background:rgba(34,197,94,0.6);" title="Very Easy">1</div>
+        <div class="rpe-seg" style="background:rgba(34,197,94,0.7);" title="Easy">2</div>
+        <div class="rpe-seg" style="background:rgba(132,204,22,0.7);" title="Light">3</div>
+        <div class="rpe-seg" style="background:rgba(234,179,8,0.6);" title="Moderate">4</div>
+        <div class="rpe-seg" style="background:rgba(234,179,8,0.7);" title="Somewhat Hard">5</div>
+        <div class="rpe-seg" style="background:rgba(249,115,22,0.6);" title="Hard">6</div>
+        <div class="rpe-seg" style="background:rgba(249,115,22,0.7);" title="Very Hard">7</div>
+        <div class="rpe-seg" style="background:rgba(239,68,68,0.6);" title="Very Very Hard">8</div>
+        <div class="rpe-seg" style="background:rgba(239,68,68,0.7);" title="Maximum">9</div>
+        <div class="rpe-seg" style="background:rgba(239,68,68,0.9);" title="All Out">10</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--text3);font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;">
+        <span>Easy Zone 2</span><span>Moderate</span><span>Max Effort</span>
+      </div>
+      <div class="divider"></div>
+      <div style="font-size:0.8rem;color:var(--text2);">
+        <strong style="color:#fff;">For beginners:</strong> Most runs should feel 3–5 on this scale. If you can't hold a conversation, you're going too hard.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;color:#fff;margin-bottom:16px;">📊 Weekly Mileage Log</div>
+    <div style="font-size:0.8rem;color:var(--text2);margin-bottom:16px;">Track your weekly km totals to monitor progression.</div>
+    <div id="mileage-log" style="display:flex;flex-direction:column;gap:10px;"></div>
+    <button class="btn-primary" style="font-size:0.9rem;padding:10px;margin-top:16px;max-width:200px;" onclick="addMileageWeek()">+ Add Week</button>
+  </div>
+
+  <!-- EXPORT / IMPORT CARD -->
+  <div class="card" style="margin-top:20px;">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;color:#fff;margin-bottom:4px;">💾 Backup & Restore Your Data</div>
+    <div style="font-size:0.78rem;color:var(--text2);margin-bottom:20px;">Export your progress to a file and import it on any device.</div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <button onclick="exportData()" style="padding:12px 24px;background:linear-gradient(135deg,var(--blue),var(--blue2));border:none;border-radius:10px;color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;text-transform:uppercase;letter-spacing:0.06em;cursor:pointer;">
+        ⬇️ Export Progress
+      </button>
+      <label style="padding:12px 24px;background:rgba(255,255,255,0.05);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;text-transform:uppercase;letter-spacing:0.06em;cursor:pointer;">
+        ⬆️ Import Progress
+        <input type="file" accept=".json" onchange="importData(event)" style="display:none;"/>
+      </label>
+    </div>
+    <div id="import-msg" style="margin-top:12px;font-size:0.82rem;color:var(--green);display:none;">✓ Data imported successfully! Refreshing...</div>
+  </div>
+
+  <!-- SMART INSIGHTS CARD -->
+  <div class="card" id="insights-card" style="margin-top:20px;display:none;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;color:#fff;">⚡ Your Personal Training Insights</div>
+      <button onclick="reopenAssessment()" style="background:rgba(255,255,255,0.05);border:1px solid var(--border2);border-radius:8px;padding:6px 12px;color:var(--text2);font-size:0.72rem;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;cursor:pointer;">✏️ Edit Profile</button>
+    </div>
+    <div style="font-size:0.78rem;color:var(--text2);margin-bottom:20px;">Based on your 5K time and body weight — calculated for you.</div>
+    <div id="insights-content" style="display:flex;flex-direction:column;gap:14px;"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ MODULE 1 ══ -->
+<div class="section" id="sec-module1">
+  <div class="page-header">
+    <div class="eyebrow">Module 01</div>
+    <h1>RUNNING <span>FUNDAMENTALS</span></h1>
+    <p>The foundation 90% of runners skip. Master this before touching a training plan.</p>
+  </div>
+
+  <div class="card-grid cols-2" style="margin-bottom:24px;">
+    <div class="card">
+      <div class="content-block">
+        <h3>How Often To Run</h3>
+        <ul>
+          <li>Beginners: 3x per week maximum — your joints need adaptation time</li>
+          <li>Intermediate: 4x per week with one rest day between hard sessions</li>
+          <li>Advanced: 5–6x but only after 6+ months of consistent base building</li>
+          <li>Never run hard two days in a row — alternate easy and hard days</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="content-block">
+        <h3>Breathing Protocol</h3>
+        <ul>
+          <li>Breathe through both nose AND mouth — don't restrict airflow</li>
+          <li>Belly breathing, not chest — feel your stomach expand on the inhale</li>
+          <li>Rhythm: inhale 2–3 steps, exhale 2–3 steps</li>
+          <li>Talk test: if you can't speak a full sentence, slow down immediately</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px;">
+    <div class="content-block" style="margin-bottom:0;">
+      <h3>Warm-Up Protocol (Do This Every Run)</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:12px;">
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:var(--blue);margin-bottom:4px;">Step 1 — 5 min</div>
+          <div style="font-size:0.85rem;color:var(--text2);">Brisk walk. Get blood moving. No stretching yet — muscles are cold.</div>
+        </div>
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:var(--blue);margin-bottom:4px;">Step 2 — 5 min</div>
+          <div style="font-size:0.85rem;color:var(--text2);">Dynamic drills: leg swings, hip circles, high knees, butt kicks.</div>
+        </div>
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:var(--blue);margin-bottom:4px;">Step 3 — 3 min</div>
+          <div style="font-size:0.85rem;color:var(--text2);">Easy jog. Build into your run pace gradually. Never start at full speed.</div>
+        </div>
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:var(--blue);margin-bottom:4px;">Cool-Down — 5 min</div>
+          <div style="font-size:0.85rem;color:var(--text2);">Walk + static stretches: calves, quads, hip flexors, hamstrings. Hold 30s each.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-grid cols-2">
+    <div class="card">
+      <div class="content-block">
+        <h3>Running Form Basics</h3>
+        <ul>
+          <li>Land midfoot — not heel strike, not toe strike</li>
+          <li>Cadence: aim for 170–180 steps per minute</li>
+          <li>Slight forward lean from ankles, not waist</li>
+          <li>Arms at 90°, drive elbows back — not across body</li>
+          <li>Relax shoulders and jaw — tension wastes energy</li>
+          <li>Eyes forward, 10–15 meters ahead of you</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="content-block">
+        <h3>The #1 Beginner Rule</h3>
+        <div class="quote-block">
+          Do not sprint every workout. The runner who runs easy most of the time beats the runner who goes hard every time — every single time over a season.
+        </div>
+        <ul>
+          <li>80% of your runs should feel easy and conversational</li>
+          <li>Only 20% should be hard or fast (intervals, tempo)</li>
+          <li>Going too hard too often is the #1 cause of injury and burnout</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ MODULE 2 ══ -->
+<div class="section" id="sec-module2">
+  <div class="page-header">
+    <div class="eyebrow">Module 02</div>
+    <h1>TRAINING <span>ZONES</span></h1>
+    <p>Know exactly how each run should feel — with or without a heart rate monitor.</p>
+  </div>
+
+  <div class="card-grid cols-2" style="margin-bottom:24px;">
+    <div class="zone-card z1">
+      <div class="zone-label">Zone 1 — Recovery</div>
+      <div class="zone-desc">Very easy. Walking pace or very slow jog. Used after hard sessions or races.</div>
+      <div class="zone-feel">Feel: Can sing. Barely breathing. RPE 1–2</div>
+    </div>
+    <div class="zone-card z2">
+      <div class="zone-label">Zone 2 — Aerobic Base ⭐</div>
+      <div class="zone-desc">The most important zone for beginners. Builds your aerobic engine. Most of your runs should be here.</div>
+      <div class="zone-feel">Feel: Full conversation possible. Slight effort. RPE 3–4</div>
+    </div>
+    <div class="zone-card z3">
+      <div class="zone-label">Zone 3 — Tempo</div>
+      <div class="zone-desc">Comfortably hard. You can talk but only in short sentences. Used in tempo runs.</div>
+      <div class="zone-feel">Feel: Breathing noticeably harder. RPE 5–6</div>
+    </div>
+    <div class="zone-card z4">
+      <div class="zone-label">Zone 4 — Threshold</div>
+      <div class="zone-desc">Hard. Race effort for 10K. You can say a few words, not full sentences.</div>
+      <div class="zone-feel">Feel: Pushing hard. Hard to talk. RPE 7–8</div>
+    </div>
+    <div class="zone-card z5">
+      <div class="zone-label">Zone 5 — VO2 Max</div>
+      <div class="zone-desc">Maximum effort. Short intervals only — 30s to 3 min. Cannot sustain long.</div>
+      <div class="zone-feel">Feel: All out. Cannot speak. RPE 9–10</div>
+    </div>
+    <div class="card">
+      <div class="content-block">
+        <h3>Zone 2 Explained</h3>
+        <p>Zone 2 is where elite athletes spend 80% of their training. It feels almost embarrassingly slow at first. That's correct.</p>
+        <div class="quote-block">If you can't hold a full conversation while running, you're above Zone 2. Slow down.</div>
+        <ul>
+          <li>Builds mitochondrial density — your cellular engines</li>
+          <li>Improves fat oxidation — burn fat as fuel more efficiently</li>
+          <li>No injury risk — sustainable day after day</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;color:#fff;margin-bottom:16px;">Pace Types Simplified</div>
+    <table class="interval-table">
+      <thead>
+        <tr>
+          <th>Pace Type</th><th>Feel</th><th>When Used</th><th>Zone</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong style="color:#fff;">Easy Pace</strong></td>
+          <td>Conversational, comfortable</td>
+          <td>Most of your runs</td>
+          <td><span class="tag blue">Zone 2</span></td>
+        </tr>
+        <tr>
+          <td><strong style="color:#fff;">Recovery Pace</strong></td>
+          <td>Very slow, almost walking</td>
+          <td>Day after hard workout</td>
+          <td><span class="tag green">Zone 1</span></td>
+        </tr>
+        <tr>
+          <td><strong style="color:#fff;">Tempo Pace</strong></td>
+          <td>Comfortably hard, controlled</td>
+          <td>Tempo runs, threshold work</td>
+          <td><span class="tag orange">Zone 3–4</span></td>
+        </tr>
+        <tr>
+          <td><strong style="color:#fff;">Interval Pace</strong></td>
+          <td>Hard, near max effort</td>
+          <td>Short intervals 400m–1K</td>
+          <td><span class="tag red">Zone 4–5</span></td>
+        </tr>
+        <tr>
+          <td><strong style="color:#fff;">Race Pace</strong></td>
+          <td>Sustained hard effort</td>
+          <td>Race simulation, peak phase</td>
+          <td><span class="tag orange">Zone 4</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ MODULE 3 ══ -->
+<div class="section" id="sec-module3">
+  <div class="page-header">
+    <div class="eyebrow">Module 03</div>
+    <h1>BEGINNER <span>PLAN</span></h1>
+    <p>0 → 5K in 8 weeks. Walk-to-run intervals, zero guessing. Check off each workout as you complete it.</p>
+  </div>
+
+  <div id="beginner-weeks"></div>
+</div>
+
+<!-- ══════════════════════════════════════════ MODULE 4 ══ -->
+<div class="section" id="sec-module4">
+  <div class="page-header">
+    <div class="eyebrow">Module 04</div>
+    <h1>INTERMEDIATE <span>PLAN</span></h1>
+    <p>5K → 10K in 8 weeks. Tempo runs, speed sessions, long run progression.</p>
+  </div>
+
+  <div id="intermediate-weeks"></div>
+</div>
+
+<!-- ══════════════════════════════════════════ MODULE 5 ══ -->
+<div class="section" id="sec-module5">
+  <div class="page-header">
+    <div class="eyebrow">Module 05</div>
+    <h1>ADVANCED <span>ENDURANCE</span></h1>
+    <p>Half marathon prep and beyond. Periodized training blocks, race simulation, peak and taper protocols.</p>
+  </div>
+
+  <div style="margin-bottom:32px;">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.3rem;color:#fff;margin-bottom:16px;text-transform:uppercase;">Performance Block System</div>
+    <div class="phase-card base">
+      <div class="phase-title">Phase 1 — Base (Weeks 1–4)</div>
+      <div class="phase-sub">Aerobic foundation building. High volume, low intensity.</div>
+      <div class="phase-body">Run 4–5x per week, all Zone 2. Build weekly mileage by no more than 10% per week. Long run increases from 10K to 15K. No hard sessions — this phase is about volume, not intensity. Most runners skip this and pay for it later.</div>
+    </div>
+    <div class="phase-card build">
+      <div class="phase-title">Phase 2 — Build (Weeks 5–8)</div>
+      <div class="phase-sub">Threshold and tempo work introduced.</div>
+      <div class="phase-body">Add 1 tempo run per week (20–30 min at Zone 3–4). Add 1 interval session per week (800m or 1K repeats). Keep 2–3 easy Zone 2 runs. Long run continues to grow — target 17–18K by end of phase.</div>
+    </div>
+    <div class="phase-card peak">
+      <div class="phase-title">Phase 3 — Peak (Weeks 9–11)</div>
+      <div class="phase-sub">Race simulation and maximum fitness.</div>
+      <div class="phase-body">Highest intensity weeks. Include one race-pace simulation run. Interval ladders: 400m + 800m + 1K + 800m + 400m. Tempo blocks up to 40 min. Long run reaches 19–21K (race distance). This is where fitness peaks — execute carefully.</div>
+    </div>
+    <div class="phase-card taper">
+      <div class="phase-title">Phase 4 — Taper (Weeks 12)</div>
+      <div class="phase-sub">Recovery and race sharpness. Do less, race more.</div>
+      <div class="phase-body">Reduce volume by 30–40% but keep intensity. Short race-pace efforts to maintain sharpness. Sleep becomes your most important training variable. No new workouts — trust the process you've built.</div>
+    </div>
+  </div>
+
+  <div class="card-grid cols-2" style="margin-bottom:24px;">
+    <div class="card">
+      <div class="content-block">
+        <h3>Advanced Workouts</h3>
+        <ul>
+          <li><strong style="color:#fff;">Interval Ladder:</strong> 400m → 800m → 1K → 800m → 400m, 90s rest between</li>
+          <li><strong style="color:#fff;">Tempo Block:</strong> 20–40 min at Zone 3–4 without stopping</li>
+          <li><strong style="color:#fff;">Hill Repeats:</strong> 8–10 × 60s uphill hard, jog down recovery</li>
+          <li><strong style="color:#fff;">Race Simulation:</strong> 5–8K at goal race pace</li>
+          <li><strong style="color:#fff;">Fatigue Run:</strong> 16K easy + last 3K at tempo pace</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="content-block">
+        <h3>Race Strategy</h3>
+        <ul>
+          <li><strong style="color:#fff;">Negative Split:</strong> Run second half faster than first — always</li>
+          <li><strong style="color:#fff;">5K:</strong> Start 5–10s/km slower than goal, build from 3K mark</li>
+          <li><strong style="color:#fff;">10K:</strong> Controlled first 5K, push from 7K, empty the tank at 9K</li>
+          <li><strong style="color:#fff;">Half Marathon:</strong> First 5K must feel easy — if not, you started too fast</li>
+          <li><strong style="color:#fff;">Never:</strong> Sprint the first km. It always ends badly by km 5</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;color:#fff;margin-bottom:16px;">Half Marathon 12-Week Plan Overview</div>
+    <table class="interval-table">
+      <thead>
+        <tr><th>Week</th><th>Phase</th><th>Long Run</th><th>Key Session</th><th>Total km</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1–2</td><td><span class="tag green">Base</span></td><td>10–12K</td><td>Easy Zone 2 runs</td><td>30–35K</td></tr>
+        <tr><td>3–4</td><td><span class="tag green">Base</span></td><td>13–15K</td><td>Aerobic volume</td><td>35–40K</td></tr>
+        <tr><td>5–6</td><td><span class="tag blue">Build</span></td><td>15–17K</td><td>20 min tempo</td><td>40–45K</td></tr>
+        <tr><td>7–8</td><td><span class="tag blue">Build</span></td><td>17–18K</td><td>800m intervals × 5</td><td>45–50K</td></tr>
+        <tr><td>9–10</td><td><span class="tag orange">Peak</span></td><td>19–20K</td><td>Race simulation 8K</td><td>50–55K</td></tr>
+        <tr><td>11</td><td><span class="tag orange">Peak</span></td><td>21K</td><td>Interval ladder</td><td>55K</td></tr>
+        <tr><td>12</td><td><span class="tag purple">Taper</span></td><td>12K easy</td><td>3K race pace</td><td>30K</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════ MODULE 5b HM ══ -->
+<div class="section" id="sec-module5hm">
+  <div class="page-header">
+    <div class="eyebrow">Module 05b</div>
+    <h1>HALF MARATHON <span>PLAN</span></h1>
+    <p>12 weeks to 21.1K. Structured phases: base, build, peak, taper. Check off each workout as you go.</p>
+  </div>
+  <div id="hm-weeks"></div>
+</div>
+
+<!-- ══════════════════════════════════════════ MODULE 5c MARATHON ══ -->
+<div class="section" id="sec-module5m">
+  <div class="page-header">
+    <div class="eyebrow">Module 05c</div>
+    <h1>MARATHON <span>PLAN</span></h1>
+    <p>16 weeks to 42.2K. Only attempt after completing the Half Marathon plan. This is the full commitment.</p>
+  </div>
+
+  <div style="margin-bottom:28px;">
+    <div class="phase-card base" style="margin-bottom:12px;">
+      <div class="phase-title">What You Need Before Starting</div>
+      <div class="phase-sub">Prerequisites — do not skip this check</div>
+      <div class="phase-body">You should be able to run 15K comfortably before starting this plan. You should have completed at least one half marathon (trained or raced). Your weekly mileage should already be 35–45K. If not — complete the Half Marathon plan first. The marathon is unforgiving of shortcuts.</div>
+    </div>
+  </div>
+
+  <div id="marathon-weeks"></div>
+
+  <div class="card" style="margin-top:24px;">
+    <div class="content-block" style="margin-bottom:0;">
+      <h3>Marathon Race Strategy</h3>
+      <ul>
+        <li><strong style="color:#fff;">The Wall:</strong> Glycogen depletes around 30–32K. Fuel every 40–45 min from km 15 to avoid it.</li>
+        <li><strong style="color:#fff;">Negative split:</strong> First half 30–45 sec/km slower than goal pace. Non-negotiable.</li>
+        <li><strong style="color:#fff;">Km 30–35:</strong> The hardest section mentally. Break it into 5K chunks. Focus only on the next kilometer.</li>
+        <li><strong style="color:#fff;">Never skip a gel:</strong> Take them on schedule even when you feel good at km 15. You will feel it at km 32.</li>
+        <li><strong style="color:#fff;">Walk breaks are not failure:</strong> 1 min walk every 10 min (Galloway method) often results in faster finish times than running through fatigue.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ MODULE 6 ══ -->
+<div class="section" id="sec-module6">
+  <div class="page-header">
+    <div class="eyebrow">Module 06</div>
+    <h1>INJURY <span>PREVENTION</span></h1>
+    <p>Stay consistent. The runner who never gets injured always beats the runner who trains harder but keeps breaking down.</p>
+  </div>
+
+  <div class="card-grid cols-2" style="margin-bottom:24px;">
+    <div class="card">
+      <div class="content-block">
+        <h3>Shin Splints Prevention</h3>
+        <ul>
+          <li>Increase mileage by max 10% per week — no exceptions</li>
+          <li>Calf raises daily: 3 × 20 reps, slow and controlled</li>
+          <li>Run on softer surfaces when possible during high-volume weeks</li>
+          <li>If pain starts: stop, ice 15 min, take 2 days off immediately</li>
+          <li>Proper footwear — visit a running store for gait analysis</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="content-block">
+        <h3>Knee Pain Prevention</h3>
+        <ul>
+          <li>Strengthen glutes — weak glutes = almost every running knee issue</li>
+          <li>Hip bridges: 3 × 15 daily, squeeze at top</li>
+          <li>Don't heel strike — land midfoot under your center of gravity</li>
+          <li>Reduce downhill running volume — it's 3× harder on knees</li>
+          <li>IT band stretch after every run — hold 45 seconds each side</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-grid cols-3" style="margin-bottom:24px;">
+    <div class="card">
+      <div class="content-block">
+        <h3>Recovery Rules</h3>
+        <ul>
+          <li>Sleep 7–9 hours — this is not optional</li>
+          <li>Easy run the day after a hard session, not rest</li>
+          <li>Foam roll calves and IT band 3x per week</li>
+          <li>Cold shower or ice bath after long runs</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="content-block">
+        <h3>Strength 2× Per Week</h3>
+        <ul>
+          <li>Single-leg squats: 3 × 10 each leg</li>
+          <li>Hip bridges or deadlifts: 3 × 12</li>
+          <li>Calf raises (weighted if possible): 3 × 20</li>
+          <li>Plank variations: 3 × 45 seconds</li>
+          <li>Nordic hamstring curls: 3 × 8</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="content-block">
+        <h3>More Is Not Better</h3>
+        <div class="quote-block">The body adapts during rest, not during training. Training is the stimulus. Sleep and recovery is where fitness actually happens.</div>
+        <ul>
+          <li>One missed workout is irrelevant. One injury costs weeks</li>
+          <li>When in doubt, do less</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ MODULE 7 ══ -->
+<div class="section" id="sec-module7">
+  <div class="page-header">
+    <div class="eyebrow">Module 07</div>
+    <h1>NUTRITION <span>BASICS</span></h1>
+    <p>Simple fueling rules that make the difference between crashing and crushing. No complicated meal plans.</p>
+  </div>
+
+  <div class="card-grid cols-2" style="margin-bottom:24px;">
+    <div class="card">
+      <div class="content-block">
+        <h3>Pre-Run Meals</h3>
+        <ul>
+          <li><strong style="color:#fff;">2–3 hours before:</strong> Full meal — oats, rice, pasta, banana, eggs</li>
+          <li><strong style="color:#fff;">30–60 min before:</strong> Light snack only — banana, toast, dates</li>
+          <li><strong style="color:#fff;">Never:</strong> Run on a completely empty stomach for sessions over 45 min</li>
+          <li><strong style="color:#fff;">Never:</strong> Eat a heavy meal less than 90 min before running</li>
+          <li>High-fiber and high-fat foods before running = GI disaster</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="content-block">
+        <h3>Post-Run Recovery</h3>
+        <ul>
+          <li><strong style="color:#fff;">Within 30 minutes:</strong> Carbs + protein — this window matters</li>
+          <li><strong style="color:#fff;">Ratio:</strong> 3:1 carbs to protein (e.g. rice + chicken, banana + Greek yogurt)</li>
+          <li><strong style="color:#fff;">Protein target:</strong> 20–30g within that window</li>
+          <li>Chocolate milk is genuinely one of the best recovery drinks</li>
+          <li>Don't skip post-run eating — recovery is where adaptation happens</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-grid cols-2">
+    <div class="card">
+      <div class="content-block">
+        <h3>Hydration</h3>
+        <ul>
+          <li>Drink 500ml water 2 hours before any run</li>
+          <li>Runs under 60 min: water only, no sports drinks needed</li>
+          <li>Runs over 60 min: electrolytes become important</li>
+          <li>Urine color check: pale yellow = good. Dark = drink more water</li>
+          <li>Don't overdrink — hyponatremia (too much water) is real</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="content-block">
+        <h3>Electrolytes & Long Runs</h3>
+        <ul>
+          <li>Sodium, potassium, magnesium — you lose these in sweat</li>
+          <li>For runs over 75 min: take electrolytes every 45 min</li>
+          <li>Gels, chews, or salt tabs all work — find what your stomach tolerates</li>
+          <li>Practice your fueling strategy in training, never first time on race day</li>
+          <li>Glycogen runs out at ~90 min — fuel before you feel bonking</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ MINDSET ══ -->
+<div class="section" id="sec-mindset">
+  <div class="page-header">
+    <div class="eyebrow">Mindset System</div>
+    <h1>THE <span>MENTAL</span> GAME</h1>
+    <p>Every physical result is built on a mental foundation first.</p>
+  </div>
+
+  <div class="card-grid cols-2" style="margin-bottom:24px;">
+    <div class="card">
+      <div class="content-block">
+        <h3>Consistency Over Motivation</h3>
+        <div class="quote-block">Motivation gets you started. Discipline gets you to the start line on days you don't feel like it. Systems get you to the finish line.</div>
+        <ul>
+          <li>You won't always want to run. Go anyway — especially then</li>
+          <li>Set a non-negotiable minimum: 3 runs per week, no excuses</li>
+          <li>Attach running to existing habits: same time, same route, same ritual</li>
+          <li>Bad run > no run. Always. Showing up is the whole game</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="content-block">
+        <h3>Slow Progress Is Normal</h3>
+        <ul>
+          <li>Running fitness takes 6–8 weeks to feel, 3–6 months to see dramatically</li>
+          <li>Compare yourself to week-1 you — not to other runners</li>
+          <li>Bad weeks are normal. They don't erase good weeks</li>
+          <li>Fitness is not linear — plateaus always precede breakthroughs</li>
+          <li>The difference between a runner and a non-runner is just consistency</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-grid cols-2">
+    <div class="card">
+      <div class="content-block">
+        <h3>Burnout Prevention</h3>
+        <ul>
+          <li>Never increase difficulty and frequency at the same time</li>
+          <li>Take one full deload week every 4 weeks — 50% volume, easy pace only</li>
+          <li>Running should feel like something you get to do, not have to do</li>
+          <li>If you dread every run: take 3 full days off. You need it more than the workout</li>
+          <li>Fun runs count. Explore. No watch. No pace. Just run</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="content-block">
+        <h3>Discipline Systems</h3>
+        <ul>
+          <li><strong style="color:#fff;">Lay out gear the night before</strong> — decision fatigue is real</li>
+          <li><strong style="color:#fff;">Schedule runs like meetings</strong> — they go in the calendar, non-negotiable</li>
+          <li><strong style="color:#fff;">Track publicly or with a partner</strong> — accountability multiplies follow-through</li>
+          <li><strong style="color:#fff;">Focus on the process</strong> — the finish line takes care of itself if you show up</li>
+          <li><strong style="color:#fff;">Identity shift:</strong> "I am a runner" — not "I'm trying to run"</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ HR CALCULATOR ══ -->
+<div class="section" id="sec-hr-calculator">
+  <div class="page-header">
+    <div class="eyebrow">Tool</div>
+    <h1>HEART RATE <span>ZONE CALCULATOR</span></h1>
+    <p>Enter your age to calculate your personal training zones. No heart rate monitor required — use the RPE scale as your guide.</p>
+  </div>
+
+  <div class="card" style="max-width:480px;margin-bottom:24px;">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;color:#fff;margin-bottom:16px;">Calculate Your Zones</div>
+    <div class="form-row">
+      <label>Your Age</label>
+      <input type="number" id="hr-age" placeholder="e.g. 28" min="15" max="80" style="max-width:200px;"/>
+    </div>
+    <div class="form-row">
+      <label>Resting Heart Rate (optional)</label>
+      <input type="number" id="hr-resting" placeholder="e.g. 60 bpm" min="40" max="100" style="max-width:200px;"/>
+      <div style="font-size:0.75rem;color:var(--text3);margin-top:6px;">Measure first thing in the morning, before getting out of bed.</div>
+    </div>
+    <button class="btn-primary" style="max-width:200px;font-size:0.95rem;padding:12px;" onclick="calcHR()">Calculate →</button>
+  </div>
+
+  <div id="hr-results" style="display:none;">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;color:#fff;margin-bottom:16px;">Your Personal Heart Rate Zones</div>
+    <div class="card-grid cols-2" style="margin-bottom:24px;">
+      <div class="zone-card z1">
+        <div class="zone-label">Zone 1 — Recovery</div>
+        <div class="zone-desc" id="hr-z1">— bpm</div>
+        <div class="zone-feel">Very easy. Active recovery pace.</div>
+      </div>
+      <div class="zone-card z2">
+        <div class="zone-label">Zone 2 — Aerobic ⭐</div>
+        <div class="zone-desc" id="hr-z2">— bpm</div>
+        <div class="zone-feel">Most of your runs live here.</div>
+      </div>
+      <div class="zone-card z3">
+        <div class="zone-label">Zone 3 — Tempo</div>
+        <div class="zone-desc" id="hr-z3">— bpm</div>
+        <div class="zone-feel">Comfortably hard. Tempo runs.</div>
+      </div>
+      <div class="zone-card z4">
+        <div class="zone-label">Zone 4 — Threshold</div>
+        <div class="zone-desc" id="hr-z4">— bpm</div>
+        <div class="zone-feel">Race effort. Hard to speak.</div>
+      </div>
+      <div class="zone-card z5">
+        <div class="zone-label">Zone 5 — VO2 Max</div>
+        <div class="zone-desc" id="hr-z5">— bpm</div>
+        <div class="zone-feel">Max effort. Short bursts only.</div>
+      </div>
+      <div class="card">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#fff;margin-bottom:8px;">Max Heart Rate</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:3rem;color:var(--blue);" id="hr-max">—</div>
+        <div style="font-size:0.78rem;color:var(--text2);">bpm (estimated via 220 − age formula)</div>
+        <div class="divider" style="margin:12px 0;"></div>
+        <div style="font-size:0.8rem;color:var(--text2);">Don't have a heart rate monitor? Use the <strong style="color:#fff;">talk test</strong> and RPE scale — they're just as effective for most runners.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="content-block" style="margin-bottom:0;">
+      <h3>No Heart Rate Monitor? No Problem.</h3>
+      <p>Heart rate zones are useful, but they're not mandatory — especially for beginners. The talk test is equally effective:</p>
+      <ul>
+        <li><strong style="color:var(--green);">Zone 2:</strong> You can speak full sentences comfortably. Feels almost too easy.</li>
+        <li><strong style="color:var(--yellow);">Zone 3:</strong> You can speak 5–6 words before needing a breath.</li>
+        <li><strong style="color:var(--orange);">Zone 4:</strong> You can say 2–3 words maximum. Clearly working hard.</li>
+        <li><strong style="color:var(--red);">Zone 5:</strong> Cannot speak at all. Not sustainable beyond 3–5 minutes.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ GEAR GUIDE ══ -->
+<div class="section" id="sec-gear">
+  <div class="page-header">
+    <div class="eyebrow">Gear Guide</div>
+    <h1>WHAT YOU <span>ACTUALLY NEED</span></h1>
+    <p>No fluff. No expensive gear lists. Just what matters and why.</p>
+  </div>
+
+  <div class="card-grid cols-2" style="margin-bottom:24px;">
+    <div class="card">
+      <div class="content-block">
+        <h3>👟 Running Shoes — The Only Non-Negotiable</h3>
+        <p>Your shoes are your most important investment. Everything else is optional.</p>
+        <ul>
+          <li><strong style="color:#fff;">Go to a running store</strong> — not a sports superstore. Get a gait analysis, it's usually free.</li>
+          <li><strong style="color:#fff;">Neutral vs Support:</strong> Most beginners think they need support shoes. Let the gait analysis decide, not marketing.</li>
+          <li><strong style="color:#fff;">Budget:</strong> €80–€130 is the sweet spot. You don't need €200+ shoes to start.</li>
+          <li><strong style="color:#fff;">Replace at 600–800km</strong> — outsole looks fine but cushion is gone. Don't push past this.</li>
+          <li><strong style="color:#fff;">Size up half a size</strong> — feet swell during runs. Your thumbnail should fit at the toe box.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="content-block">
+        <h3>🕐 GPS Watch vs Smartphone</h3>
+        <p>Smartphone is completely fine to start. You don't need a watch.</p>
+        <ul>
+          <li><strong style="color:#fff;">Phone apps:</strong> Garmin Connect, Strava, Nike Run Club — all free, all accurate enough</li>
+          <li><strong style="color:#fff;">When to get a watch:</strong> When you're running consistently for 3+ months and want heart rate data</li>
+          <li><strong style="color:#fff;">Budget watches:</strong> Garmin Forerunner 55 or Coros Pace 3 — best value for runners</li>
+          <li><strong style="color:#fff;">Don't buy:</strong> Apple Watch for running. Battery life is the problem on long runs.</li>
+          <li>Running with your phone in hand is completely normal and fine</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-grid cols-3" style="margin-bottom:24px;">
+    <div class="card">
+      <div class="content-block">
+        <h3>👕 Clothing Basics</h3>
+        <ul>
+          <li><strong style="color:#fff;">Moisture-wicking fabric only</strong> — cotton holds sweat and causes chafing</li>
+          <li>Running shorts or tights with liner — no underwear underneath</li>
+          <li>Anti-chafe stick for long runs — thighs, underarms, nipples</li>
+          <li>Compression socks optional but helpful for recovery</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="content-block">
+        <h3>🎧 Headphones</h3>
+        <ul>
+          <li>Bone conduction headphones are safest for outdoor running (Shokz)</li>
+          <li>Wireless earbuds fine for treadmill or safe paths</li>
+          <li>One ear out rule in traffic — always</li>
+          <li>Music at 80% volume max — you need to hear your surroundings</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="content-block">
+        <h3>💧 Hydration Gear</h3>
+        <ul>
+          <li>Runs under 45 min: no water needed if hydrated beforehand</li>
+          <li>45–75 min: handheld bottle or waist belt</li>
+          <li>Over 75 min: hydration vest or plan a route with water stops</li>
+          <li>Electrolyte tabs or gels for anything over 60 min</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="content-block" style="margin-bottom:0;">
+      <h3>📱 Best Free Apps for Runners</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:12px;">
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#fff;margin-bottom:4px;">Strava</div>
+          <div style="font-size:0.83rem;color:var(--text2);">Best for tracking, community, segment competition. Free tier is excellent.</div>
+        </div>
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#fff;margin-bottom:4px;">Nike Run Club</div>
+          <div style="font-size:0.83rem;color:var(--text2);">Guided runs with audio coaching. Excellent for beginners who want someone talking them through it.</div>
+        </div>
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#fff;margin-bottom:4px;">Garmin Connect</div>
+          <div style="font-size:0.83rem;color:var(--text2);">Best analytics if you have a Garmin watch. Free, deep data.</div>
+        </div>
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#fff;margin-bottom:4px;">Interval Timer App</div>
+          <div style="font-size:0.83rem;color:var(--text2);">For walk/run intervals in early weeks. Set your intervals, it beeps, you switch. Simple.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ WEATHER ══ -->
+<div class="section" id="sec-weather">
+  <div class="page-header">
+    <div class="eyebrow">Running Conditions</div>
+    <h1>RUN IN <span>ANY WEATHER</span></h1>
+    <p>The weather is not an excuse. But you do need to adapt. Here's exactly how.</p>
+  </div>
+
+  <div class="card-grid cols-2" style="margin-bottom:24px;">
+    <div class="card">
+      <div class="content-block">
+        <h3>🌧️ Running in Rain</h3>
+        <p>Rain is actually one of the best running conditions — it keeps you cool and empty streets are peaceful.</p>
+        <ul>
+          <li><strong style="color:#fff;">Wear:</strong> Lightweight water-resistant jacket, NOT a heavy waterproof — you'll overheat</li>
+          <li><strong style="color:#fff;">Cap with brim</strong> — keeps rain out of your eyes, game-changer</li>
+          <li><strong style="color:#fff;">Chafing risk doubles</strong> in rain — apply anti-chafe before you leave</li>
+          <li><strong style="color:#fff;">Shoes:</strong> They will get soaked. Stuff with newspaper after, dry naturally. Never use a dryer.</li>
+          <li>Slow down by 10–15 sec/km on wet surfaces — especially corners</li>
+          <li>Lightning = stop immediately. Rain alone = keep going</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="content-block">
+        <h3>☀️ Running in Heat (25°C+)</h3>
+        <p>Heat is the hardest condition for runners. It dramatically increases perceived effort.</p>
+        <ul>
+          <li><strong style="color:#fff;">Run early morning or evening</strong> — avoid 11:00–17:00 in summer</li>
+          <li><strong style="color:#fff;">Slow down 20–30 sec/km</strong> per 5°C above your training temperature</li>
+          <li><strong style="color:#fff;">Hydrate before</strong> — don't rely on thirst during the run</li>
+          <li><strong style="color:#fff;">Electrolytes mandatory</strong> on anything over 40 min in heat</li>
+          <li>Light colors, loose fit, moisture-wicking only</li>
+          <li>If dizzy, nauseated, or stopped sweating — stop immediately, find shade</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-grid cols-2" style="margin-bottom:24px;">
+    <div class="card">
+      <div class="content-block">
+        <h3>❄️ Running in Cold (Under 5°C)</h3>
+        <p>Cold running is underrated. Your lungs adjust. Your body warms up within the first km.</p>
+        <ul>
+          <li><strong style="color:#fff;">Layering rule:</strong> Dress as if it's 10°C warmer than it is — you will warm up fast</li>
+          <li><strong style="color:#fff;">Extremities first:</strong> Gloves and ear cover before a thicker jacket</li>
+          <li><strong style="color:#fff;">Warm up longer</strong> — 8–10 min easy walk/jog before picking up pace</li>
+          <li>Breathe through your nose when possible — warms air before lungs</li>
+          <li><strong style="color:#fff;">Ice on ground:</strong> Shorten your stride, land flatter. Do not heel strike on ice.</li>
+          <li>Below −10°C: treadmill is smart, not weak</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="content-block">
+        <h3>💨 Running in Wind</h3>
+        <ul>
+          <li><strong style="color:#fff;">Start into the wind</strong> — run the hard direction first, come back with wind assistance</li>
+          <li>Headwind effort = 10–15 sec/km added. Don't fight the pace — run by effort</li>
+          <li>Wind-resistant outer layer but avoid fully waterproof — you'll overheat</li>
+          <li>Strong crosswinds: lean slightly into the wind, shorten stride</li>
+        </ul>
+        <div class="divider"></div>
+        <h3>🌡️ Post-Run Recovery by Condition</h3>
+        <ul>
+          <li><strong style="color:#fff;">After heat run:</strong> Cold shower, electrolytes, 500ml water within 20 min</li>
+          <li><strong style="color:#fff;">After cold run:</strong> Dry clothes immediately, warm drink, don't stand around in wet gear</li>
+          <li><strong style="color:#fff;">After rain run:</strong> Change immediately, dry shoes properly, check for blisters</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ FAQ ══ -->
+<div class="section" id="sec-faq">
+  <div class="page-header">
+    <div class="eyebrow">Frequently Asked</div>
+    <h1>THE <span>FAQ</span></h1>
+    <p>Every common question answered directly. No fluff.</p>
+  </div>
+
+  <div id="faq-list" style="display:flex;flex-direction:column;gap:12px;"></div>
+</div>
+
+</main>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+<div id="toast"></div>
+
+<script>
+// ─── STATE ───────────────────────────────────────────────
+const STATE_KEY = 'rovex_state';
+let state = {
+  assessed: false,
+  level: 'beginner',
+  goal: '5k',
+  planName: 'Beginner Plan',
+  streak: 0,
+  lastWorkoutDate: null,
+  workouts: {},
+  pbs: {},
+  mileage: [],
+  weekExpanded: {}
+};
+
+function loadState(){
+  try{
+    const s = localStorage.getItem(STATE_KEY);
+    if(s) state = {...state,...JSON.parse(s)};
+  }catch(e){}
+}
+function saveState(){
+  localStorage.setItem(STATE_KEY, JSON.stringify(state));
+}
+loadState();
+
+// ─── ASSESSMENT ───────────────────────────────────────────
+function completeAssessment(){
+  const level = document.getElementById('exp-level').value;
+  const goal = document.getElementById('goal').value;
+  const time5k = document.getElementById('time-5k').value;
+  const weightRaw = parseFloat(document.getElementById('weight').value);
+  if(!level || !goal){alert('Please select your experience level and goal.');return;}
+
+  state.assessed = true;
+  state.level = level;
+  state.goal = goal;
+
+  const planMap = {
+    beginner:'Beginner Plan — 0→5K',
+    intermediate:'Intermediate Plan — 5K→10K',
+    advanced:'Advanced Endurance System'
+  };
+  state.planName = planMap[level] || 'Beginner Plan';
+  if(time5k) state.pb5k_initial = time5k;
+  if(weightRaw) {
+    state.weightKg = weightUnit === 'lbs' ? Math.round(weightRaw / 2.205 * 10) / 10 : weightRaw;
+    state.weightUnit = weightUnit;
+  }
+  saveState();
+  document.getElementById('assessment-overlay').style.display='none';
+  initUI();
+}
+
+// ─── TRAINING DATA ────────────────────────────────────────
+const beginnerWeeks = [
+  {title:'Foundation Week',sub:'Walk-run intervals. Focus on breathing and form.',workouts:[
+    {day:'Monday',name:'Walk/Run Intervals',dist:'2.5K',pace:'Easy',notes:'1 min run / 2 min walk × 8. Focus purely on breathing rhythm.',dot:'green'},
+    {day:'Wednesday',name:'Easy Walk-Run',dist:'2K',pace:'Zone 1–2',notes:'Same as Monday. No pressure — just getting comfortable with movement.',dot:'green'},
+    {day:'Friday',name:'Continuous Easy Run',dist:'2K',pace:'Zone 2',notes:'Try to run 5–10 min continuously. Walk when needed. No shame.',dot:'blue'},
+    {day:'Sunday',name:'Long Easy Effort',dist:'3K',pace:'Very Easy',notes:'Walk/run combo. Take as long as you need. This builds your aerobic base.',dot:'green'},
+  ]},
+  {title:'Building Base',sub:'Longer intervals, more running, less walking.',workouts:[
+    {day:'Monday',name:'Interval Run',dist:'3K',pace:'Easy',notes:'2 min run / 1 min walk × 8. You should feel controlled, not gasping.',dot:'green'},
+    {day:'Wednesday',name:'Recovery Jog',dist:'2.5K',pace:'Zone 1',notes:'Very easy. This is active recovery — slower than you think you should go.',dot:'green'},
+    {day:'Friday',name:'Progressive Run',dist:'3K',pace:'Zone 2',notes:'Start slow, finish slightly quicker. Last km at a pace you could hold for 5 min.',dot:'blue'},
+    {day:'Sunday',name:'Long Run',dist:'4K',pace:'Easy',notes:'Continuous if possible. Walk 1 min every 10 min if needed. Keep Zone 2.',dot:'green'},
+  ]},
+  {title:'First 5 Minutes',sub:'Running 5 continuous minutes without stopping.',workouts:[
+    {day:'Monday',name:'5-Min Continuous Run',dist:'3K',pace:'Easy',notes:'Warm up 5 min walk, then run 5 min continuous. Then walk 2 min. Repeat 3×.',dot:'blue'},
+    {day:'Wednesday',name:'Easy Recovery',dist:'2.5K',pace:'Zone 1',notes:'Very slow jog or brisk walk. Your body is adapting — respect it.',dot:'green'},
+    {day:'Friday',name:'Tempo Taste',dist:'3.5K',pace:'Zone 2–3',notes:'After warm-up: 3 min at slightly harder effort, then easy. First taste of pace.',dot:'orange'},
+    {day:'Sunday',name:'Long Run',dist:'5K',pace:'Easy',notes:'Walk/run as needed. The distance matters more than the pace right now.',dot:'green'},
+  ]},
+  {title:'Consolidation Week',sub:'Lower volume, same structure. Let the body absorb.',workouts:[
+    {day:'Monday',name:'Easy Run',dist:'2.5K',pace:'Zone 2',notes:'Deload week. Just move. Keep it comfortable and enjoyable.',dot:'green'},
+    {day:'Wednesday',name:'Walk-Run Mix',dist:'3K',pace:'Easy',notes:'No pressure this week. Half walk, half easy jog.',dot:'green'},
+    {day:'Friday',name:'10-Min Continuous Run',dist:'3K',pace:'Zone 2',notes:'Can you run 10 minutes without stopping? Try it. Walk when needed.',dot:'blue'},
+    {day:'Sunday',name:'Long Easy Effort',dist:'4K',pace:'Very Easy',notes:'Just cover the distance. Pace is irrelevant. Mind-body connection.',dot:'green'},
+  ]},
+  {title:'Pushing Forward',sub:'Running 15–20 minutes continuously.',workouts:[
+    {day:'Monday',name:'15-Min Continuous',dist:'3.5K',pace:'Zone 2',notes:'Can you run 15 min straight? That\'s the target. Walk if needed, but try.',dot:'blue'},
+    {day:'Wednesday',name:'Easy Jog',dist:'3K',pace:'Zone 1–2',notes:'Conversational pace only. This is active recovery from Monday.',dot:'green'},
+    {day:'Friday',name:'Fartlek Run',dist:'4K',pace:'Mixed',notes:'Run easy 4 min, then 1 min slightly harder, repeat. First structured speed work.',dot:'orange'},
+    {day:'Sunday',name:'Long Run',dist:'6K',pace:'Easy',notes:'Longest run yet. Walk 1 min if needed every 15 min. You\'re building.',dot:'blue'},
+  ]},
+  {title:'Speed Introduction',sub:'First real speed work. Short intervals.',workouts:[
+    {day:'Monday',name:'Easy Baseline Run',dist:'4K',pace:'Zone 2',notes:'Smooth, controlled, comfortable. Legs fresh for Wednesday.',dot:'green'},
+    {day:'Wednesday',name:'Speed Intervals',dist:'4K',pace:'Mixed',notes:'Warm up 1.5K. Then 4 × 400m at hard effort (Zone 4), 90s walk recovery. Cool down.',dot:'red'},
+    {day:'Friday',name:'Recovery Run',dist:'3K',pace:'Zone 1',notes:'Genuinely easy. Faster than walking, slower than you want to go.',dot:'green'},
+    {day:'Sunday',name:'Long Run',dist:'7K',pace:'Easy',notes:'Zone 2 throughout. If form breaks down or breathing gets hard — slow down.',dot:'blue'},
+  ]},
+  {title:'Race Week Prep',sub:'Your first near-5K effort. Pace practice.',workouts:[
+    {day:'Monday',name:'Shakeout Run',dist:'3K',pace:'Easy',notes:'Fresh legs for the week. Nothing hard. Just move.',dot:'green'},
+    {day:'Wednesday',name:'5K Simulation',dist:'5K',pace:'Zone 3',notes:'Run 5K at a pace you\'re proud of. Not a sprint — a controlled effort. Note your time.',dot:'orange'},
+    {day:'Friday',name:'Easy Recovery',dist:'2.5K',pace:'Zone 1',notes:'Very easy. You worked hard Wednesday. Recovery is training.',dot:'green'},
+    {day:'Sunday',name:'Long Run',dist:'8K',pace:'Easy',notes:'Biggest long run so far. All Zone 2. Fuel well before and after.',dot:'blue'},
+  ]},
+  {title:'Final Week — 5K Complete',sub:'You earned this. Run your 5K strong.',workouts:[
+    {day:'Monday',name:'Taper Run',dist:'3K',pace:'Zone 2',notes:'Short and easy. Save energy for Sunday\'s 5K.',dot:'green'},
+    {day:'Wednesday',name:'Final Speed Session',dist:'3.5K',pace:'Mixed',notes:'Warm up + 3 × 400m at race pace + cool down. Legs should feel sharp.',dot:'orange'},
+    {day:'Friday',name:'Complete Rest',dist:'REST',pace:'—',notes:'No running today. Walk, stretch, sleep well. You\'re ready.',dot:'green'},
+    {day:'Sunday',name:'🏁 5K — RACE DAY',dist:'5K',pace:'Race Pace',notes:'Start controlled. Build through the middle. Empty the tank in the last km. You trained for this.',dot:'red'},
+  ]},
+];
+
+const intermediateWeeks = [
+  {title:'5K → 10K Base',sub:'Building weekly volume. All Zone 2.',workouts:[
+    {day:'Monday',name:'Easy Run',dist:'5K',pace:'Zone 2',notes:'Conversational pace. First week — no heroics.',dot:'green'},
+    {day:'Wednesday',name:'Tempo Introduction',dist:'6K',pace:'Zone 3',notes:'Warm up 2K, then 15 min tempo, cool down. First sustained effort.',dot:'orange'},
+    {day:'Friday',name:'Recovery Jog',dist:'4K',pace:'Zone 1',notes:'Slow. Slower than you think. This is a recovery day.',dot:'green'},
+    {day:'Sunday',name:'Long Run',dist:'8K',pace:'Zone 2',notes:'Build toward 10K distance. Steady and controlled.',dot:'blue'},
+  ]},
+  {title:'Volume Build',sub:'Increasing long run and total weekly km.',workouts:[
+    {day:'Monday',name:'Easy Run',dist:'5K',pace:'Zone 2',notes:'Keep building the aerobic base.',dot:'green'},
+    {day:'Wednesday',name:'800m Intervals',dist:'7K',pace:'Mixed',notes:'Warm up 2K, 4 × 800m Zone 4 with 2 min rest, cool down 1.5K.',dot:'red'},
+    {day:'Friday',name:'Recovery',dist:'4K',pace:'Zone 1',notes:'After hard Wednesday, today is genuinely easy.',dot:'green'},
+    {day:'Sunday',name:'Long Run',dist:'9K',pace:'Zone 2',notes:'Steady. Feel strong through the last 2K.',dot:'blue'},
+  ]},
+  {title:'Threshold Week',sub:'Longer tempo efforts. Building lactate threshold.',workouts:[
+    {day:'Monday',name:'Easy Run',dist:'6K',pace:'Zone 2',notes:'Aerobic maintenance. Nothing hard.',dot:'green'},
+    {day:'Wednesday',name:'Tempo Run',dist:'7K',pace:'Zone 3–4',notes:'2K warm up, 25 min tempo (Zone 3–4), 2K cool down. Hold the effort.',dot:'orange'},
+    {day:'Friday',name:'Easy Recovery',dist:'5K',pace:'Zone 2',notes:'Conversational pace throughout.',dot:'green'},
+    {day:'Sunday',name:'Long Run',dist:'10K',pace:'Zone 2',notes:'First 10K long run. This is your new base distance.',dot:'blue'},
+  ]},
+  {title:'Deload Week',sub:'Volume drops 30%. Same structure, less mileage.',workouts:[
+    {day:'Monday',name:'Easy Run',dist:'4K',pace:'Zone 2',notes:'Deload week — just move.',dot:'green'},
+    {day:'Wednesday',name:'Speed Strides',dist:'5K',pace:'Mixed',notes:'Easy 4K + 6 × 100m strides at 5K pace. Keep it light.',dot:'orange'},
+    {day:'Friday',name:'Walk/Recovery',dist:'3K',pace:'Zone 1',notes:'Very easy. Your body is absorbing the previous 3 weeks.',dot:'green'},
+    {day:'Sunday',name:'Long Run',dist:'8K',pace:'Zone 2',notes:'Easier than last week. Feel fresh, don\'t push.',dot:'blue'},
+  ]},
+  {title:'Speed Phase',sub:'Interval intensity increases.',workouts:[
+    {day:'Monday',name:'Easy Run',dist:'6K',pace:'Zone 2',notes:'Keep base strong.',dot:'green'},
+    {day:'Wednesday',name:'1K Intervals',dist:'8K',pace:'Mixed',notes:'2K warm up, 4 × 1K at Zone 4–5, 2 min rest between, cool down.',dot:'red'},
+    {day:'Friday',name:'Recovery Run',dist:'4K',pace:'Zone 1',notes:'Slow and deliberate. Legs need this.',dot:'green'},
+    {day:'Sunday',name:'Long Run',dist:'11K',pace:'Zone 2',notes:'Biggest long run yet. Fuel before. Hydrate during.',dot:'blue'},
+  ]},
+  {title:'Race Pace Work',sub:'Running at 10K race pace for the first time.',workouts:[
+    {day:'Monday',name:'Easy Run',dist:'6K',pace:'Zone 2',notes:'Fresh and comfortable.',dot:'green'},
+    {day:'Wednesday',name:'Race Pace Simulation',dist:'8K',pace:'Zone 4',notes:'Warm up 2K, then 4K at goal 10K pace, cool down 2K. This is your race.',dot:'orange'},
+    {day:'Friday',name:'Easy Run',dist:'5K',pace:'Zone 2',notes:'Nothing hard. Legs preparing for Sunday.',dot:'green'},
+    {day:'Sunday',name:'Long Run',dist:'12K',pace:'Zone 2',notes:'Controlled. Second longest run. All conversational pace.',dot:'blue'},
+  ]},
+  {title:'Peak Week',sub:'Maximum fitness. Nail the sessions.',workouts:[
+    {day:'Monday',name:'Easy Run',dist:'5K',pace:'Zone 2',notes:'Controlled. Save legs for Wednesday.',dot:'green'},
+    {day:'Wednesday',name:'Interval Ladder',dist:'9K',pace:'Mixed',notes:'400m + 800m + 1K + 800m + 400m. 90s rest between. This is the hardest session.',dot:'red'},
+    {day:'Friday',name:'Easy Jog',dist:'4K',pace:'Zone 1',notes:'Very easy. You earned a soft day.',dot:'green'},
+    {day:'Sunday',name:'Long Run',dist:'13K',pace:'Zone 2',notes:'Your longest run. Control the first half. Finish strong.',dot:'blue'},
+  ]},
+  {title:'Race Week — 10K',sub:'Taper, trust, execute.',workouts:[
+    {day:'Monday',name:'Taper Run',dist:'4K',pace:'Zone 2',notes:'Short and easy. Legs need to be fresh.',dot:'green'},
+    {day:'Wednesday',name:'Sharpener',dist:'5K',pace:'Mixed',notes:'2K easy + 3 × 400m at race pace + 1.5K easy. Just staying sharp.',dot:'orange'},
+    {day:'Friday',name:'Rest Day',dist:'REST',pace:'—',notes:'Walk, eat well, sleep early. Trust your training.',dot:'green'},
+    {day:'Sunday',name:'🏁 10K — RACE DAY',dist:'10K',pace:'Race Pace',notes:'Negative split. First 5K slightly conservative. Build from 6K. Go at 9K.',dot:'red'},
+  ]},
+];
+
+// ─── RENDER TRAINING WEEKS ────────────────────────────────
+function renderWeeks(weeksData, containerId, prefix){
+  const container = document.getElementById(containerId);
+  if(!container) return;
+  container.innerHTML = '';
+
+  weeksData.forEach((week, wi) => {
+    const isFirst = wi === 0;
+    const prevDone = wi === 0 ? true : isWeekComplete(prefix, wi-1, weeksData[wi-1].workouts.length);
+    const locked = !prevDone && wi > 0;
+    const complete = isWeekComplete(prefix, wi, week.workouts.length);
+    const expanded = state.weekExpanded[prefix+'_'+wi] !== false;
+
+    let statusHTML = '';
+    if(locked) statusHTML = '<span class="week-status locked">🔒 Locked</span>';
+    else if(complete) statusHTML = '<span class="week-status complete">✓ Complete</span>';
+    else if(wi === 0 || prevDone) statusHTML = '<span class="week-status in-progress">In Progress</span>';
+
+    const weekDiv = document.createElement('div');
+    weekDiv.className = 'week-block';
+    weekDiv.innerHTML = `
+      <div class="week-header ${locked?'locked-week':''}" onclick="${locked ? '' : `toggleWeek('${prefix}',${wi})`}">
+        <div class="week-num">W${wi+1}</div>
+        <div class="week-title">
+          <strong>${week.title}</strong>
+          <span>${week.sub}</span>
+        </div>
+        ${statusHTML}
+        ${!locked ? `<div class="week-toggle" id="toggle-${prefix}-${wi}">${expanded?'▲':'▼'}</div>` : ''}
+      </div>
+      <div class="week-body ${expanded&&!locked?'':'collapsed'}" id="wbody-${prefix}-${wi}">
+        ${week.workouts.map((w,wki)=>{
+          const id = `${prefix}_w${wi}_wk${wki}`;
+          const done = state.workouts[id];
+          return `
+          <div class="workout-card ${done?'done':''}" id="wcard-${id}">
+            <div class="workout-checkbox ${done?'checked':''}" onclick="toggleWorkout('${id}','${prefix}',${wi},${week.workouts.length})" id="chk-${id}">
+              ${done?'✓':''}
+            </div>
+            <div class="workout-info">
+              <div class="workout-day">${w.day}</div>
+              <div class="workout-name">${w.name}</div>
+              <div class="workout-meta">
+                <div class="workout-tag"><span class="dot ${w.dot||''}"></span>${w.dist}</div>
+                <div class="workout-tag"><span class="dot blue"></span>${w.pace}</div>
+              </div>
+              <div class="workout-notes">${w.notes}</div>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    `;
+    container.appendChild(weekDiv);
+  });
+}
+
+function toggleWeek(prefix, wi){
+  const body = document.getElementById(`wbody-${prefix}-${wi}`);
+  const toggle = document.getElementById(`toggle-${prefix}-${wi}`);
+  const isCollapsed = body.classList.contains('collapsed');
+  body.classList.toggle('collapsed', !isCollapsed);
+  if(toggle) toggle.textContent = isCollapsed ? '▲' : '▼';
+  state.weekExpanded[prefix+'_'+wi] = isCollapsed;
+  saveState();
+}
+
+function isWeekComplete(prefix, wi, count){
+  let done = 0;
+  for(let i=0;i<count;i++){
+    if(state.workouts[`${prefix}_w${wi}_wk${i}`]) done++;
+  }
+  return done === count;
+}
+
+function toggleWorkout(id, prefix, wi, weekCount){
+  state.workouts[id] = !state.workouts[id];
+  if(state.workouts[id]){
+    state.streak = (state.streak||0)+1;
+    state.lastWorkoutDate = new Date().toDateString();
+  }
+  saveState();
+  updateUI();
+  if(prefix==='beg') renderWeeks(beginnerWeeks,'beginner-weeks','beg');
+  if(prefix==='int') renderWeeks(intermediateWeeks,'intermediate-weeks','int');
+  if(prefix==='hm') renderWeeks(hmWeeks,'hm-weeks','hm');
+  if(prefix==='mar') renderWeeks(marathonWeeks,'marathon-weeks','mar');
+  if(state.workouts[id]) showToast('Workout complete! 🔥');
+}
+
+// ─── REOPEN ASSESSMENT ───────────────────────────────────
+function reopenAssessment(){
+  // Pre-fill existing values
+  if(state.level) document.getElementById('exp-level').value = state.level;
+  if(state.goal) document.getElementById('goal').value = state.goal;
+  if(state.pb5k_initial){
+    const el = document.getElementById('time-5k');
+    el.value = state.pb5k_initial;
+    el.disabled = false;
+    el.style.opacity = '1';
+    el.placeholder = 'e.g. 32:00';
+  }
+  if(state.weightKg){
+    document.getElementById('weight').value = state.weightUnit === 'lbs'
+      ? Math.round(state.weightKg * 2.205)
+      : state.weightKg;
+    if(state.weightUnit) setWeightUnit(state.weightUnit);
+  }
+  document.getElementById('assessment-overlay').style.display = 'flex';
+}
+
+// ─── WEIGHT UNIT TOGGLE ───────────────────────────────────
+let weightUnit = 'kg';
+function setWeightUnit(unit){
+  weightUnit = unit;
+  document.getElementById('unit-kg').style.background = unit==='kg' ? 'var(--blue)' : 'transparent';
+  document.getElementById('unit-kg').style.color = unit==='kg' ? '#fff' : 'var(--text3)';
+  document.getElementById('unit-lbs').style.background = unit==='lbs' ? 'var(--blue)' : 'transparent';
+  document.getElementById('unit-lbs').style.color = unit==='lbs' ? '#fff' : 'var(--text3)';
+  document.getElementById('weight-unit-hint').textContent = unit==='kg' ? 'Enter weight in kg' : 'Enter weight in lbs';
+  document.getElementById('weight').placeholder = unit==='kg' ? 'e.g. 75' : 'e.g. 165';
+}
+
+function skipPB5k(){
+  const el = document.getElementById('time-5k');
+  el.value = '';
+  el.placeholder = 'Skipped — Complete Beginner';
+  el.disabled = true;
+  el.style.opacity = '0.4';
+}
+
+// ─── PB TRACKER ───────────────────────────────────────────
+function savePB(dist){
+  const val = document.getElementById('pb-'+dist).value;
+  if(!val) return;
+  state.pbs[dist] = val;
+  if(dist==='5k' && !state.pb5k_initial) state.pb5k_initial = val;
+  saveState();
+  generateInsights();
+  showToast('PB saved! 🏆');
+}
+
+function loadPBs(){
+  ['1k','5k','10k','hm'].forEach(d=>{
+    const el = document.getElementById('pb-'+d);
+    if(el && state.pbs[d]) el.value = state.pbs[d];
+  });
+}
+
+// ─── MILEAGE LOG ──────────────────────────────────────────
+function addMileageWeek(){
+  const weekNum = (state.mileage||[]).length + 1;
+  state.mileage = state.mileage || [];
+  state.mileage.push({week: weekNum, km: ''});
+  saveState();
+  renderMileage();
+}
+
+function renderMileage(){
+  const el = document.getElementById('mileage-log');
+  if(!el) return;
+  el.innerHTML = (state.mileage||[]).map((m,i)=>`
+    <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);">
+      <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:var(--text3);min-width:60px;">Week ${m.week}</span>
+      <input type="number" placeholder="km total" value="${m.km}"
+        style="background:var(--bg);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:#fff;font-family:'JetBrains Mono',monospace;font-size:0.9rem;width:120px;outline:none;"
+        onchange="updateMileage(${i},this.value)"/>
+      <span style="font-size:0.8rem;color:var(--text2);">km</span>
+    </div>
+  `).join('');
+}
+
+function updateMileage(i, val){
+  state.mileage[i].km = val;
+  saveState();
+}
+
+// ─── UI UPDATE ────────────────────────────────────────────
+function updateUI(){
+  // streak
+  const streak = state.streak||0;
+  document.getElementById('streak-num').textContent = streak;
+  document.getElementById('dash-streak').textContent = streak;
+
+  // plan name
+  const planName = state.planName || 'Beginner Plan';
+  document.getElementById('sidebar-plan-name').textContent = planName;
+  document.getElementById('dash-plan').textContent = planName;
+
+  // goal
+  const goalMap = {beginner:'5K',intermediate:'10K',advanced:'21K'};
+  document.getElementById('dash-goal').textContent = goalMap[state.level] || '5K';
+
+  // total workouts done
+  const totalDone = Object.values(state.workouts).filter(Boolean).length;
+  document.getElementById('dash-workouts').textContent = totalDone;
+
+  // overall progress (beginner = 32 workouts total)
+  const totalWorkouts = 32;
+  const pct = Math.round((totalDone/totalWorkouts)*100);
+  document.getElementById('prog-pct').textContent = pct+'%';
+  document.getElementById('prog-fill').style.width = pct+'%';
+
+  // current week
+  let currentWeek = 1;
+  for(let i=0;i<8;i++){
+    if(isWeekComplete('beg',i,4)) currentWeek = i+2;
+  }
+  currentWeek = Math.min(currentWeek,8);
+  document.getElementById('dash-week').textContent = 'W'+currentWeek;
+
+  loadPBs();
+  renderMileage();
+  generateInsights();
+}
+
+// ─── SECTION NAVIGATION ───────────────────────────────────
+function showSection(name){
+  closeSidebar();
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+
+  const secMap = {
+    dashboard:'sec-dashboard',
+    'pb-tracker':'sec-pb-tracker',
+    module1:'sec-module1',
+    module2:'sec-module2',
+    module3:'sec-module3',
+    module4:'sec-module4',
+    module5:'sec-module5',
+    module5hm:'sec-module5hm',
+    module5m:'sec-module5m',
+    module6:'sec-module6',
+    module7:'sec-module7',
+    mindset:'sec-mindset',
+    'hr-calculator':'sec-hr-calculator',
+    gear:'sec-gear',
+    weather:'sec-weather',
+    faq:'sec-faq',
+  };
+
+  const sec = document.getElementById(secMap[name]);
+  if(sec) sec.classList.add('active');
+
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes(`'${name}'`))
+      n.classList.add('active');
+  });
+
+  if(typeof window !== 'undefined' && window.innerWidth <= 768) closeSidebar();
+  window.scrollTo(0,0);
+}
+
+// ─── SIDEBAR MOBILE ───────────────────────────────────────
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebar-overlay').classList.toggle('open');
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
+}
+
+// ─── TOAST ────────────────────────────────────────────────
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+// ─── HR CALCULATOR ────────────────────────────────────────
+function calcHR(){
+  const age = parseInt(document.getElementById('hr-age').value);
+  const resting = parseInt(document.getElementById('hr-resting').value) || 60;
+  if(!age || age < 15 || age > 80){alert('Please enter a valid age (15–80).');return;}
+
+  const maxHR = 220 - age;
+  const hrr = maxHR - resting; // heart rate reserve
+
+  // Karvonen method if resting provided, else % of max
+  const z = (lo, hi) => {
+    const low = Math.round(resting + hrr * lo);
+    const high = Math.round(resting + hrr * hi);
+    return `${low} – ${high} bpm`;
+  };
+
+  document.getElementById('hr-max').textContent = maxHR;
+  document.getElementById('hr-z1').textContent = z(0.50, 0.60);
+  document.getElementById('hr-z2').textContent = z(0.60, 0.70);
+  document.getElementById('hr-z3').textContent = z(0.70, 0.80);
+  document.getElementById('hr-z4').textContent = z(0.80, 0.90);
+  document.getElementById('hr-z5').textContent = z(0.90, 1.00);
+  document.getElementById('hr-results').style.display = 'block';
+  showToast('Zones calculated! ❤️');
+}
+
+// ─── FAQ ──────────────────────────────────────────────────
+const faqs = [
+  {q:'How many times per week should I run as a beginner?',a:'3 times per week is the sweet spot for beginners. It gives you enough frequency to build adaptation while allowing recovery between sessions. Resist the urge to do more in the first 4 weeks — your joints and tendons adapt slower than your cardiovascular system.'},
+  {q:'My knee hurts after running. Should I stop?',a:'Sharp pain = stop immediately. Mild discomfort that goes away within 24 hours is normal adaptation. If pain persists beyond 48 hours, take 3–5 days off completely. If it returns when you come back, see a sports physio — not a general GP. Most running injuries are overuse and 100% preventable with proper load management.'},
+  {q:'I missed a week of training. Do I start over?',a:'No. Never start over. Missing one week has almost zero fitness impact. Missing two weeks causes only a small regression. Just pick up where you left off, reduce intensity slightly for the first session back, and continue. The worst thing you can do is mentally "reset" and redo weeks you already completed.'},
+  {q:'Is it normal for Zone 2 to feel embarrassingly slow?',a:'Yes, completely normal — especially for beginners. Zone 2 often feels like a slow jog bordering on a walk. That is correct. Over 8–12 weeks, your pace at Zone 2 will increase significantly while the effort stays the same. This is aerobic adaptation happening. Trust the process.'},
+  {q:'Should I run every day?',a:'No. Rest days are mandatory, not optional. Your body builds fitness during recovery, not during training. Running every day as a beginner is the fastest path to injury. 3–4 days per week with rest or easy walking between sessions is optimal.'},
+  {q:'What should I eat before a morning run?',a:'For runs under 45 minutes: nothing, or a small banana. For runs over 45 minutes: eat a light carb snack 30–45 minutes before (banana, toast, dates). For runs over 75 minutes: a proper meal 2–3 hours before. Never eat a big meal within 90 minutes of running.'},
+  {q:'My shins hurt. What is this?',a:'Likely shin splints (medial tibial stress syndrome). It is caused by too much too soon. Treatment: rest 3–5 days, ice 15 min 3x daily, do calf raises daily, return to running at 50% previous volume. Prevention: never increase weekly mileage by more than 10% per week.'},
+  {q:'Do I need a GPS watch to follow this program?',a:'No. A smartphone with any free running app (Strava, Nike Run Club, Garmin Connect) works perfectly. Use the distance and time data from your phone. A watch is a convenience, not a requirement.'},
+  {q:'How do I breathe correctly while running?',a:'Breathe through both nose and mouth — never restrict airflow by breathing nose only. Use belly breathing, not chest breathing. Aim for a 2:2 or 3:3 rhythm (inhale 2–3 steps, exhale 2–3 steps). If you feel gasping, you\'re going too fast — slow down.'},
+  {q:'When will running start to feel easier?',a:'Most runners feel the first significant improvement around weeks 4–6. The "I can actually do this" moment typically hits somewhere between week 3 and week 5. Before that, it feels hard because your aerobic system is building its foundation. After that, the same effort produces noticeably better results.'},
+  {q:'Can I lose weight by running?',a:'Running burns calories and improves body composition when combined with consistent nutrition. However, running alone without addressing diet rarely produces significant weight loss — the body adapts and hunger increases. View running as a performance tool first. Weight changes are a byproduct of consistent training and sensible eating, not something to obsess over weekly.'},
+  {q:'What is the difference between a tempo run and an interval run?',a:'Tempo run: sustained effort at Zone 3–4 for 20–40 minutes continuously. It\'s "comfortably hard" — like a controlled 10K race effort. Interval run: short bursts of Zone 4–5 effort (400m to 1K) with recovery breaks between. Tempo builds lactate threshold. Intervals build VO2 max. Both matter. Neither belongs in your first month.'},
+];
+
+function renderFAQ(){
+  const el = document.getElementById('faq-list');
+  if(!el) return;
+  el.innerHTML = faqs.map((f,i)=>`
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;">
+      <div onclick="toggleFAQ(${i})" style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;user-select:none;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.05rem;color:#fff;">${f.q}</div>
+        <div id="faq-icon-${i}" style="color:var(--blue);font-size:1.2rem;min-width:20px;text-align:center;transition:transform 0.2s;">+</div>
+      </div>
+      <div id="faq-body-${i}" style="display:none;padding:0 24px 20px;color:var(--text2);font-size:0.9rem;line-height:1.8;border-top:1px solid var(--border);">
+        <div style="padding-top:16px;">${f.a}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleFAQ(i){
+  const body = document.getElementById('faq-body-'+i);
+  const icon = document.getElementById('faq-icon-'+i);
+  const isOpen = body.style.display === 'block';
+  body.style.display = isOpen ? 'none' : 'block';
+  icon.textContent = isOpen ? '+' : '−';
+}
+
+// ─── INIT ─────────────────────────────────────────────────
+
+
+
+// ─── HALF MARATHON WEEKS ──────────────────────────────────
+const hmWeeks = [
+  {title:'Aerobic Base 1',sub:'Build easy volume. All Zone 2. No hard sessions.',workouts:[
+    {day:'Tuesday',name:'Easy Run',dist:'6K',pace:'Zone 2',notes:'Conversational pace only. Establish your base rhythm for the next 12 weeks.',dot:'green'},
+    {day:'Thursday',name:'Easy Run',dist:'5K',pace:'Zone 2',notes:'Same easy effort. Keep it comfortable.',dot:'green'},
+    {day:'Saturday',name:'Long Run',dist:'10K',pace:'Zone 2',notes:'First long run. All conversational. Walk 1 min every 15 min if needed.',dot:'blue'},
+  ]},
+  {title:'Aerobic Base 2',sub:'Volume increases slightly. Still all easy.',workouts:[
+    {day:'Tuesday',name:'Easy Run',dist:'7K',pace:'Zone 2',notes:'Build volume without increasing intensity.',dot:'green'},
+    {day:'Thursday',name:'Easy Run',dist:'6K',pace:'Zone 2',notes:'Relaxed and controlled.',dot:'green'},
+    {day:'Saturday',name:'Long Run',dist:'12K',pace:'Zone 2',notes:'Longest run so far. Fuel before. Hydrate during.',dot:'blue'},
+  ]},
+  {title:'Aerobic Base 3',sub:'Adding a midweek medium run.',workouts:[
+    {day:'Monday',name:'Recovery Jog',dist:'5K',pace:'Zone 1',notes:'Very easy. Active recovery.',dot:'green'},
+    {day:'Wednesday',name:'Medium Run',dist:'8K',pace:'Zone 2',notes:'Comfortable effort. Building aerobic capacity.',dot:'green'},
+    {day:'Friday',name:'Easy Run',dist:'6K',pace:'Zone 2',notes:'Relax into it.',dot:'green'},
+    {day:'Sunday',name:'Long Run',dist:'13K',pace:'Zone 2',notes:'Focus on time on feet. Pace is secondary.',dot:'blue'},
+  ]},
+  {title:'Deload Week 1',sub:'Volume drops 30%. Recovery is training.',workouts:[
+    {day:'Tuesday',name:'Easy Run',dist:'5K',pace:'Zone 2',notes:'Deload week. Just move.',dot:'green'},
+    {day:'Thursday',name:'Easy Run',dist:'5K',pace:'Zone 2',notes:'Nothing hard. Body absorbs the previous 3 weeks.',dot:'green'},
+    {day:'Saturday',name:'Long Run',dist:'10K',pace:'Zone 2',notes:'Easier than last week. Feel fresh.',dot:'blue'},
+  ]},
+  {title:'Build Phase 1',sub:'Tempo work introduced. 20 min sustained effort.',workouts:[
+    {day:'Monday',name:'Easy Run',dist:'6K',pace:'Zone 2',notes:'Aerobic base maintenance.',dot:'green'},
+    {day:'Wednesday',name:'Tempo Run',dist:'8K',pace:'Zone 3',notes:'2K warm-up, 20 min tempo (Zone 3), 2K cool-down. Comfortably hard.',dot:'orange'},
+    {day:'Friday',name:'Easy Recovery',dist:'5K',pace:'Zone 1',notes:'After tempo day — genuinely easy.',dot:'green'},
+    {day:'Sunday',name:'Long Run',dist:'14K',pace:'Zone 2',notes:'Controlled throughout. First 10K easy, last 4K steady.',dot:'blue'},
+  ]},
+  {title:'Build Phase 2',sub:'800m intervals for speed development.',workouts:[
+    {day:'Monday',name:'Easy Run',dist:'6K',pace:'Zone 2',notes:'Fresh legs for Wednesday.',dot:'green'},
+    {day:'Wednesday',name:'800m Intervals',dist:'9K',pace:'Mixed',notes:'2K warm-up, 5×800m Zone 4-5 with 90s rest, 2K cool-down.',dot:'red'},
+    {day:'Friday',name:'Recovery Run',dist:'5K',pace:'Zone 1',notes:'Slow and deliberate.',dot:'green'},
+    {day:'Sunday',name:'Long Run',dist:'15K',pace:'Zone 2',notes:'All easy. Fuel at 45 min. Biggest long run yet.',dot:'blue'},
+  ]},
+  {title:'Build Phase 3',sub:'Longer tempo. 25-30 min sustained.',workouts:[
+    {day:'Monday',name:'Easy Run',dist:'7K',pace:'Zone 2',notes:'Aerobic maintenance.',dot:'green'},
+    {day:'Wednesday',name:'Tempo Run',dist:'10K',pace:'Zone 3',notes:'2K warm-up, 30 min tempo, 2K cool-down. Hold the pace.',dot:'orange'},
+    {day:'Friday',name:'Easy Run',dist:'6K',pace:'Zone 2',notes:'Nothing hard.',dot:'green'},
+    {day:'Sunday',name:'Long Run',dist:'16K',pace:'Zone 2',notes:'New distance PR. Fuel every 45 min.',dot:'blue'},
+  ]},
+  {title:'Deload Week 2',sub:'Second deload. Absorb the build phase.',workouts:[
+    {day:'Monday',name:'Easy Run',dist:'5K',pace:'Zone 2',notes:'Easy deload week.',dot:'green'},
+    {day:'Wednesday',name:'Strides',dist:'6K',pace:'Mixed',notes:'5K easy + 6×100m strides at 5K pace. Light and sharp.',dot:'orange'},
+    {day:'Saturday',name:'Long Run',dist:'12K',pace:'Zone 2',notes:'Shorter long run. Feel fresh.',dot:'blue'},
+  ]},
+  {title:'Peak Phase 1',sub:'Race simulation. 8K at goal HM pace.',workouts:[
+    {day:'Monday',name:'Easy Run',dist:'7K',pace:'Zone 2',notes:'Controlled.',dot:'green'},
+    {day:'Wednesday',name:'Race Simulation',dist:'10K',pace:'Zone 4',notes:'2K warm-up, 8K at goal half marathon pace, rest. This is your race pace.',dot:'orange'},
+    {day:'Friday',name:'Easy Recovery',dist:'5K',pace:'Zone 1',notes:'After hard Wednesday.',dot:'green'},
+    {day:'Sunday',name:'Long Run',dist:'18K',pace:'Zone 2',notes:'Biggest long run. Fuel and hydrate properly. First 15K easy, last 3K steady.',dot:'blue'},
+  ]},
+  {title:'Peak Phase 2',sub:'Interval ladder. Maximum fitness.',workouts:[
+    {day:'Monday',name:'Easy Run',dist:'7K',pace:'Zone 2',notes:'Save legs for Wednesday.',dot:'green'},
+    {day:'Wednesday',name:'Interval Ladder',dist:'11K',pace:'Mixed',notes:'2K warm-up, 400m+800m+1K+1K+800m+400m with 90s rest, 2K cool-down.',dot:'red'},
+    {day:'Friday',name:'Easy Run',dist:'6K',pace:'Zone 1',notes:'Genuinely easy.',dot:'green'},
+    {day:'Sunday',name:'Long Run',dist:'19K',pace:'Zone 2',notes:'Second to last big long run. Trust your fitness.',dot:'blue'},
+  ]},
+  {title:'Peak Phase 3',sub:'Final long run. Race sharpness.',workouts:[
+    {day:'Monday',name:'Easy Run',dist:'6K',pace:'Zone 2',notes:'Short and controlled.',dot:'green'},
+    {day:'Wednesday',name:'Tempo Blocks',dist:'10K',pace:'Zone 3',notes:'2K warm-up, 2×15 min tempo with 3 min rest, 2K cool-down.',dot:'orange'},
+    {day:'Friday',name:'Easy Run',dist:'5K',pace:'Zone 1',notes:'Final real easy day.',dot:'green'},
+    {day:'Sunday',name:'Long Run',dist:'20K',pace:'Zone 2',notes:'Your longest training run. Take it easy. You made it here.',dot:'blue'},
+  ]},
+  {title:'Taper Week — Race Day',sub:'Less volume. Sharp legs. Trust the process.',workouts:[
+    {day:'Monday',name:'Easy Run',dist:'6K',pace:'Zone 2',notes:'Short. Fresh legs incoming.',dot:'green'},
+    {day:'Wednesday',name:'Race Sharpener',dist:'6K',pace:'Mixed',notes:'2K easy + 3×1K at race pace + 1K easy. Just staying sharp.',dot:'orange'},
+    {day:'Friday',name:'Complete Rest',dist:'REST',pace:'—',notes:'Walk, eat well, sleep early. You are ready.',dot:'green'},
+    {day:'Sunday',name:'🏅 HALF MARATHON — RACE DAY',dist:'21.1K',pace:'Race Pace',notes:'Start 10-15s/km slower than goal. Build from 10K. At 16K — go. Negative split always wins.',dot:'red'},
+  ]},
+];
+
+// ─── MARATHON WEEKS ───────────────────────────────────────
+const marathonWeeks = [
+  {title:'Base Block 1',sub:'Establish base mileage. All Zone 2.',workouts:[
+    {day:'Monday',name:'Easy Run',dist:'8K',pace:'Zone 2',notes:'Comfortable aerobic effort.',dot:'green'},
+    {day:'Wednesday',name:'Medium Run',dist:'10K',pace:'Zone 2',notes:'Steady and controlled.',dot:'green'},
+    {day:'Friday',name:'Easy Run',dist:'6K',pace:'Zone 1',notes:'Recovery effort.',dot:'green'},
+    {day:'Sunday',name:'Long Run',dist:'16K',pace:'Zone 2',notes:'Marathon training starts here. All easy.',dot:'blue'},
+  ]},
+  {title:'Base Block 2',sub:'Adding volume and a tempo run.',workouts:[
+    {day:'Monday',name:'Easy Run',dist:'8K',pace:'Zone 2',notes:'Aerobic base.',dot:'green'},
+    {day:'Wednesday',name:'Tempo Run',dist:'12K',pace:'Zone 3',notes:'2K warm-up, 25 min tempo, cool-down.',dot:'orange'},
+    {day:'Friday',name:'Easy Run',dist:'7K',pace:'Zone 2',notes:'Nothing hard.',dot:'green'},
+    {day:'Sunday',name:'Long Run',dist:'18K',pace:'Zone 2',notes:'Building toward 30K+ long runs.',dot:'blue'},
+  ]},
+  {title:'Base Block 3',sub:'Volume continues building.',workouts:[
+    {day:'Monday',name:'Recovery Run',dist:'8K',pace:'Zone 1',notes:'Easy after Sunday long run.',dot:'green'},
+    {day:'Wednesday',name:'800m Intervals',dist:'12K',pace:'Mixed',notes:'2K warm-up, 6×800m Zone 4, 90s rest, cool-down.',dot:'red'},
+    {day:'Friday',name:'Easy Run',dist:'7K',pace:'Zone 2',notes:'Relaxed.',dot:'green'},
+    {day:'Sunday',name:'Long Run',dist:'21K',pace:'Zone 2',notes:'Half marathon distance as a training run. Fuel every 40 min.',dot:'blue'},
+  ]},
+  {title:'Deload Week 1',sub:'Volume drops. Recovery.',workouts:[
+    {day:'Monday',name:'Easy Run',dist:'6K',pace:'Zone 2',notes:'Deload.',dot:'green'},
+    {day:'Wednesday',name:'Easy Strides',dist:'8K',pace:'Mixed',notes:'7K easy + 5×100m strides.',dot:'green'},
+    {day:'Sunday',name:'Long Run',dist:'16K',pace:'Zone 2',notes:'Shorter long run. Feel fresh.',dot:'blue'},
+  ]},
+  {title:'Build Block 1',sub:'Intensity and volume both increase.',workouts:[
+    {day:'Monday',name:'Easy Run',dist:'9K',pace:'Zone 2',notes:'Aerobic base.',dot:'green'},
+    {day:'Wednesday',name:'Tempo Run',dist:'14K',pace:'Zone 3',notes:'2K warm-up, 35 min tempo, cool-down.',dot:'orange'},
+    {day:'Friday',name:'Easy Run',dist:'8K',pace:'Zone 2',notes:'Nothing hard.',dot:'green'},
+    {day:'Sunday',name:'Long Run',dist:'24K',pace:'Zone 2',notes:'First 20K+ run. Fuel at 45 and 90 min. Take it seriously.',dot:'blue'},
+  ]},
+  {title:'Build Block 2',sub:'1K intervals. Speed development.',workouts:[
+    {day:'Monday',name:'Easy Run',dist:'9K',pace:'Zone 2',notes:'Fresh legs for Wednesday.',dot:'green'},
+    {day:'Wednesday',name:'1K Intervals',dist:'14K',pace:'Mixed',notes:'2K warm-up, 6×1K Zone 4-5 with 2 min rest, cool-down.',dot:'red'},
+    {day:'Friday',name:'Recovery Run',dist:'7K',pace:'Zone 1',notes:'Slow. Intentionally.',dot:'green'},
+    {day:'Sunday',name:'Long Run',dist:'26K',pace:'Zone 2',notes:'Getting close to 30K territory. Gel at 45, 90, 120 min.',dot:'blue'},
+  ]},
+  {title:'Build Block 3',sub:'Marathon-pace work introduced.',workouts:[
+    {day:'Monday',name:'Easy Run',dist:'9K',pace:'Zone 2',notes:'Aerobic maintenance.',dot:'green'},
+    {day:'Wednesday',name:'Marathon Pace Run',dist:'15K',pace:'Zone 3',notes:'2K warm-up, 10K at goal marathon pace, cool-down.',dot:'orange'},
+    {day:'Friday',name:'Easy Run',dist:'8K',pace:'Zone 2',notes:'Relaxed.',dot:'green'},
+    {day:'Sunday',name:'Long Run',dist:'28K',pace:'Zone 2',notes:'Your body is adapting. Fuel every 40 min from km 15 onward.',dot:'blue'},
+  ]},
+  {title:'Deload Week 2',sub:'Second deload. Essential recovery.',workouts:[
+    {day:'Monday',name:'Easy Run',dist:'7K',pace:'Zone 2',notes:'Easy deload.',dot:'green'},
+    {day:'Wednesday',name:'Tempo Strides',dist:'10K',pace:'Mixed',notes:'Easy + 4×200m at 5K effort.',dot:'orange'},
+    {day:'Sunday',name:'Long Run',dist:'20K',pace:'Zone 2',notes:'Shorter. Feel the freshness.',dot:'blue'},
+  ]},
+  {title:'Peak Block 1',sub:'30K long run. The key milestone.',workouts:[
+    {day:'Monday',name:'Easy Run',dist:'10K',pace:'Zone 2',notes:'Save legs for the big weekend.',dot:'green'},
+    {day:'Wednesday',name:'Tempo Run',dist:'14K',pace:'Zone 3',notes:'2K warm-up, 35 min tempo, cool-down.',dot:'orange'},
+    {day:'Friday',name:'Recovery Run',dist:'8K',pace:'Zone 1',notes:'Very easy. Prepare for Sunday.',dot:'green'},
+    {day:'Sunday',name:'Long Run 30K',dist:'30K',pace:'Zone 2',notes:'The most important training run. Fuel and hydrate exactly as race day. Do not race this.',dot:'blue'},
+  ]},
+  {title:'Peak Block 2',sub:'Race simulation. Interval ladder.',workouts:[
+    {day:'Monday',name:'Easy Run',dist:'9K',pace:'Zone 2',notes:'Recovery from 30K.',dot:'green'},
+    {day:'Wednesday',name:'Interval Ladder',dist:'14K',pace:'Mixed',notes:'2K warm-up, 400+800+1K+1K+800+400m, 90s rest, cool-down.',dot:'red'},
+    {day:'Friday',name:'Easy Run',dist:'8K',pace:'Zone 2',notes:'Nothing hard.',dot:'green'},
+    {day:'Sunday',name:'Long Run',dist:'26K',pace:'Zone 2',notes:'Back down from 30K. Should feel easier. Trust that.',dot:'blue'},
+  ]},
+  {title:'Peak Block 3',sub:'Sharpness work. Final hard sessions.',workouts:[
+    {day:'Monday',name:'Easy Run',dist:'9K',pace:'Zone 2',notes:'Aerobic maintenance.',dot:'green'},
+    {day:'Wednesday',name:'Marathon Pace + Tempo',dist:'16K',pace:'Mixed',notes:'3K warm-up, 8K at marathon pace, 5K tempo, cool-down.',dot:'orange'},
+    {day:'Friday',name:'Easy Run',dist:'7K',pace:'Zone 1',notes:'Genuinely easy.',dot:'green'},
+    {day:'Sunday',name:'Long Run',dist:'24K',pace:'Zone 2',notes:'Last major long run. Treat it like a dress rehearsal.',dot:'blue'},
+  ]},
+  {title:'Taper Block 1',sub:'Volume drops 30%. Legs wake up.',workouts:[
+    {day:'Monday',name:'Easy Run',dist:'8K',pace:'Zone 2',notes:'Start of taper. Still running, less volume.',dot:'green'},
+    {day:'Wednesday',name:'Tempo Intervals',dist:'12K',pace:'Mixed',notes:'2K warm-up, 3×10 min at marathon pace with 2 min rest, cool-down.',dot:'orange'},
+    {day:'Friday',name:'Easy Run',dist:'6K',pace:'Zone 2',notes:'Nothing hard.',dot:'green'},
+    {day:'Sunday',name:'Long Run',dist:'18K',pace:'Zone 2',notes:'Last longer run. All easy.',dot:'blue'},
+  ]},
+  {title:'Taper Block 2',sub:'Volume drops 50%. Sharpness maintained.',workouts:[
+    {day:'Monday',name:'Easy Run',dist:'7K',pace:'Zone 2',notes:'Light and fresh.',dot:'green'},
+    {day:'Wednesday',name:'Race Sharpener',dist:'10K',pace:'Mixed',notes:'3K easy + 4×1K at marathon pace + 1K easy.',dot:'orange'},
+    {day:'Friday',name:'Easy Run',dist:'5K',pace:'Zone 2',notes:'Short and relaxed.',dot:'green'},
+    {day:'Sunday',name:'Long Run',dist:'14K',pace:'Zone 2',notes:'Last real long run. Your legs should feel amazing.',dot:'blue'},
+  ]},
+  {title:'Race Week',sub:'Trust the training. Execute the plan.',workouts:[
+    {day:'Monday',name:'Easy Run',dist:'6K',pace:'Zone 2',notes:'Short shakeout. Keep moving.',dot:'green'},
+    {day:'Wednesday',name:'Final Sharpener',dist:'5K',pace:'Mixed',notes:'3K easy + 4×100m strides at race pace. Just staying sharp.',dot:'orange'},
+    {day:'Friday',name:'Complete Rest',dist:'REST',pace:'—',notes:'Walk only. Eat well. Sleep early. Everything is done.',dot:'green'},
+    {day:'Saturday',name:'Pre-Race Jog',dist:'2K',pace:'Zone 1',notes:'10 min very easy jog. Just to stay loose. Do not skip breakfast.',dot:'green'},
+    {day:'Sunday',name:'🏆 MARATHON — RACE DAY',dist:'42.2K',pace:'Race Pace',notes:'First half: 30s/km slower than goal. Fuel every 40 min from km 15. At km 32: this is where your training lives. Go.',dot:'red'},
+  ]},
+  {title:'Post-Race Recovery',sub:'You finished a marathon. Now recover properly.',workouts:[
+    {day:'All week',name:'Complete Rest',dist:'REST',pace:'—',notes:'No running for 7–10 days minimum after a marathon. Walk, stretch, eat well. Your body needs this.',dot:'green'},
+    {day:'Day 10+',name:'Easy Walk-Jog',dist:'3–5K',pace:'Zone 1',notes:'Only if legs feel 100%. Very slow jog. Listen to your body.',dot:'green'},
+  ]},
+];
+
+// ─── EXPORT / IMPORT ──────────────────────────────────────
+function exportData(){
+  const data = localStorage.getItem('rovex_state');
+  if(!data){ alert('No data to export yet.'); return; }
+  const a = document.createElement('a');
+  a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(data);
+  a.download = 'rovex-progress.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  showToast('Progress exported! 💾');
+}
+
+function importData(event){
+  const file = event.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e){
+    try{
+      const parsed = JSON.parse(e.target.result);
+      if(!parsed.assessed){ alert('Invalid file — not a Rovex backup.'); return; }
+      localStorage.setItem('rovex_state', e.target.result);
+      const msg = document.getElementById('import-msg');
+      msg.style.display = 'block';
+      setTimeout(()=>{ location.reload(); }, 1500);
+    } catch(err){
+      alert('Could not read file. Make sure it is a valid Rovex export.');
+    }
+  };
+  reader.readAsText(file);
+}
+
+// ─── SMART INSIGHTS ENGINE ────────────────────────────────
+function parse5kSecs(timeStr){
+  if(!timeStr) return null;
+  const parts = timeStr.split(':');
+  if(parts.length === 2) return parseInt(parts[0])*60 + parseInt(parts[1]);
+  if(parts.length === 3) return parseInt(parts[0])*3600 + parseInt(parts[1])*60 + parseInt(parts[2]);
+  return null;
+}
+
+function fmtPace(secsPerKm){
+  const m = Math.floor(secsPerKm/60);
+  const s = Math.round(secsPerKm%60);
+  return m+':'+(s<10?'0':'')+s+' /km';
+}
+
+function generateInsights(){
+  const card = document.getElementById('insights-card');
+  const container = document.getElementById('insights-content');
+  if(!card || !container) return;
+
+  const time5kSec = parse5kSecs(state.pb5k_initial || (state.pbs && state.pbs['5k']));
+  const weightKg = state.weightKg;
+  const items = [];
+
+  if(time5kSec){
+    const pace5k = time5kSec / 5; // secs per km
+
+    // Training zones based on 5K pace
+    const z2pace = pace5k * 1.35;
+    const z3pace = pace5k * 1.15;
+    const z4pace = pace5k * 1.05;
+    const tempoPace = pace5k * 1.10;
+
+    items.push({
+      icon:'🟢',
+      label:'Zone 2 — Easy Run Pace',
+      value: fmtPace(z2pace),
+      desc:'This is your conversational pace. 80% of your runs should be here.'
+    });
+    items.push({
+      icon:'🟡',
+      label:'Zone 3 — Tempo Pace',
+      value: fmtPace(tempoPace),
+      desc:'Comfortably hard. Used for tempo runs. You can speak in short sentences.'
+    });
+    items.push({
+      icon:'🔴',
+      label:'Zone 4 — Interval Pace',
+      value: fmtPace(z4pace),
+      desc:'Hard effort. Used for 400m–1K intervals. Not sustainable for long.'
+    });
+
+    // Predicted 10K time
+    const pred10k = time5kSec * 2 * 1.06;
+    const pred10kMin = Math.floor(pred10k/60);
+    const pred10kSec = Math.round(pred10k%60);
+    items.push({
+      icon:'🎯',
+      label:'Predicted 10K Time',
+      value: pred10kMin+':'+(pred10kSec<10?'0':'')+pred10kSec,
+      desc:'Based on your 5K PB using standard running conversion formula.'
+    });
+  } else {
+    // Complete beginner — no PB
+    items.push({
+      icon:'🟢',
+      label:'Your Starting Pace',
+      value:'Walk/Jog Mix',
+      desc:"As a complete beginner, forget pace. Focus on time on feet. Aim to run 1 min, walk 2 min alternating."
+    });
+    items.push({
+      icon:'🎯',
+      label:'Week 4 Goal',
+      value:'Run 10 min non-stop',
+      desc:"Most beginners hit this milestone by week 4. It's the first big breakthrough."
+    });
+  }
+
+  if(weightKg){
+    // Weekly mileage recommendation based on weight
+    let recKm, recLabel;
+    if(weightKg < 65){ recKm = '20–25 km'; recLabel = 'Your lighter frame recovers faster — you can handle moderate weekly volume.'; }
+    else if(weightKg < 85){ recKm = '15–20 km'; recLabel = 'Standard weekly volume for your weight range. Build slowly by 10% per week max.'; }
+    else { recKm = '12–16 km'; recLabel = 'Start conservative. Higher body weight means more joint load — build volume gradually over 3+ months.'; }
+
+    const displayWeight = state.weightUnit === 'lbs'
+      ? Math.round(weightKg * 2.205) + ' lbs (' + weightKg + ' kg)'
+      : weightKg + ' kg';
+
+    items.push({
+      icon:'📦',
+      label:'Recommended Weekly Mileage',
+      value: recKm,
+      desc: recLabel
+    });
+
+    // Calorie burn estimate per km
+    const calPerKm = Math.round(weightKg * 1.036);
+    items.push({
+      icon:'🔥',
+      label:'Calorie Burn Per km',
+      value:'~'+calPerKm+' kcal',
+      desc:'Approximate. A 5K run burns ~'+Math.round(calPerKm*5)+' kcal for your body weight.'
+    });
+  }
+
+  if(items.length === 0){ card.style.display='none'; return; }
+
+  card.style.display = 'block';
+  container.innerHTML = items.map(it => `
+    <div style="display:flex;align-items:flex-start;gap:16px;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;">
+      <span style="font-size:1.4rem;min-width:28px;">${it.icon}</span>
+      <div style="flex:1;">
+        <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);font-family:'Barlow Condensed',sans-serif;font-weight:700;margin-bottom:2px;">${it.label}</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.5rem;color:#fff;line-height:1.1;margin-bottom:4px;">${it.value}</div>
+        <div style="font-size:0.82rem;color:var(--text2);line-height:1.6;">${it.desc}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function initUI(){
+  renderWeeks(beginnerWeeks,'beginner-weeks','beg');
+  renderWeeks(intermediateWeeks,'intermediate-weeks','int');
+  renderWeeks(hmWeeks,'hm-weeks','hm');
+  renderWeeks(marathonWeeks,'marathon-weeks','mar');
+  renderFAQ();
+  updateUI();
+}
+
+// Show assessment or init
+if(state.assessed){
+  document.getElementById('assessment-overlay').style.display='none';
+  initUI();
+} else {
+  initUI();
+}
+</script>
+</body>
+</html>
