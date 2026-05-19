@@ -700,6 +700,19 @@ nav{flex:1;padding:16px 0;overflow-y:auto;}
     <h1>YOUR <span>COMMAND</span><br/>CENTER</h1>
     <p>Track your progress, continue training, and hit your goals systematically.</p>
   </div>
+  <div id="pwa-banner" style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);border-radius:14px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
+  <div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#fff;font-size:0.95rem;margin-bottom:4px;">📱 Add to your Home Screen</div>
+    <div style="font-size:0.8rem;color:var(--text2);line-height:1.6;"><strong style="color:var(--text);">iPhone:</strong> tap Share → "Add to Home Screen" &nbsp;·&nbsp; <strong style="color:var(--text);">Android:</strong> tap ⋮ → "Add to Home Screen"</div>
+  </div>
+  <button onclick="document.getElementById('pwa-banner').style.display='none';localStorage.setItem('pwa_dismissed','1');" style="flex-shrink:0;background:transparent;border:none;color:var(--text3);font-size:1.2rem;cursor:pointer;padding:0;">✕</button>
+</div>
+<script>
+  if(localStorage.getItem('pwa_dismissed')==='1'){
+    var b=document.getElementById('pwa-banner');
+    if(b) b.style.display='none';
+  }
+</script>
 
   <div class="card-grid cols-4" style="margin-bottom:24px;">
     <div class="stat-card">
