@@ -2,7 +2,7 @@
   "name": "Rovex Method",
   "short_name": "Rovex",
   "description": "The Structured Running System — Members Area",
-  "start_url": "/members.html",
+  "start_url": "https://rovexmethod.com/members.html",
   "display": "standalone",
   "background_color": "#08090a",
   "theme_color": "#3B82F6",
