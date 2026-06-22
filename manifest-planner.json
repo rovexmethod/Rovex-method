@@ -1,0 +1,13 @@
+{
+  "name": "PR Planner — Rovex Method",
+  "short_name": "PR Planner",
+  "description": "Enter your current race time. Get a realistic PR target and a full week-by-week training plan.",
+  "start_url": "/planner.html",
+  "display": "standalone",
+  "background_color": "#07070E",
+  "theme_color": "#3B82F6",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "/icon-r.png", "sizes": "192x192", "type": "image/png" }
+  ]
+}
