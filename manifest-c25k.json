@@ -1,8 +1,8 @@
 {
-  "name": "PR Planner — Rovex Method",
-  "short_name": "PR Planner",
-  "description": "Enter your current race time and get a personalized PR target with a week-by-week training plan.",
-  "start_url": "/planner-tsrcgc.html",
+  "name": "Couch to 5K — Rovex Method",
+  "short_name": "Couch to 5K",
+  "description": "8-week walk/run program from zero running experience to a full 5K.",
+  "start_url": "/c25k-tqmf8s.html",
   "scope": "/",
   "display": "standalone",
   "background_color": "#07070E",
