@@ -1611,7 +1611,13 @@
 ════════════════════════════════════════ -->
 <script>
   // ── Thank-You overlay ──
-  function showThankYou(type) {
+  // `accessUrl` comes from the /api/paypal-capture verification call (see
+  // PayPal SDK script below). It's optional so this still works before that
+  // backend is deployed — in that case each branch falls back to the plain
+  // page URL, same as before. Pass `accessUrl: null` explicitly (not just
+  // omitted) to signal "verification ran but failed" and show the
+  // email-support fallback instead of a link.
+  function showThankYou(type, accessUrl) {
     const overlay = document.getElementById('thankyou-overlay');
     // Update access button, subhead and step-2 copy based on product —
     // previously these stayed hardcoded to the Full Method wording
@@ -1624,8 +1630,9 @@
     const step2Desc = document.getElementById('ty-step2-desc');
     const step3Title = document.getElementById('ty-step3-title');
     const step3Desc = document.getElementById('ty-step3-desc');
+    const verificationFailed = accessUrl === null;
     if(type === 'planner') {
-      accessBtn.href = 'https://rovexmethod.com/planner-tsrcgc.html';
+      accessBtn.href = accessUrl || 'https://rovexmethod.com/planner-tsrcgc.html';
       accessBtn.textContent = '🎯 Access Your PR Planner →';
       subhead.textContent = 'Payment confirmed. Your PR Planner access is ready below.';
       step2Title.textContent = 'Access your PR Planner';
@@ -1633,7 +1640,7 @@
       step3Title.textContent = 'Enter your current time';
       step3Desc.textContent = 'Pick your distance and current PB to get your personalized pace targets and weekly plan.';
     } else if(type === 'c25k') {
-      accessBtn.href = 'https://rovexmethod.com/c25k-tqmf8s.html';
+      accessBtn.href = accessUrl || 'https://rovexmethod.com/c25k-tqmf8s.html';
       accessBtn.textContent = '🏁 Access Your C25K Program →';
       subhead.textContent = 'Payment confirmed. Your Couch to 5K access is ready below.';
       step2Title.textContent = 'Access your Couch to 5K program';
@@ -1641,7 +1648,7 @@
       step3Title.textContent = 'Start with Week 1';
       step3Desc.textContent = 'Begin with the Foundation Week. Walk/run intervals, no pressure - just showing up consistently.';
     } else {
-      accessBtn.href = 'https://rovexmethod.com/members-11x6lq.html';
+      accessBtn.href = accessUrl || 'https://rovexmethod.com/members-11x6lq.html';
       accessBtn.textContent = '🚀 Access Your Members Area →';
       subhead.textContent = 'Payment confirmed. Your full Rovex Method access is ready below.';
       step2Title.textContent = 'Access all 7 modules';
@@ -1649,9 +1656,41 @@
       step3Title.textContent = 'Start with Module 01';
       step3Desc.textContent = 'Begin with Running Fundamentals regardless of your level. The foundation makes everything else click faster.';
     }
+    if (verificationFailed) {
+      accessBtn.href = 'mailto:rovexmethod@gmail.com?subject=Access%20link%20issue';
+      accessBtn.textContent = '⚠️ Email us for your access link →';
+      subhead.textContent = "Payment received! We're double-checking it with PayPal — email us and we'll send your access link within minutes.";
+    }
     overlay.classList.add('active');
     document.body.style.overflow = 'hidden';
     overlay.scrollTop = 0;
+  }
+
+  // ── Verified access link (falls back to plain URL if /api/paypal-capture
+  // isn't deployed yet, so this is safe to ship ahead of the backend) ──
+  const PLAIN_ACCESS_URL = {
+    full: 'https://rovexmethod.com/members-11x6lq.html',
+    planner: 'https://rovexmethod.com/planner-tsrcgc.html',
+    c25k: 'https://rovexmethod.com/c25k-tqmf8s.html',
+  };
+  function resolveAccessUrl(product, orderId) {
+    return fetch('/api/paypal-capture', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ orderId: orderId, product: product })
+    })
+      .then(function(r) {
+        if (r.status === 404) return { notDeployed: true };
+        return r.json();
+      })
+      .then(function(result) {
+        if (result.notDeployed) return PLAIN_ACCESS_URL[product];
+        if (result.ok) return result.url;
+        return null; // verification ran and failed — do not leak the plain URL
+      })
+      .catch(function() {
+        return PLAIN_ACCESS_URL[product];
+      });
   }
 
   // ── Sticky nav on scroll ──
@@ -1734,7 +1773,9 @@
               currency: 'USD',
               items: [{ item_id: 'full-method', item_name: 'Full Method' }]
             });
-            showThankYou('full');
+            return resolveAccessUrl('full', details.id).then(function(url) {
+              showThankYou('full', url);
+            });
           });
         },
         onError: function(err) {
@@ -1763,7 +1804,9 @@
               currency: 'USD',
               items: [{ item_id: 'pr-planner', item_name: 'PR Planner' }]
             });
-            showThankYou('planner');
+            return resolveAccessUrl('planner', details.id).then(function(url) {
+              showThankYou('planner', url);
+            });
           });
         },
         onError: function(err) {
@@ -1792,7 +1835,9 @@
               currency: 'USD',
               items: [{ item_id: 'c25k', item_name: 'Couch to 5K' }]
             });
-            showThankYou('c25k');
+            return resolveAccessUrl('c25k', details.id).then(function(url) {
+              showThankYou('c25k', url);
+            });
           });
         },
         onError: function(err) {

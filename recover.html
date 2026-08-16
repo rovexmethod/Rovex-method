@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex, nofollow">
+<title>Recover Access — Rovex Method</title>
+<style>
+  body { background:#0A0A0F; color:#F0F0F5; font-family:'DM Sans',sans-serif; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; }
+  .card { max-width:420px; width:100%; background:#111118; border:1px solid rgba(59,130,246,0.2); border-radius:16px; padding:32px; }
+  h1 { font-size:1.4rem; margin:0 0 8px; }
+  p { color:#8888A0; font-size:0.9rem; line-height:1.5; margin:0 0 20px; }
+  label { display:block; font-size:0.8rem; color:#C0C0D8; margin-bottom:6px; margin-top:16px; }
+  select, input { width:100%; padding:10px 12px; background:#1A1A24; border:1px solid rgba(59,130,246,0.25); border-radius:8px; color:#fff; font-size:0.9rem; box-sizing:border-box; }
+  button { width:100%; margin-top:22px; padding:12px; background:linear-gradient(135deg,#3B82F6,#1D4ED8); border:none; border-radius:8px; color:#fff; font-weight:700; cursor:pointer; font-size:0.95rem; }
+  button:disabled { opacity:0.6; cursor:not-allowed; }
+  #result { margin-top:18px; font-size:0.85rem; line-height:1.5; }
+  #result a { color:#60A5FA; }
+  .err { color:#F87171; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>Lost your access link?</h1>
+    <p>Enter your PayPal Transaction/Order ID (from your PayPal receipt email) and the product you bought — we'll regenerate your link instantly.</p>
+
+    <label for="product">Product</label>
+    <select id="product">
+      <option value="full">Full Method ($49)</option>
+      <option value="planner">PR Planner ($17.99)</option>
+      <option value="c25k">Couch to 5K ($17.99)</option>
+    </select>
+
+    <label for="orderId">PayPal Order/Transaction ID</label>
+    <input id="orderId" type="text" placeholder="e.g. 8AB123456C789012D" />
+
+    <button id="submitBtn" onclick="recover()">Get My Link</button>
+    <div id="result"></div>
+  </div>
+
+<script>
+function recover() {
+  const btn = document.getElementById('submitBtn');
+  const resultEl = document.getElementById('result');
+  const product = document.getElementById('product').value;
+  const orderId = document.getElementById('orderId').value.trim();
+  if (!orderId) {
+    resultEl.innerHTML = '<span class="err">Please enter your Order ID.</span>';
+    return;
+  }
+  btn.disabled = true;
+  btn.textContent = 'Checking with PayPal...';
+  resultEl.innerHTML = '';
+
+  fetch('/api/paypal-capture', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ orderId: orderId, product: product })
+  })
+    .then(function(r) { return r.json(); })
+    .then(function(result) {
+      if (result.ok) {
+        resultEl.innerHTML = 'Found it — <a href="' + result.url + '">click here to access your content →</a>';
+      } else {
+        resultEl.innerHTML = '<span class="err">We couldn\'t verify that Order ID for this product. Double-check it against your PayPal receipt, or email <a href="mailto:rovexmethod@gmail.com">rovexmethod@gmail.com</a>.</span>';
+      }
+    })
+    .catch(function() {
+      resultEl.innerHTML = '<span class="err">Something went wrong. Email <a href="mailto:rovexmethod@gmail.com">rovexmethod@gmail.com</a> and we\'ll sort it out.</span>';
+    })
+    .finally(function() {
+      btn.disabled = false;
+      btn.textContent = 'Get My Link';
+    });
+}
+</script>
+</body>
+</html>
