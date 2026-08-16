@@ -1275,6 +1275,7 @@
           </div>
           <div id="paypal-button-container-c25k"></div>
           <p class="text-xs text-gray-600 text-center mt-2">Secured by PayPal · 256-bit SSL</p>
+          <p class="text-xs text-gray-600 text-center mt-1">Card or PayPal balance — no PayPal account required</p>
         </div>
       </div>
 
@@ -1306,6 +1307,7 @@
           </div>
           <div id="paypal-button-container-planner"></div>
           <p class="text-xs text-gray-600 text-center mt-2">Secured by PayPal · 256-bit SSL</p>
+          <p class="text-xs text-gray-600 text-center mt-1">Card or PayPal balance — no PayPal account required</p>
         </div>
       </div>
 
@@ -1338,6 +1340,7 @@
           <p class="text-gray-600 text-xs mb-4">One-time · Instant access · No subscription</p>
           <div id="paypal-button-container"></div>
           <p class="text-xs text-gray-600 text-center mt-2">Secured by PayPal · 256-bit SSL</p>
+          <p class="text-xs text-gray-600 text-center mt-1">Card or PayPal balance — no PayPal account required</p>
         </div>
       </div>
 
@@ -1658,6 +1661,21 @@
     else nav.classList.remove('visible');
   }, { passive: true });
 
+  // ── Track how many visitors actually reach pricing (funnel visibility) ──
+  const pricingSectionEl = document.getElementById('pricing');
+  if (pricingSectionEl) {
+    let pricingSeen = false;
+    new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => {
+        if (e.isIntersecting && !pricingSeen) {
+          pricingSeen = true;
+          gtag('event', 'view_pricing');
+          obs.disconnect();
+        }
+      });
+    }, { threshold: 0.15 }).observe(pricingSectionEl);
+  }
+
   // ── Mobile sticky bottom CTA: show after hero, hide once pricing is in view ──
   const mobileCta = document.getElementById('mobile-sticky-cta');
   const heroEl = document.querySelector('.hero-bg');
@@ -1709,12 +1727,19 @@
           });
         },
         onApprove: function(data, actions) {
-          return actions.order.capture().then(function() {
+          return actions.order.capture().then(function(details) {
+            gtag('event', 'purchase', {
+              transaction_id: details.id,
+              value: 49.00,
+              currency: 'USD',
+              items: [{ item_id: 'full-method', item_name: 'Full Method' }]
+            });
             showThankYou('full');
           });
         },
         onError: function(err) {
           console.error('PayPal error:', err);
+          gtag('event', 'payment_error', { product: 'full-method' });
           alert('Payment failed. Please try again or contact support.');
         },
         style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'pay' }
@@ -1731,12 +1756,19 @@
           });
         },
         onApprove: function(data, actions) {
-          return actions.order.capture().then(function() {
+          return actions.order.capture().then(function(details) {
+            gtag('event', 'purchase', {
+              transaction_id: details.id,
+              value: 17.99,
+              currency: 'USD',
+              items: [{ item_id: 'pr-planner', item_name: 'PR Planner' }]
+            });
             showThankYou('planner');
           });
         },
         onError: function(err) {
           console.error('PayPal error:', err);
+          gtag('event', 'payment_error', { product: 'pr-planner' });
           alert('Payment failed. Please try again or contact support.');
         },
         style: { layout: 'vertical', color: 'blue', shape: 'rect', label: 'pay' }
@@ -1753,12 +1785,19 @@
           });
         },
         onApprove: function(data, actions) {
-          return actions.order.capture().then(function() {
+          return actions.order.capture().then(function(details) {
+            gtag('event', 'purchase', {
+              transaction_id: details.id,
+              value: 17.99,
+              currency: 'USD',
+              items: [{ item_id: 'c25k', item_name: 'Couch to 5K' }]
+            });
             showThankYou('c25k');
           });
         },
         onError: function(err) {
           console.error('PayPal error:', err);
+          gtag('event', 'payment_error', { product: 'c25k' });
           alert('Payment failed. Please try again or contact support.');
         },
         style: { layout: 'vertical', color: 'blue', shape: 'rect', label: 'pay' }
