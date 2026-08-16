@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/icon-r.png?v=2">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rovex Method - Transform Your Running</title>
+  <meta name="description" content="The premium digital running training system. Beginner to advanced. Injury-free. Results-proven. One-time payment, instant access." />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Rovex Method - Transform Your Running" />
+  <meta property="og:description" content="The structured running system that builds endurance, speed, and keeps you injury-free. $49 one-time." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1571008887538-b36bb32f4571?w=1200&q=80" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            accent: '#3B82F6',
+            'accent-light': '#60A5FA',
+            'accent-dark': '#1D4ED8',
+            dark: '#0A0A0F',
+            'dark-2': '#111118',
+            'dark-3': '#1A1A24',
+            'dark-4': '#22222F',
+          },
+          fontFamily: {
+            display: ['"Barlow Condensed"', 'sans-serif'],
+            body: ['"DM Sans"', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: #0A0A0F;
+      color: #F0F0F5;
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── Noise texture overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.4;
+    }
+
+    /* ── Glow utilities ── */
+    .glow-blue { box-shadow: 0 0 40px rgba(59,130,246,0.35), 0 0 80px rgba(59,130,246,0.15); }
+    .glow-blue-sm { box-shadow: 0 0 20px rgba(59,130,246,0.4); }
+    .text-glow { text-shadow: 0 0 30px rgba(59,130,246,0.5); }
+
+    /* ── Gradient mesh backgrounds ── */
+    .hero-bg {
+      background:
+        radial-gradient(ellipse 80% 60% at 60% 0%, rgba(59,130,246,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 10% 80%, rgba(59,130,246,0.08) 0%, transparent 60%),
+        #0A0A0F;
+    }
+
+    .section-glow {
+      background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(59,130,246,0.08) 0%, transparent 70%);
+    }
+
+    /* ── Animated gradient border ── */
+    .grad-border {
+      position: relative;
+      background: #1A1A24;
+      border-radius: 16px;
+    }
+    .grad-border::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(59,130,246,0.6), rgba(59,130,246,0.05), rgba(59,130,246,0.3));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    /* ── CTA Button ── */
+    .btn-primary {
+      background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+      color: #fff;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 18px 40px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 30px rgba(59,130,246,0.4);
+      display: inline-block;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 40px rgba(59,130,246,0.6);
+    }
+    .btn-primary:hover::after { opacity: 1; }
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-secondary {
+      border: 1.5px solid rgba(59,130,246,0.5);
+      color: #60A5FA;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 16px 36px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: inline-block;
+      text-decoration: none;
+      background: transparent;
+    }
+    .btn-secondary:hover {
+      background: rgba(59,130,246,0.1);
+      border-color: #3B82F6;
+      color: #fff;
+    }
+
+    /* ── Sticky Nav ── */
+    #sticky-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 999;
+      transform: translateY(-100%);
+      transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+      background: rgba(10,10,15,0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(59,130,246,0.15);
+    }
+    #sticky-nav.visible { transform: translateY(0); }
+
+    /* ── Headline ── */
+    .display-headline {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      line-height: 0.92;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+    }
+
+    /* ── Divider line ── */
+    .accent-line {
+      width: 48px;
+      height: 3px;
+      background: linear-gradient(90deg, #3B82F6, transparent);
+      border-radius: 2px;
+    }
+
+    /* ── Module cards ── */
+    .module-card {
+      background: #111118;
+      border: 1px solid rgba(59,130,246,0.12);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+    .module-card:hover {
+      border-color: rgba(59,130,246,0.45);
+      transform: translateY(-3px);
+      background: #1A1A24;
+    }
+
+    /* ── Testimonial card ── */
+    .testi-card {
+      background: #111118;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      transition: border-color 0.3s;
+    }
+    .testi-card:hover { border-color: rgba(59,130,246,0.3); }
+
+    /* ── FAQ ── */
+    .faq-item summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      font-weight: 500;
+      color: #E0E0F0;
+      transition: color 0.2s;
+    }
+    .faq-item summary:hover { color: #3B82F6; }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item[open] summary { color: #3B82F6; }
+    .faq-chevron {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      transition: transform 0.3s;
+    }
+    .faq-item[open] .faq-chevron { transform: rotate(180deg); }
+    .faq-content {
+      padding-bottom: 20px;
+      color: #8888A0;
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+
+    /* ── Pricing card ── */
+    .price-card {
+      background: linear-gradient(160deg, #1A1A28 0%, #111118 100%);
+      border: 1px solid rgba(59,130,246,0.35);
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .price-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #3B82F6, transparent);
+    }
+
+    /* ── Stats bar ── */
+    .stat-item {
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .stat-item:last-child { border-right: none; }
+
+    /* ── Scroll reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Badge pulse ── */
+    @keyframes pulse-ring {
+      0% { box-shadow: 0 0 0 0 rgba(59,130,246,0.5); }
+      70% { box-shadow: 0 0 0 10px rgba(59,130,246,0); }
+      100% { box-shadow: 0 0 0 0 rgba(59,130,246,0); }
+    }
+    .pulse { animation: pulse-ring 2s infinite; }
+
+    /* ── Running track line decoration ── */
+    .track-line {
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, #3B82F6 30%, #60A5FA 70%, transparent 100%);
+      opacity: 0.4;
+    }
+
+    /* ── Progress stripe ── */
+    .progress-stripe {
+      background: repeating-linear-gradient(
+        -55deg,
+        rgba(59,130,246,0.15),
+        rgba(59,130,246,0.15) 10px,
+        transparent 10px,
+        transparent 20px
+      );
+    }
+
+    /* ── Checkmark list ── */
+    .check-item::before {
+      content: '✓';
+      color: #3B82F6;
+      font-weight: 700;
+      margin-right: 10px;
+    }
+
+    /* ── Mobile nav ── */
+    @media (max-width: 640px) {
+      .hero-headline { font-size: clamp(3.5rem, 16vw, 7rem); }
+    }
+
+    /* ── Thank-You overlay ── */
+    #thankyou-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background-color: #0A0A0F;
+      background-image: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(59,130,246,0.18) 0%, transparent 70%),
+                        radial-gradient(ellipse 40% 40% at 80% 80%, rgba(59,130,246,0.07) 0%, transparent 60%);
+      overflow-y: auto;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    #thankyou-overlay.active { display: flex; }
+
+    @keyframes checkIn {
+      0% { transform: scale(0) rotate(-20deg); opacity: 0; }
+      60% { transform: scale(1.15) rotate(5deg); }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+    .ty-check-anim { animation: checkIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both; }
+
+    @keyframes tyFadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .ty-fade-1 { animation: tyFadeUp 0.6s ease 0.5s both; }
+    .ty-fade-2 { animation: tyFadeUp 0.6s ease 0.7s both; }
+    .ty-fade-3 { animation: tyFadeUp 0.6s ease 0.9s both; }
+    .ty-fade-4 { animation: tyFadeUp 0.6s ease 1.1s both; }
+
+    .ty-card {
+      background: linear-gradient(160deg, #1A1A28 0%, #111118 100%);
+      border: 1px solid rgba(59,130,246,0.3);
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .ty-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #3B82F6, transparent);
+    }
+    .ty-step-card {
+      background: #111118;
+      border: 1px solid rgba(59,130,246,0.12);
+      border-radius: 14px;
+      transition: border-color 0.3s;
+    }
+    .ty-step-card:hover { border-color: rgba(59,130,246,0.4); }
+
+    /* ── PayPal/LS payment sections ── */
+    .payment-block {
+      background: rgba(255,255,255,0.03);
+      border: 1px dashed rgba(59,130,246,0.3);
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    /* ── Countdown ── */
+    .countdown-box {
+      background: rgba(59,130,246,0.12);
+      border: 1px solid rgba(59,130,246,0.25);
+      border-radius: 10px;
+      padding: 12px 20px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 1.5rem;
+      letter-spacing: 0.05em;
+      min-width: 0;
+      flex: 1;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+  <!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6N957XDCGP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-6N957XDCGP');
+</script>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     STICKY NAV
+════════════════════════════════════════ -->
+<nav id="sticky-nav">
+  <div class="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
+    <span class="font-display font-900 text-xl tracking-widest uppercase text-white">
+      ROVEX <span class="text-accent">METHOD</span>
+    </span>
+    <a href="#pricing" class="btn-primary py-2.5 px-6 text-sm">Get Instant Access - $49</a>
+  </div>
+</nav>
+
+
+<!-- ════════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<section class="hero-bg min-h-screen flex flex-col justify-center relative overflow-hidden pt-20">
+
+  <!-- Background runner silhouette (decorative) -->
+  <div class="absolute right-0 top-0 bottom-0 w-1/2 opacity-5 pointer-events-none select-none"
+       style="background: url('https://images.unsplash.com/photo-1571008887538-b36bb32f4571?w=800&q=60&auto=format') center/cover no-repeat;">
+  </div>
+
+  <!-- Diagonal accent line -->
+  <div class="absolute top-1/3 left-0 right-0 h-px opacity-10"
+       style="background: linear-gradient(90deg, transparent, #3B82F6 20%, #3B82F6 80%, transparent);"></div>
+
+  <div class="max-w-6xl mx-auto px-6 py-24 relative z-10">
+
+    <!-- Label -->
+    <div class="flex items-center gap-3 mb-8">
+      <div class="w-2 h-2 rounded-full bg-accent pulse"></div>
+      <span class="text-accent font-body text-sm font-500 uppercase tracking-widest">Premium Running System</span>
+    </div>
+
+    <!-- Main headline -->
+    <h1 class="display-headline text-white mb-6 hero-headline"
+        style="font-size: clamp(3.8rem, 10vw, 8.5rem); line-height: 0.9;">
+      RUN<br/>
+      <span class="text-accent text-glow">FASTER.</span><br/>
+      <span style="color:#C0C0D8;">FURTHER.</span><br/>
+      INJURY&#8209;FREE.
+    </h1>
+
+    <div class="track-line my-8 max-w-xs"></div>
+
+    <!-- Subheadline -->
+   <p class="text-lg md:text-xl font-body text-gray-300 max-w-lg leading-relaxed mb-10" style="font-weight:300;">
+  <strong class="text-white font-500">Built to help you run further, faster, and more consistently.</strong> Simple for beginners. Effective for experienced runners.
+</p>
+
+    <!-- Hero pricing cards -->
+    <div class="grid md:grid-cols-2 gap-4 mb-8 max-w-2xl">
+
+      <!-- PR Planner card -->
+      <div style="background:#111118;border:1px solid rgba(59,130,246,0.2);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:16px;">
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.1rem;text-transform:uppercase;letter-spacing:0.08em;color:#fff;margin-bottom:4px;">🎯 PR Planner</div>
+          <div style="font-size:0.8rem;color:#60A5FA;font-style:italic;margin-bottom:12px;">Already ran the distance. Want to go faster.</div>
+          <p style="font-size:0.82rem;color:#8888A0;line-height:1.6;margin-bottom:14px;">Enter your current PB. Get a realistic PR target, exact pace breakdowns, and a full week-by-week plan built around your fitness. Not a generic template.</p>
+          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px;">
+            <li style="font-size:0.78rem;color:#C0C0D8;"><span style="color:#3B82F6;font-weight:700;margin-right:6px;">✓</span>Works for 5K, 10K, Half and Full Marathon</li>
+            <li style="font-size:0.78rem;color:#C0C0D8;"><span style="color:#3B82F6;font-weight:700;margin-right:6px;">✓</span>Exact paces for every session</li>
+            <li style="font-size:0.78rem;color:#C0C0D8;"><span style="color:#3B82F6;font-weight:700;margin-right:6px;">✓</span>Week-by-week structured plan</li>
+            <li style="font-size:0.78rem;color:#C0C0D8;"><span style="color:#3B82F6;font-weight:700;margin-right:6px;">✓</span>Instant access</li>
+          </ul>
+        </div>
+        <div style="margin-top:auto;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2rem;color:#fff;margin-bottom:10px;">$19 <span style="font-size:0.85rem;font-weight:400;color:#8888A0;">one-time</span></div>
+          <a href="#pricing" class="btn-secondary text-sm" style="display:block;text-align:center;padding:12px;">Get PR Planner →</a>
+        </div>
+      </div>
+
+      <!-- Full Method card -->
+      <div style="background:linear-gradient(160deg,#1A1A28 0%,#111118 100%);border:1px solid rgba(59,130,246,0.45);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:16px;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#3B82F6,transparent);"></div>
+        <div style="position:absolute;top:12px;right:12px;background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);border-radius:20px;padding:3px 10px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.08em;color:#3B82F6;">⭐ Most Popular</div>
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.1rem;text-transform:uppercase;letter-spacing:0.08em;color:#fff;margin-bottom:4px;">🚀 Rovex Method</div>
+          <div style="font-size:0.8rem;color:#60A5FA;font-style:italic;margin-bottom:12px;">Never run the distance before. Or want the complete system.</div>
+          <p style="font-size:0.82rem;color:#8888A0;line-height:1.6;margin-bottom:14px;">7 training modules from your first steps to marathon finish line. Injury prevention, training zones, nutrition, and PR Planner included. Everything in one place.</p>
+          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px;">
+            <li style="font-size:0.78rem;color:#C0C0D8;"><span style="color:#3B82F6;font-weight:700;margin-right:6px;">✓</span>Beginner (0→5K) + Intermediate (5K→10K) plans</li>
+            <li style="font-size:0.78rem;color:#C0C0D8;"><span style="color:#3B82F6;font-weight:700;margin-right:6px;">✓</span>Advanced block + Half and Full Marathon</li>
+            <li style="font-size:0.78rem;color:#C0C0D8;"><span style="color:#3B82F6;font-weight:700;margin-right:6px;">✓</span>Injury Prevention System</li>
+            <li style="font-size:0.78rem;color:#C0C0D8;"><span style="color:#3B82F6;font-weight:700;margin-right:6px;">✓</span>Nutrition Guide</li>
+            <li style="font-size:0.78rem;color:#C0C0D8;"><span style="color:#3B82F6;font-weight:700;margin-right:6px;">✓</span>PR Planner included</li>
+            <li style="font-size:0.78rem;color:#C0C0D8;"><span style="color:#3B82F6;font-weight:700;margin-right:6px;">✓</span>Lifetime access + future updates</li>
+          </ul>
+        </div>
+        <div style="margin-top:auto;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2rem;color:#fff;margin-bottom:10px;">$49 <span style="font-size:0.85rem;font-weight:400;color:#8888A0;">one-time</span></div>
+          <a href="#pricing" class="btn-primary text-sm" style="display:block;text-align:center;padding:12px;">Get Full Access →</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Tagline -->
+    <p style="font-size:0.82rem;color:#555570;margin-bottom:16px;max-width:540px;">Never run the distance? Start with Rovex Method. Already finished it and want faster? PR Planner is for you.</p>
+
+    <a href="#inside" class="btn-secondary text-sm" style="display:inline-block;">
+      See What's Inside ↓
+    </a>
+
+    <!-- Stats bar -->
+    <div class="grid grid-cols-3 max-w-xl">
+      <div class="stat-item pr-8">
+        <div class="font-display font-800 text-3xl text-white">1,300+</div>
+        <div class="text-xs text-gray-500 uppercase tracking-wider mt-1">Runners Trained</div>
+      </div>
+      <div class="stat-item px-8">
+        <div class="font-display font-800 text-3xl text-white">7</div>
+        <div class="text-xs text-gray-500 uppercase tracking-wider mt-1">Training Modules</div>
+      </div>
+      <div class="stat-item pl-8">
+        <div class="font-display font-800 text-3xl text-white">$49</div>
+        <div class="text-xs text-gray-500 uppercase tracking-wider mt-1">One-Time Only</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bottom fade -->
+  <div class="absolute bottom-0 left-0 right-0 h-32"
+       style="background: linear-gradient(to bottom, transparent, #0A0A0F);"></div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SOCIAL PROOF STRIP
+════════════════════════════════════════ -->
+<div class="bg-dark-3 border-y border-white/5 py-5 overflow-hidden">
+  <div class="flex gap-12 items-center animate-[scroll_20s_linear_infinite] whitespace-nowrap" style="animation: none;">
+    <div class="flex gap-12 items-center flex-wrap justify-center w-full px-6">
+      <span class="text-gray-500 text-sm uppercase tracking-widest">As seen on</span>
+      <span class="text-white/30 font-display font-700 text-lg tracking-wider">REDDIT</span>
+      <span class="text-white/20">·</span>
+      <span class="text-white/30 font-display font-700 text-lg tracking-wider">TIKTOK</span>
+      <span class="text-white/20">·</span>
+      <span class="text-white/30 font-display font-700 text-lg tracking-wider">YOUTUBE</span>
+      <span class="text-white/20">·</span>
+      <span class="text-white/30 font-display font-700 text-lg tracking-wider">STRAVA</span>
+      <span class="text-white/20">·</span>
+      <span class="text-white/30 font-display font-700 text-lg tracking-wider">GARMIN COMMUNITY</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     PROBLEM SECTION
+════════════════════════════════════════ -->
+<section class="py-28 section-glow" id="problem">
+  <div class="max-w-6xl mx-auto px-6">
+
+    <div class="reveal mb-20">
+      <div class="accent-line mb-6"></div>
+      <h2 class="display-headline text-white mb-6" style="font-size: clamp(2.5rem, 6vw, 5rem);">
+        WHY MOST RUNNERS<br/>
+        <span class="text-accent">NEVER IMPROVE</span>
+      </h2>
+      <p class="text-gray-400 text-lg max-w-xl font-body" style="font-weight:300;">
+        It's not your fitness. It's not your genetics. It's your method - or the lack of one.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+
+      <!-- Problem cards -->
+      <div class="grad-border p-8 reveal" style="transition-delay:0.1s">
+        <div class="text-4xl mb-4">⚡</div>
+        <h3 class="font-display font-700 text-2xl text-white uppercase mb-3">Running Too Fast, Too Soon</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">Most beginners hammer every run at max effort, thinking more pain = more gain. This destroys your aerobic base and leads to burnout within weeks.</p>
+      </div>
+
+      <div class="grad-border p-8 reveal" style="transition-delay:0.2s">
+        <div class="text-4xl mb-4">🦵</div>
+        <h3 class="font-display font-700 text-2xl text-white uppercase mb-3">Constant Injuries</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">Shin splints, knee pain, IT band issues. Random training without structure overloads your body faster than it can adapt. Then you stop. Then you restart. Cycle repeats.</p>
+      </div>
+
+      <div class="grad-border p-8 reveal" style="transition-delay:0.3s">
+        <div class="text-4xl mb-4">🎲</div>
+        <h3 class="font-display font-700 text-2xl text-white uppercase mb-3">Zero Structure</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">Running on random YouTube videos and Reddit threads gives you contradictory advice. Without a clear progression, you plateau - or worse, regress.</p>
+      </div>
+
+      <div class="grad-border p-8 reveal" style="transition-delay:0.4s">
+        <div class="text-4xl mb-4">🧠</div>
+        <h3 class="font-display font-700 text-2xl text-white uppercase mb-3">Training Zones? No Idea.</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">Everyone says "Zone 2, Zone 5" but nobody explains what that means in practical terms. Most runners spend 80% of their time in the wrong zones and wonder why they stall.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SOLUTION SECTION
+════════════════════════════════════════ -->
+<section class="py-28 bg-dark-2" id="solution">
+  <div class="max-w-6xl mx-auto px-6">
+
+    <div class="grid md:grid-cols-2 gap-16 items-center">
+
+      <!-- Left: text -->
+      <div class="reveal">
+        <div class="accent-line mb-6"></div>
+        <h2 class="display-headline text-white mb-8" style="font-size: clamp(2.5rem, 5.5vw, 4.5rem);">
+          THE ROVEX<br/>
+          <span class="text-accent">METHOD</span><br/>
+          <span style="color:#9090B0;">IS DIFFERENT.</span>
+        </h2>
+
+        <p class="text-gray-300 leading-relaxed mb-8" style="font-weight:300;">
+          Rovex Method is a structured, science-backed digital training system designed to build you from the ground up - with clear progression, simplified training zones, and built-in injury prevention. No fluff. No confusion.
+        </p>
+
+        <ul class="space-y-4 text-gray-300 font-body">
+          <li class="flex gap-4 items-start">
+            <span class="text-accent font-700 text-xl mt-0.5 flex-shrink-0">01</span>
+            <div>
+              <strong class="text-white block mb-1">Beginner to Advanced Progression</strong>
+              <span class="text-sm text-gray-500">Every week builds on the last. You always know exactly what to run, how fast, and for how long.</span>
+            </div>
+          </li>
+          <li class="flex gap-4 items-start">
+            <span class="text-accent font-700 text-xl mt-0.5 flex-shrink-0">02</span>
+            <div>
+              <strong class="text-white block mb-1">Training Zones Made Human</strong>
+              <span class="text-sm text-gray-500">We translate zones into plain English. Conversational run? Easy run? Tempo? We show you exactly how each should feel.</span>
+            </div>
+          </li>
+          <li class="flex gap-4 items-start">
+            <span class="text-accent font-700 text-xl mt-0.5 flex-shrink-0">03</span>
+            <div>
+              <strong class="text-white block mb-1">Injury Prevention Baked In</strong>
+              <span class="text-sm text-gray-500">Every plan includes recovery protocols, mobility work, and load management so you stay consistent - not sidelined.</span>
+            </div>
+          </li>
+          <li class="flex gap-4 items-start">
+            <span class="text-accent font-700 text-xl mt-0.5 flex-shrink-0">04</span>
+            <div>
+              <strong class="text-white block mb-1">Simple. Step-by-Step. Proven.</strong>
+              <span class="text-sm text-gray-500">Open the plan, follow the session. No decisions to make. No second-guessing. Just run.</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Right: visual block -->
+      <div class="reveal" style="transition-delay:0.2s">
+        <div class="price-card p-8 relative">
+          <div class="progress-stripe absolute inset-0 rounded-3xl opacity-30"></div>
+          <div class="relative z-10">
+            <div class="font-display font-800 text-accent text-sm uppercase tracking-widest mb-6">Your Transformation Timeline</div>
+            <div class="space-y-5">
+              <div>
+                <div class="flex justify-between text-sm mb-2">
+                  <span class="text-gray-300">Week 1–2</span>
+                  <span class="text-accent font-600">Foundation</span>
+                </div>
+                <div class="h-2 bg-dark-4 rounded-full overflow-hidden">
+                  <div class="h-full bg-accent rounded-full" style="width:15%"></div>
+                </div>
+                <div class="text-xs text-gray-600 mt-1">Building the aerobic base</div>
+              </div>
+              <div>
+                <div class="flex justify-between text-sm mb-2">
+                  <span class="text-gray-300">Week 3–5</span>
+                  <span class="text-accent font-600">Momentum</span>
+                </div>
+                <div class="h-2 bg-dark-4 rounded-full overflow-hidden">
+                  <div class="h-full bg-accent rounded-full" style="width:40%"></div>
+                </div>
+                <div class="text-xs text-gray-600 mt-1">First 5k without stopping</div>
+              </div>
+              <div>
+                <div class="flex justify-between text-sm mb-2">
+                  <span class="text-gray-300">Week 6–10</span>
+                  <span class="text-accent font-600">Acceleration</span>
+                </div>
+                <div class="h-2 bg-dark-4 rounded-full overflow-hidden">
+                  <div class="h-full bg-accent rounded-full" style="width:65%"></div>
+                </div>
+                <div class="text-xs text-gray-600 mt-1">Speed work + endurance combined</div>
+              </div>
+              <div>
+                <div class="flex justify-between text-sm mb-2">
+                  <span class="text-gray-300">Week 11–16</span>
+                  <span class="text-accent font-600">Peak Performance</span>
+                </div>
+                <div class="h-2 bg-dark-4 rounded-full overflow-hidden">
+                  <div class="h-full bg-accent rounded-full" style="width:92%"></div>
+                </div>
+                <div class="text-xs text-gray-600 mt-1">10k+ comfortable, injury-free</div>
+              </div>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-white/10">
+              <div class="grid grid-cols-2 gap-4">
+                <div class="text-center">
+                  <div class="font-display font-800 text-3xl text-white">16</div>
+                  <div class="text-xs text-gray-500 uppercase tracking-wider">Week Program</div>
+                </div>
+                <div class="text-center">
+                  <div class="font-display font-800 text-3xl text-accent">0→10k</div>
+                  <div class="text-xs text-gray-500 uppercase tracking-wider">Guaranteed Path</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     WHAT'S INSIDE
+════════════════════════════════════════ -->
+<section class="py-28" id="inside">
+  <div class="max-w-6xl mx-auto px-6">
+
+    <div class="reveal mb-16 text-center">
+      <div class="accent-line mx-auto mb-6"></div>
+      <h2 class="display-headline text-white mb-4" style="font-size: clamp(2.5rem, 6vw, 5rem);">
+        WHAT'S INSIDE<br/>
+        <span class="text-accent">ROVEX METHOD</span>
+      </h2>
+      <p class="text-gray-400 max-w-lg mx-auto" style="font-weight:300;">
+        7 complete modules. Everything you need to go from first steps to peak performance.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+      <div class="module-card p-7 reveal" style="transition-delay:0.05s">
+        <div class="text-accent font-display font-800 text-sm uppercase tracking-widest mb-3">Module 01</div>
+        <div class="text-2xl mb-3">🎯</div>
+        <h3 class="font-display font-700 text-xl text-white uppercase mb-3">Running Fundamentals</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Form, breathing, cadence, footstrike. The foundation that 90% of runners skip and regret. Get it right from day one.</p>
+        <div class="mt-5 pt-5 border-t border-white/5">
+          <span class="text-xs text-gray-600 uppercase tracking-wide">Form guides · Charts & visuals</span>
+        </div>
+      </div>
+
+      <div class="module-card p-7 reveal" style="transition-delay:0.1s">
+        <div class="text-accent font-display font-800 text-sm uppercase tracking-widest mb-3">Module 02</div>
+        <div class="text-2xl mb-3">📊</div>
+        <h3 class="font-display font-700 text-xl text-white uppercase mb-3">Training Zones Simplified</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">We cut through the science and give you the practical breakdown. Know exactly how each run should feel - with or without a heart rate monitor.</p>
+        <div class="mt-5 pt-5 border-t border-white/5">
+          <span class="text-xs text-gray-600 uppercase tracking-wide">Interactive zone calculator · Training zone breakdown</span>
+        </div>
+      </div>
+
+      <div class="module-card p-7 reveal" style="transition-delay:0.15s">
+        <div class="text-accent font-display font-800 text-sm uppercase tracking-widest mb-3">Module 03</div>
+        <div class="text-2xl mb-3">🟢</div>
+        <h3 class="font-display font-700 text-xl text-white uppercase mb-3">Beginner Plan (0→5k)</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">8-week structured plan. Walk-to-run intervals progressing to a full 5k without stopping. Day-by-day, zero guessing.</p>
+        <div class="mt-5 pt-5 border-t border-white/5">
+          <span class="text-xs text-gray-600 uppercase tracking-wide">8-week plan · Daily sessions</span>
+        </div>
+      </div>
+
+      <div class="module-card p-7 reveal" style="transition-delay:0.2s">
+        <div class="text-accent font-display font-800 text-sm uppercase tracking-widest mb-3">Module 04</div>
+        <div class="text-2xl mb-3">🔵</div>
+        <h3 class="font-display font-700 text-xl text-white uppercase mb-3">Intermediate Plan (5k→10k)</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Already running but stuck? This module doubles your distance in 8 weeks with tempo runs, long runs, and easy day protocols that actually work.</p>
+        <div class="mt-5 pt-5 border-t border-white/5">
+          <span class="text-xs text-gray-600 uppercase tracking-wide">8-week plan · Speed sessions</span>
+        </div>
+      </div>
+
+     <div class="module-card p-7 reveal" style="transition-delay:0.25s">
+        <div class="text-accent font-display font-800 text-sm uppercase tracking-widest mb-3">Module 05</div>
+        <div class="text-2xl mb-3">🚀</div>
+        <h3 class="font-display font-700 text-xl text-white uppercase mb-3">Advanced Endurance System</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Half marathon prep and beyond. Periodized training blocks, race simulation, peak and taper protocols for serious performance.</p>
+        <div class="mt-5 pt-5 border-t border-white/5">
+          <span class="text-xs text-gray-600 uppercase tracking-wide">12-week advanced block · HM & Marathon plans · PR Planner - personalized race target + week-by-week plan for 5K, 10K, HM & Marathon</span>
+        </div>
+      </div>
+
+      <div class="module-card p-7 reveal" style="transition-delay:0.3s">
+        <div class="text-accent font-display font-800 text-sm uppercase tracking-widest mb-3">Module 06</div>
+        <div class="text-2xl mb-3">🛡️</div>
+        <h3 class="font-display font-700 text-xl text-white uppercase mb-3">Injury Prevention System</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Prehab routines, mobility flows, strength work for runners, and the recovery protocols that keep you running for years - not weeks.</p>
+        <div class="mt-5 pt-5 border-t border-white/5">
+          <span class="text-xs text-gray-600 uppercase tracking-wide">6 routines · Mobility library</span>
+        </div>
+      </div>
+
+      <!-- Module 7 spans full width on lg -->
+      <div class="module-card p-7 reveal lg:col-span-3 md:col-span-2" style="transition-delay:0.35s">
+        <div class="md:flex gap-10 items-center">
+          <div class="mb-4 md:mb-0">
+            <div class="text-accent font-display font-800 text-sm uppercase tracking-widest mb-3">Module 07</div>
+            <div class="text-2xl mb-3">🥗</div>
+            <h3 class="font-display font-700 text-2xl text-white uppercase mb-3">Nutrition Basics for Runners</h3>
+            <p class="text-gray-500 text-sm leading-relaxed max-w-xl">What to eat before runs, after runs, on long days. Hydration strategy. The simple fueling rules that make the difference between crashing and crushing. No complicated meal plans - just practical guidance.</p>
+          </div>
+          <div class="flex-shrink-0 grid grid-cols-3 gap-3 mt-4 md:mt-0">
+            <div class="text-center bg-dark-4 rounded-xl p-4">
+              <div class="font-display font-700 text-lg text-white">Pre-Run</div>
+              <div class="text-xs text-gray-600 mt-1">Fueling guide</div>
+            </div>
+            <div class="text-center bg-dark-4 rounded-xl p-4">
+              <div class="font-display font-700 text-lg text-white">Recovery</div>
+              <div class="text-xs text-gray-600 mt-1">Post-run meals</div>
+            </div>
+            <div class="text-center bg-dark-4 rounded-xl p-4">
+              <div class="font-display font-700 text-lg text-white">Race Day</div>
+              <div class="text-xs text-gray-600 mt-1">Protocol</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CTA repeat -->
+    <div class="text-center mt-16 reveal">
+      <a href="#pricing" class="btn-primary text-lg">
+        Get All 7 Modules - $49 One-Time →
+      </a>
+    </div>
+
+  </div>
+</section>
+  <!-- PR PLANNER HIGHLIGHT -->
+<section class="py-28" style="background:linear-gradient(135deg,rgba(59,130,246,0.06),rgba(0,0,0,0) 60%);">
+  <div class="max-w-5xl mx-auto px-6">
+
+    <div class="reveal mb-12 text-center">
+      <div class="accent-line mx-auto mb-6"></div>
+      <h2 class="display-headline text-white mb-4" style="font-size: clamp(2.5rem, 6vw, 5rem);">
+        YOUR PERSONAL<br/>
+        <span class="text-accent">RACE PLAN.</span>
+      </h2>
+      <p class="text-gray-400 max-w-xl mx-auto" style="font-weight:300;">
+        Enter your current time for any distance. Get a realistic PR target and a complete week-by-week training plan - built specifically for your fitness level. Works for complete beginners and sub-19 min 5K runners alike.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 reveal mb-14">
+      <div class="module-card p-7 text-center">
+        <div class="text-3xl mb-4">⏱️</div>
+        <h3 class="font-display font-700 text-white uppercase mb-2">Enter Your Time</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">5K, 10K, Half Marathon, or Full Marathon. Whatever distance you're targeting.</p>
+      </div>
+      <div class="module-card p-7 text-center">
+        <div class="text-3xl mb-4">🎯</div>
+        <h3 class="font-display font-700 text-white uppercase mb-2">Get Your Target</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">We calculate a realistic PR based on your current fitness - not what you wish you could run.</p>
+      </div>
+      <div class="module-card p-7 text-center">
+        <div class="text-3xl mb-4">📅</div>
+        <h3 class="font-display font-700 text-white uppercase mb-2">Follow The Plan</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Every session. Every week. Exact paces, distances, and structure - from day one to race day.</p>
+      </div>
+    </div>
+
+    <div class="module-card p-8 reveal" style="border:1px solid rgba(59,130,246,0.25);">
+      <div class="md:flex items-center gap-10">
+        <div class="flex-1 mb-6 md:mb-0">
+          <div class="text-accent font-display font-800 text-sm uppercase tracking-widest mb-3">Example - 10K Runner</div>
+          <h3 class="font-display font-700 text-2xl text-white uppercase mb-3">Current: 58:00 → Target: 54:22</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">10-week plan generated instantly. Zone 2 runs at 7:05/km.. Tempo sessions at 6:10/km. Intervals at 5:28/km. Every week different, every session with a purpose.</p>
+        </div>
+        <div class="flex-shrink-0 text-center">
+          <a href="#pricing" class="btn-primary text-base">
+            Get My PR Plan - $49 →
+          </a>
+          <div class="text-xs text-gray-600 mt-3">One-time · Instant access</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     TESTIMONIALS
+════════════════════════════════════════ -->
+<section class="py-28 bg-dark-2" id="testimonials">
+  <div class="max-w-6xl mx-auto px-6">
+
+    <div class="reveal mb-16">
+      <div class="accent-line mb-6"></div>
+      <h2 class="display-headline text-white mb-4" style="font-size: clamp(2.5rem, 6vw, 5rem);">
+        REAL RUNNERS.<br/>
+        <span class="text-accent">REAL RESULTS.</span>
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+
+      <div class="testi-card p-7 reveal" style="transition-delay:0.1s">
+        <div class="flex gap-1 mb-4">
+          <span class="text-accent text-lg">★★★★★</span>
+        </div>
+        <p class="text-gray-300 text-sm leading-relaxed mb-6">
+          "I'd been running 5K in around 31 minutes for almost a year and couldn't figure out why I wasn't getting faster. Used the PR Planner, followed the 8-week plan it generated, and hit 28:40 on my next race. First time I've actually seen the number drop."
+        </p>
+        <div class="flex items-center gap-3 pt-5 border-t border-white/8">
+          <div class="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center font-display font-700 text-accent text-sm">MK</div>
+          <div>
+            <div class="text-white font-500 text-sm">Matthew K.</div>
+            <div class="text-gray-600 text-xs">5K - 31:00 → 28:40</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card p-7 reveal" style="transition-delay:0.2s">
+        <div class="flex gap-1 mb-4">
+          <span class="text-accent text-lg">★★★★★</span>
+        </div>
+        <p class="text-gray-300 text-sm leading-relaxed mb-6">
+          "The training zones module finally made everything click. I was always running too hard and wondering why I wasn't improving. Three months into the intermediate plan and I ran 10k in 52 minutes. First time ever."
+        </p>
+        <div class="flex items-center gap-3 pt-5 border-t border-white/8">
+          <div class="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center font-display font-700 text-accent text-sm">SL</div>
+          <div>
+            <div class="text-white font-500 text-sm">Sarah L.</div>
+            <div class="text-gray-600 text-xs">10k - 52 min PB</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card p-7 reveal" style="transition-delay:0.3s">
+        <div class="flex gap-1 mb-4">
+          <span class="text-accent text-lg">★★★★★</span>
+        </div>
+        <p class="text-gray-300 text-sm leading-relaxed mb-6">
+          "Bought it thinking I'd skim through it once and forget. I've gone through every module twice. The structure just makes sense. I'm in week 11 of the advanced block and running 4x per week consistently for the first time in my life."
+        </p>
+        <div class="flex items-center gap-3 pt-5 border-t border-white/8">
+          <div class="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center font-display font-700 text-accent text-sm">TN</div>
+          <div>
+            <div class="text-white font-500 text-sm">Thomas N.</div>
+            <div class="text-gray-600 text-xs">Advanced block - Week 11</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card p-7 reveal" style="transition-delay:0.35s">
+        <div class="flex gap-1 mb-4">
+          <span class="text-accent text-lg">★★★★★</span>
+        </div>
+        <p class="text-gray-300 text-sm leading-relaxed mb-6">
+          "Worth 10x the price. I've spent more on a single pair of running shoes and got less results. The nutrition module alone changed how I fuel my long runs and the most important no more hitting the wall at 7k."
+        </p>
+        <div class="flex items-center gap-3 pt-5 border-t border-white/8">
+          <div class="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center font-display font-700 text-accent text-sm">AP</div>
+          <div>
+            <div class="text-white font-500 text-sm">Anna P.</div>
+            <div class="text-gray-600 text-xs">Intermediate runner </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card p-7 reveal" style="transition-delay:0.4s">
+        <div class="flex gap-1 mb-4">
+          <span class="text-accent text-lg">★★★★☆</span>
+        </div>
+        <p class="text-gray-300 text-sm leading-relaxed mb-6">
+          "I was skeptical about an online course for running. Seemed weird. But the structure and the way training zones are explained makes it genuinely different from anything free on YouTube. Two months in, feeling stronger."
+        </p>
+        <div class="flex items-center gap-3 pt-5 border-t border-white/8">
+          <div class="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center font-display font-700 text-accent text-sm">JV</div>
+          <div>
+            <div class="text-white font-500 text-sm">Janko V.</div>
+            <div class="text-gray-600 text-xs">Beginner → Intermediate</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card p-7 reveal" style="transition-delay:0.45s">
+        <div class="flex gap-1 mb-4">
+          <span class="text-accent text-lg">★★★★★</span>
+        </div>
+        <p class="text-gray-300 text-sm leading-relaxed mb-6">
+          "I'm 38, was convinced I'm 'not a runner'. Started the beginner plan. Eight weeks later, 5k done. The injury prevention section is incredibly detailed: no shin splints this time, which has never happened before."
+        </p>
+        <div class="flex items-center gap-3 pt-5 border-t border-white/8">
+          <div class="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center font-display font-700 text-accent text-sm">LM</div>
+          <div>
+            <div class="text-white font-500 text-sm">Luna M.</div>
+            <div class="text-gray-600 text-xs">Age 38 · First 5k completed</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     PRICING
+════════════════════════════════════════ -->
+<section class="py-28 hero-bg" id="pricing">
+  <div class="max-w-6xl mx-auto px-6">
+
+    <div class="reveal text-center mb-16">
+      <div class="accent-line mx-auto mb-6"></div>
+      <h2 class="display-headline text-white mb-4" style="font-size: clamp(2.5rem, 6vw, 5rem);">
+        ONE PRICE.<br/>
+        <span class="text-accent">LIFETIME ACCESS.</span>
+      </h2>
+      <p class="text-gray-400 max-w-md mx-auto" style="font-weight:300;">
+        No subscriptions. No upsells. Pay once, own it forever.
+      </p>
+    </div>
+
+    <!-- Tagline -->
+    <p class="text-center text-sm text-gray-600 mb-10" style="max-width:560px;margin-left:auto;margin-right:auto;">Never run the distance? Start with Rovex Method. Already finished it and want faster? PR Planner is for you.</p>
+
+    <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto reveal">
+
+      <!-- PR PLANNER CARD -->
+      <div class="price-card p-8 flex flex-col">
+        <div class="inline-flex items-center gap-2 bg-accent/10 border border-accent/20 rounded-full px-3 py-1.5 mb-6 self-start">
+          <span class="text-accent text-xs font-600 uppercase tracking-widest">🎯 PR Planner</span>
+        </div>
+
+        <div class="mb-6">
+          <p class="text-accent text-sm italic mb-3">Already ran the distance. Want to go faster.</p>
+          <p class="text-gray-500 text-sm leading-relaxed mb-5">Enter your current PB. Get a realistic PR target, exact pace breakdowns, and a full week-by-week plan built around your fitness. Not a generic template.</p>
+          <ul class="space-y-2 text-sm text-gray-300">
+            <li class="check-item">Works for 5K, 10K, Half and Full Marathon</li>
+            <li class="check-item">Exact paces for every session</li>
+            <li class="check-item">Week-by-week structured plan</li>
+            <li class="check-item">Instant access as app on iOS and Android</li>
+          </ul>
+        </div>
+
+        <div class="mt-auto">
+          <div class="flex items-baseline gap-3 mb-5">
+            <span class="font-display font-800 text-5xl text-white"><span class="text-3xl">$</span>19</span>
+            <span class="text-gray-500 text-sm">one-time</span>
+          </div>
+          <div id="paypal-button-container-planner"></div>
+          <p class="text-xs text-gray-600 text-center mt-2">Secured by PayPal · 256-bit SSL</p>
+        </div>
+      </div>
+
+      <!-- FULL METHOD CARD -->
+      <div class="price-card p-8 flex flex-col" style="border-color:rgba(59,130,246,0.5);">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#3B82F6,transparent);border-radius:24px 24px 0 0;"></div>
+
+        <div class="inline-flex items-center gap-2 bg-accent/15 border border-accent/30 rounded-full px-3 py-1.5 mb-6 self-start">
+          <div class="w-1.5 h-1.5 rounded-full bg-accent pulse"></div>
+          <span class="text-accent text-xs font-600 uppercase tracking-widest">⭐ Most Popular</span>
+        </div>
+
+        <div class="mb-6">
+          <p class="text-accent text-sm italic mb-3">Never run the distance before. Or want the complete system.</p>
+          <p class="text-gray-500 text-sm leading-relaxed mb-5">7 training modules from your first steps to marathon finish line. Injury prevention, training zones, nutrition, and PR Planner included. Everything in one place.</p>
+          <ul class="space-y-2 text-sm text-gray-300">
+            <li class="check-item">Beginner (0→5K) + Intermediate (5K→10K) plans</li>
+            <li class="check-item">Advanced block + Half and Full Marathon</li>
+            <li class="check-item">Injury Prevention System</li>
+            <li class="check-item">Nutrition Guide</li>
+            <li class="check-item">PR Planner included</li>
+            <li class="check-item">Lifetime access + future updates</li>
+          </ul>
+        </div>
+
+        <div class="mt-auto">
+          <div class="flex items-baseline gap-3 mb-2">
+            <span class="font-display font-800 text-5xl text-white"><span class="text-3xl">$</span>49</span>
+            <div>
+              <span class="text-gray-500 line-through text-xl font-display">$79</span>
+              <div class="text-accent text-xs font-600">Save $30</div>
+            </div>
+          </div>
+          <p class="text-gray-600 text-xs mb-4">One-time · Instant access · No subscription</p>
+          <div id="paypal-button-container"></div>
+          <p class="text-xs text-gray-600 text-center mt-2">Secured by PayPal · 256-bit SSL</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Guarantee -->
+    <div class="mt-8 flex items-start gap-3 text-sm text-gray-500 max-w-4xl mx-auto">
+      <span class="text-2xl">🔒</span>
+      <p>Your payment is <strong class="text-gray-300">100% secure</strong>. If you have any issues with access after purchase, contact support and you'll be sorted within 24 hours.</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     FAQ
+════════════════════════════════════════ -->
+<section class="py-28 bg-dark-2" id="faq">
+  <div class="max-w-3xl mx-auto px-6">
+
+    <div class="reveal mb-16">
+      <div class="accent-line mb-6"></div>
+      <h2 class="display-headline text-white" style="font-size: clamp(2.5rem, 6vw, 4.5rem);">
+        QUESTIONS?<br/>
+        <span class="text-accent">ANSWERED.</span>
+      </h2>
+    </div>
+
+    <div class="divide-y divide-white/8 reveal">
+
+      <details class="faq-item">
+        <summary>
+          I'm a complete beginner. Is this for me?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <p class="faq-content">Absolutely. The beginner plan starts with walking intervals and builds you up progressively over 8 weeks to running a full 5k. No prior fitness required - just consistency.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+         I already run regularly. Is this too basic?.
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <p class="faq-content">No. Beginners get the 0→5K plan. Intermediate runners get the 10K system. Advanced runners get Half Marathon, Marathon, and the PR Planner - enter your current time, get a personalized week-by-week plan built for your level. No ceiling.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          How do I access the content after purchase?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <p class="faq-content">After payment, you'll be redirected to your private access page with all 7 modules. A confirmation email is also sent instantly with download links. You can access everything immediately - no login, no waiting.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          Do I need any special equipment?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <p class="faq-content">Running shoes and willingness. A heart rate monitor is helpful for training zones but we provide alternative RPE (effort) scales that work just as well without any tech.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          Is this a subscription? Will I be charged again?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <p class="faq-content">Zero subscriptions. You pay once and you own lifetime access including all future updates to the program. That's it.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          What if I buy it and it doesn't work for me?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <p class="faq-content">Contact support within 14 days of purchase if you feel the program isn't a fit and we'll work something out. We want runners who follow the system to succeed - not reluctant customers.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          How long does it take to see results?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <p class="faq-content">Most beginners notice significant endurance improvements within 3–4 weeks. Completing a full 5k is typically achievable in 8 weeks following the beginner plan. Speed and structural fitness improvements accumulate over 12–16 weeks of consistent training.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          Can I do this alongside gym training?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <p class="faq-content">Yes - the program includes guidance on combining running with strength training. The injury prevention module covers how to structure your week so both complement each other instead of creating overload.</p>
+      </details>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     FINAL CTA
+════════════════════════════════════════ -->
+<section class="py-32" style="background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(59,130,246,0.12) 0%, transparent 70%), #0A0A0F;">
+  <div class="max-w-3xl mx-auto px-6 text-center reveal">
+    <h2 class="display-headline text-white mb-6" style="font-size: clamp(3rem, 7vw, 6rem);">
+      STOP GUESSING.<br/>
+      <span class="text-accent text-glow">START RUNNING.</span>
+    </h2>
+    <p class="text-gray-400 text-lg mb-10 max-w-xl mx-auto" style="font-weight:300;">
+      1,300+ runners have already made the switch to structured training. Your first session is one click away.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="#pricing" class="btn-primary text-xl glow-blue-sm">
+        🚀 &nbsp;Get Rovex Method - $49
+      </a>
+    </div>
+    <p class="text-gray-600 text-sm mt-6">One-time payment · Instant access · Lifetime ownership</p>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer class="border-t border-white/5 bg-dark py-10">
+  <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+    <span class="font-display font-800 text-xl tracking-widest uppercase text-white">
+      ROVEX <span class="text-accent">METHOD</span>
+    </span>
+    <div class="flex gap-6 text-sm text-gray-600">
+      <a href="/privacy.html" class="hover:text-gray-400 transition-colors">Privacy Policy</a>
+      <a href="/terms.html" class="hover:text-gray-400 transition-colors">Terms</a>
+      <a href="mailto:rovexmethod@gmail.com" class="hover:text-gray-400 transition-colors">Support</a>
+    </div>
+    <p class="text-gray-700 text-xs">© 2026 Rovex Method. All rights reserved.</p>
+  </div>
+</footer>
+
+
+<!-- ════════════════════════════════════════
+     THANK YOU PAGE
+     (separate file: thank-you.html)
+     After purchase, redirect here.
+     This is a placeholder - create thank-you.html separately.
+════════════════════════════════════════ -->
+
+
+<!-- ════════════════════════════════════════
+     THANK-YOU OVERLAY
+     Prikazuje se nakon uspešne kupovine (PayPal i LemonSqueezy)
+════════════════════════════════════════ -->
+<div id="thankyou-overlay" role="dialog" aria-modal="true" aria-label="Purchase confirmed">
+  <div class="relative z-10 w-full max-w-2xl mx-auto px-6 py-20 text-center">
+
+    <!-- Logo -->
+    <div class="mb-12 ty-fade-1">
+      <span class="font-display font-900 text-xl tracking-widest uppercase text-white" style="font-family:'Barlow Condensed',sans-serif;font-weight:900;">
+        ROVEX <span style="color:#3B82F6;">METHOD</span>
+      </span>
+    </div>
+
+    <!-- Checkmark -->
+    <div class="flex justify-center mb-8">
+      <div class="ty-check-anim w-24 h-24 rounded-full flex items-center justify-center pulse"
+           style="background:rgba(59,130,246,0.15);border:2px solid #3B82F6;">
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 22L18 32L36 12" stroke="#3B82F6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Headline -->
+    <div class="ty-fade-1">
+      <h1 class="display-headline text-white mb-4" style="font-size: clamp(3rem, 9vw, 5.5rem);">
+        YOU'RE<br/>
+        <span style="color:#3B82F6;text-shadow:0 0 30px rgba(59,130,246,0.5);">IN.</span>
+      </h1>
+      <p class="text-gray-400 text-lg mb-2" style="font-weight:300;">
+        Payment confirmed. Your full Rovex Method access is ready below.
+      </p>
+      <p class="text-gray-600 text-sm">Check your email - your access link is on its way.</p>
+       <a id="ty-access-btn" href="https://rovexmethod.com/members.html" style="display:inline-block;margin-top:24px;padding:16px 40px;background:linear-gradient(135deg,#3B82F6,#1D4ED8);color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.2rem;text-transform:uppercase;letter-spacing:0.08em;border-radius:12px;text-decoration:none;">
+        🚀 Access Your Members Area →
+      </a>
+    </div>
+
+    <!-- Divider -->
+    <div class="my-10 ty-fade-2" style="height:1px;background:rgba(255,255,255,0.05);"></div>
+
+    <!-- What happens next -->
+    <div class="ty-fade-2 mb-10">
+      <p class="text-xs uppercase tracking-widest mb-6" style="color:#3B82F6;font-family:'Barlow Condensed',sans-serif;font-weight:700;">What happens next</p>
+      <div class="space-y-4 text-left">
+
+        <div class="ty-step-card p-5 flex gap-5 items-start">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-display font-800 text-lg"
+               style="background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);color:#3B82F6;font-family:'Barlow Condensed',sans-serif;font-weight:800;">1</div>
+          <div>
+            <div class="text-white mb-1" style="font-weight:500;">Click the button above to access your training instantly. Bookmark the page or add it to your Home Screen for one-tap access - works like a native app on iOS and Android.</div>
+            <div class="text-gray-500 text-sm leading-relaxed">No account needed. Direct access, forever.</div>
+          </div>
+        </div>
+
+        <div class="ty-step-card p-5 flex gap-5 items-start">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-display font-800 text-lg"
+               style="background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);color:#3B82F6;font-family:'Barlow Condensed',sans-serif;font-weight:800;">2</div>
+          <div>
+            <div class="text-white mb-1" style="font-weight:500;">Access all 7 modules</div>
+            <div class="text-gray-500 text-sm leading-relaxed">Your link gives you instant access to all training modules, interactive plans, zone calculator and PR Planner. No account needed.</div>
+          </div>
+        </div>
+
+        <div class="ty-step-card p-5 flex gap-5 items-start">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-display font-800 text-lg"
+               style="background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);color:#3B82F6;font-family:'Barlow Condensed',sans-serif;font-weight:800;">3</div>
+          <div>
+            <div class="text-white mb-1" style="font-weight:500;">Start with Module 01</div>
+            <div class="text-gray-500 text-sm leading-relaxed">Begin with Running Fundamentals regardless of your level. The foundation makes everything else click faster.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Info card -->
+    <div class="ty-card p-7 ty-fade-3 text-left mb-10">
+      <div class="flex gap-4 items-start">
+        <span class="text-2xl flex-shrink-0">📌</span>
+        <div>
+          <div class="text-white mb-2" style="font-weight:500;">Need help?</div>
+          <p class="text-gray-500 text-sm leading-relaxed">
+            Contact us at
+            <a href="mailto:rovexmethod@gmail.com" style="color:#3B82F6;" class="hover:underline">rovexmethod@gmail.com</a>
+            and we'll sort it out within 24 hours.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- Footer note -->
+    <div class="ty-fade-4" style="color:#374151;font-size:0.75rem;">
+      <p>© 2026 Rovex Method · <a href="mailto:rovexmethod@gmail.com" class="hover:text-gray-500 transition-colors">Support</a></p>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════ -->
+<script>
+  // ── Thank-You overlay ──
+  function showThankYou(type) {
+    const overlay = document.getElementById('thankyou-overlay');
+    // Update access button based on product
+    const accessBtn = document.getElementById('ty-access-btn');
+    if(type === 'planner') {
+      accessBtn.href = 'https://rovexmethod.com/planner.html';
+      accessBtn.textContent = '🎯 Access Your PR Planner →';
+    } else {
+      accessBtn.href = 'https://rovexmethod.com/members.html';
+      accessBtn.textContent = '🚀 Access Your Members Area →';
+    }
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    overlay.scrollTop = 0;
+  }
+
+  // ── Sticky nav on scroll ──
+  const nav = document.getElementById('sticky-nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 80) nav.classList.add('visible');
+    else nav.classList.remove('visible');
+  }, { passive: true });
+
+  // ── Scroll reveal ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+
+</script>
+
+<!-- PayPal SDK -->
+<script>
+  (function() {
+    var script = document.createElement('script');
+    script.src = 'https://www.paypal.com/sdk/js?client-id=AWRczY44Vd9MzXsFJ41Vl0zQ-goKNlcQXpCDi51V63P-EXZJASjdkwypO3qEzvFv-bAo15d1ax2PS3vL&currency=USD';
+    script.onload = function() {
+
+      // ── Full Method $49 ──
+      paypal.Buttons({
+        createOrder: function(data, actions) {
+          return actions.order.create({
+            purchase_units: [{
+              description: 'Rovex Method - Full Access',
+              amount: { value: '49.00', currency_code: 'USD' }
+            }]
+          });
+        },
+        onApprove: function(data, actions) {
+          return actions.order.capture().then(function() {
+            showThankYou('full');
+          });
+        },
+        onError: function(err) {
+          console.error('PayPal error:', err);
+          alert('Payment failed. Please try again or contact support.');
+        },
+        style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'pay' }
+      }).render('#paypal-button-container');
+
+      // ── PR Planner $19 ──
+      paypal.Buttons({
+        createOrder: function(data, actions) {
+          return actions.order.create({
+            purchase_units: [{
+              description: 'Rovex Method - PR Planner',
+              amount: { value: '19.00', currency_code: 'USD' }
+            }]
+          });
+        },
+        onApprove: function(data, actions) {
+          return actions.order.capture().then(function() {
+            showThankYou('planner');
+          });
+        },
+        onError: function(err) {
+          console.error('PayPal error:', err);
+          alert('Payment failed. Please try again or contact support.');
+        },
+        style: { layout: 'vertical', color: 'blue', shape: 'rect', label: 'pay' }
+      }).render('#paypal-button-container-planner');
+
+    };
+    document.body.appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

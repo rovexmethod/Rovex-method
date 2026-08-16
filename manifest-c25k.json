@@ -1,0 +1,22 @@
+{
+  "name": "Couch to 5K — Rovex Method",
+  "short_name": "Couch to 5K",
+  "description": "8-week walk/run program from zero running experience to a full 5K.",
+  "start_url": "/c25k-tqmf8s.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#07070E",
+  "theme_color": "#3B82F6",
+  "icons": [
+    {
+      "src": "/icon-r.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-r.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
