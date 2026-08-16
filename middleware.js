@@ -44,6 +44,14 @@ export default async function middleware(request) {
   if (!product) return; // not a gated path
 
   const secret = process.env.ACCESS_TOKEN_SECRET;
+  if (!secret) {
+    // Not configured yet (env var missing) — fail OPEN, not closed. Better
+    // to temporarily behave like before this fix existed than to lock
+    // everyone out of a page they may have just paid for because of a
+    // deploy/config-ordering mistake.
+    return;
+  }
+
   const cookies = parseCookies(request.headers.get('cookie'));
   const cookieName = `rovex_access_${product}`;
 
