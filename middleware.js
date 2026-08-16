@@ -74,7 +74,11 @@ export default async function middleware(request) {
     }
   }
 
-  // No valid token or cookie — bounce to the pricing section instead of
-  // leaking the page.
-  return Response.redirect(new URL('/index.html#pricing', url.origin), 302);
+  // No valid token or cookie — send to self-serve recovery instead of a
+  // flat "buy now" wall. Customers who purchased before this gate existed
+  // have a bookmarked link but no token/cookie; recover.html re-verifies
+  // their PayPal Order ID directly against PayPal (works for orders from
+  // any date) and hands back a working link, so they don't get bounced to
+  // checkout for something they already paid for.
+  return Response.redirect(new URL(`/recover.html?product=${product}`, url.origin), 302);
 }

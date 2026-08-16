@@ -1,0 +1,13 @@
+{
+  "name": "Rovex Method",
+  "short_name": "Rovex",
+  "description": "The Structured Running System — Members Area",
+  "start_url": "/members.html",
+  "display": "standalone",
+  "background_color": "#08090a",
+  "theme_color": "#3B82F6",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "/icon-r.png", "sizes": "192x192", "type": "image/png" }
+  ]
+}

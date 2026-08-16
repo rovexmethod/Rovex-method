@@ -21,8 +21,8 @@
 </head>
 <body>
   <div class="card">
-    <h1>Lost your access link?</h1>
-    <p>Enter your PayPal Transaction/Order ID (from your PayPal receipt email) and the product you bought — we'll regenerate your link instantly.</p>
+    <h1>Already purchased?</h1>
+    <p>Enter your PayPal Transaction/Order ID (from your PayPal receipt email) and the product you bought — we'll verify it with PayPal and give you your link instantly.</p>
 
     <label for="product">Product</label>
     <select id="product">
@@ -36,9 +36,19 @@
 
     <button id="submitBtn" onclick="recover()">Get My Link</button>
     <div id="result"></div>
+    <p style="margin:20px 0 0;font-size:0.8rem;">Haven't purchased yet? <a href="/index.html#pricing" style="color:#60A5FA;">See pricing →</a></p>
   </div>
 
 <script>
+  (function() {
+    const params = new URLSearchParams(window.location.search);
+    const product = params.get('product');
+    const select = document.getElementById('product');
+    if (product && ['full', 'planner', 'c25k'].includes(product)) {
+      select.value = product;
+    }
+  })();
+
 function recover() {
   const btn = document.getElementById('submitBtn');
   const resultEl = document.getElementById('result');
