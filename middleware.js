@@ -71,12 +71,16 @@ export default async function middleware(request) {
           // (so the token isn't left sitting in the address bar / history).
           const cleanUrl = new URL(url);
           cleanUrl.searchParams.delete('token');
-          const res = Response.redirect(cleanUrl.toString(), 302);
-          res.headers.append(
-            'Set-Cookie',
-            `${cookieName}=1; Max-Age=${TEN_YEARS}; Path=/; Secure; HttpOnly; SameSite=Lax`
-          );
-          return res;
+          // Response.redirect() returns a Response with immutable headers,
+          // so appending Set-Cookie to it throws. Build the redirect by hand
+          // instead so the cookie actually gets set.
+          return new Response(null, {
+            status: 302,
+            headers: {
+              Location: cleanUrl.toString(),
+              'Set-Cookie': `${cookieName}=1; Max-Age=${TEN_YEARS}; Path=/; Secure; HttpOnly; SameSite=Lax`,
+            },
+          });
         }
       }
     }

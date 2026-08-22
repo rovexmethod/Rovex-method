@@ -47,24 +47,42 @@ module.exports = async (req, res) => {
 
   try {
     const accessToken = await getPayPalAccessToken();
+
+    // `orderId` here may actually be a checkout Order ID (what the live
+    // on-page flow sends via actions.order.capture().id) OR a Capture/
+    // Transaction ID (what PayPal shows buyers in their receipt email and
+    // sellers in the dashboard — a different ID namespace). Try both so
+    // recover.html works with whatever ID the buyer actually has.
     const orderRes = await fetch(`${PAYPAL_API}/v2/checkout/orders/${orderId}`, {
       headers: { 'Authorization': `Bearer ${accessToken}` },
     });
-    if (!orderRes.ok) {
-      res.status(400).json({ ok: false, error: 'order_lookup_failed' });
-      return;
+
+    let status, amount, currency;
+
+    if (orderRes.ok) {
+      const order = await orderRes.json();
+      const capture = order.purchase_units && order.purchase_units[0] &&
+        order.purchase_units[0].payments && order.purchase_units[0].payments.captures &&
+        order.purchase_units[0].payments.captures[0];
+
+      status = (capture && capture.status) || order.status;
+      amount = (capture && capture.amount && capture.amount.value) ||
+        (order.purchase_units && order.purchase_units[0] && order.purchase_units[0].amount && order.purchase_units[0].amount.value);
+      currency = (capture && capture.amount && capture.amount.currency_code) ||
+        (order.purchase_units && order.purchase_units[0] && order.purchase_units[0].amount && order.purchase_units[0].amount.currency_code);
+    } else {
+      const captureRes = await fetch(`${PAYPAL_API}/v2/payments/captures/${orderId}`, {
+        headers: { 'Authorization': `Bearer ${accessToken}` },
+      });
+      if (!captureRes.ok) {
+        res.status(400).json({ ok: false, error: 'order_lookup_failed' });
+        return;
+      }
+      const capture = await captureRes.json();
+      status = capture.status;
+      amount = capture.amount && capture.amount.value;
+      currency = capture.amount && capture.amount.currency_code;
     }
-    const order = await orderRes.json();
-
-    const capture = order.purchase_units && order.purchase_units[0] &&
-      order.purchase_units[0].payments && order.purchase_units[0].payments.captures &&
-      order.purchase_units[0].payments.captures[0];
-
-    const status = (capture && capture.status) || order.status;
-    const amount = (capture && capture.amount && capture.amount.value) ||
-      (order.purchase_units && order.purchase_units[0] && order.purchase_units[0].amount && order.purchase_units[0].amount.value);
-    const currency = (capture && capture.amount && capture.amount.currency_code) ||
-      (order.purchase_units && order.purchase_units[0] && order.purchase_units[0].amount && order.purchase_units[0].amount.currency_code);
 
     // Defends against someone paying for the cheaper product and trying to
     // claim a more expensive one by reusing the endpoint with a different
